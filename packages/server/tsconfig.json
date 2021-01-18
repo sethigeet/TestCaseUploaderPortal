@@ -1,0 +1,16 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "declaration": true,
+    "lib": ["dom", "es6", "es2017", "esnext.asynciterable"],
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "ts-node": {
+    "files": true
+  },
+  "files": ["src/index.ts"],
+  "exclude": ["node_modules"],
+  "include": ["./src/**/*.ts"]
+}

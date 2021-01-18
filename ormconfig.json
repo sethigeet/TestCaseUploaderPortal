@@ -1,0 +1,29 @@
+[
+  {
+    "name": "development",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "kcsuser3",
+    "password": "kcsuser3",
+    "database": "test-case-uploader-portal",
+    "synchronize": true,
+    "logging": true,
+    "entities": ["src/**/*Entity.ts"],
+    "migrations": ["src/migrations/**/*.ts"]
+  },
+  {
+    "name": "test",
+    "type": "postgres",
+    "host": "localhost",
+    "port": 5432,
+    "username": "kcsuser3",
+    "password": "kcsuser3",
+    "database": "test-case-uploader-portal-test",
+    "synchronize": true,
+    "dropSchema": true,
+    "logging": false,
+    "entities": ["src/**/*Entity.ts"],
+    "migrations": ["src/migrations/**/*.ts"]
+  }
+]
