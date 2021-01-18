@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useLocation } from "react-router-dom";
 
 import { Box, Image, Heading, Button } from "@chakra-ui/react";
 
@@ -9,6 +9,10 @@ import { Link } from "./Link";
 import Logo from "../assets/icon.svg";
 
 export const Navbar: FC = () => {
+  const location = useLocation();
+
+  const activeRoute = location.pathname.split("/")[1];
+
   return (
     <Box
       display="flex"
@@ -25,15 +29,35 @@ export const Navbar: FC = () => {
       </Box>
 
       <Box display="flex" alignItems="center">
-        <Link to="/create">Create</Link>
-        <Link to="/status">Status</Link>
-        <Link to="/test">Test</Link>
-        <Link to="/dashboard">Dashboard</Link>
+        <Link to="/" fontWeight={activeRoute === "" ? "bold" : ""}>
+          Home
+        </Link>
+        <Link to="/create" fontWeight={activeRoute === "create" ? "bold" : ""}>
+          Create
+        </Link>
+        <Link to="/status" fontWeight={activeRoute === "status" ? "bold" : ""}>
+          Status
+        </Link>
+        <Link to="/test" fontWeight={activeRoute === "test" ? "bold" : ""}>
+          Test
+        </Link>
+        <Link
+          to="/dashboard"
+          fontWeight={activeRoute === "dashboard" ? "bold" : ""}
+        >
+          Dashboard
+        </Link>
       </Box>
 
       <Box display="flex" mr={10} alignItems="center">
         <RouterLink to="/login">
-          <Button variant="outline" color="blue.900">
+          <Button
+            variant={activeRoute === "login" ? "solid" : "outline"}
+            color="blue.900"
+            _hover={{
+              transform: "scale(1.1)",
+            }}
+          >
             Login
           </Button>
         </RouterLink>

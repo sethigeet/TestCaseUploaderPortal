@@ -24,6 +24,7 @@ export const Link: FC<LinkProps> = ({ to, children, ...props }) => {
           outline: "none",
           borderBottom: "1px solid",
           borderBottomColor: "blue.900",
+          transform: "scale(1.1)",
         }}
         {...props}
       >
