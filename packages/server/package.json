@@ -50,7 +50,7 @@
   },
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev --respawn src/index.ts",
-    "test": "NODE_ENV=test jest --detectOpenHandles --watchAll",
+    "test": "NODE_ENV=test jest --detectOpenHandles --watch",
     "build": "tsc",
     "gen-env": "gen-env-types .env -o ./src/modules/shared/types/env.d.ts -e ."
   },

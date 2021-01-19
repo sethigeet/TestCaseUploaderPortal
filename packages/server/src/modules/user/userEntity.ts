@@ -9,12 +9,18 @@ import { ObjectType, Field } from "type-graphql";
 
 import { hash } from "argon2";
 
+import { UserRoles } from "@portal/common";
+
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
   @Field(() => String)
   @PrimaryGeneratedColumn("uuid")
   id!: string;
+
+  @Field()
+  @Column({ type: "enum", enum: UserRoles, default: UserRoles.TESTER })
+  role!: UserRoles;
 
   @Field(() => String)
   @Column({ type: "varchar", length: 255, unique: true })
