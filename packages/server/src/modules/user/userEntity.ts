@@ -3,18 +3,22 @@ import {
   BeforeInsert,
   Column,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { ObjectType, Field } from "type-graphql";
+import { ObjectType, Field, registerEnumType } from "type-graphql";
 
 import { hash } from "argon2";
 
 import { UserRoles } from "@portal/common";
+import { TestCase } from "../testCase/testCaseEntity";
+
+registerEnumType(UserRoles, { name: "UserRoles" });
 
 @ObjectType()
 @Entity()
 export class User extends BaseEntity {
-  @Field(() => String)
+  @Field()
   @PrimaryGeneratedColumn("uuid")
   id!: string;
 
@@ -22,9 +26,13 @@ export class User extends BaseEntity {
   @Column({ type: "enum", enum: UserRoles, default: UserRoles.TESTER })
   role!: UserRoles;
 
-  @Field(() => String)
+  @Field()
   @Column({ type: "varchar", length: 255, unique: true })
   username!: string;
+
+  @Field()
+  @OneToMany(() => TestCase, (testCase) => testCase.user)
+  testCases!: TestCase[];
 
   @Column({ type: "text" })
   password!: string;
