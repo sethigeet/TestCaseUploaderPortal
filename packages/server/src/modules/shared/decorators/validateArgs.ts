@@ -2,7 +2,7 @@ import { createMethodDecorator } from "type-graphql";
 import { ValidationError } from "yup";
 
 import { FieldError } from "../responseTypes";
-import { toFieldError } from "../../user/auth/utils/validation/toFieldError";
+import { toFieldError } from "../utils/validation/toFieldError";
 
 export function ValidateArgs<T>(
   schema: any,

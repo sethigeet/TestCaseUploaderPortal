@@ -1,8 +1,8 @@
 import rp from "request-promise";
 import { CoreOptions } from "request";
 
-import { UserResponse } from "../../../src/modules/user/auth/UserResponse";
-import { User } from "../../../src/modules/user/userEntity";
+import { UserResponse } from "../../src/modules/user/auth/UserResponse";
+import { User } from "../../src/modules/user/userEntity";
 
 export class TestClient {
   url: string;

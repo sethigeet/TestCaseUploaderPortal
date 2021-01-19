@@ -1,6 +1,6 @@
 import { ValidationError } from "yup";
 
-import { FieldError } from "../../../../shared/responseTypes";
+import { FieldError } from "../../responseTypes";
 
 export const toFieldError = (errors: ValidationError): FieldError[] => {
   const mappedErrors: FieldError[] = [];

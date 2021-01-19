@@ -4,7 +4,7 @@ import {
   getMinLenMessage,
   getMustNotContainMessage,
   getRequiredMessage,
-} from "../errorMessages";
+} from "../../errorMessages";
 
 export const registerSchema = yup.object().shape({
   username: yup

@@ -11,7 +11,7 @@ import {
 import { User } from "../../../src/modules/user/userEntity";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
-import { TestClient } from "../utils";
+import { TestClient } from "../../utils";
 
 seed(Date.now() + 0);
 const correctUsername = internet.userName();
