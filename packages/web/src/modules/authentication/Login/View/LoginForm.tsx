@@ -3,8 +3,7 @@ import { FC } from "react";
 import { InputField } from "../../../components";
 import { Box, Button, Image } from "@chakra-ui/react";
 
-// import Img1 from "../../../assets/Rangitikei.svg";
-import Img2 from "../../../assets/Reuss.svg";
+import bgImg from "../../../assets/Reuss.svg";
 
 interface LoginFormProps {
   isSubmitting: boolean;
@@ -13,13 +12,12 @@ interface LoginFormProps {
 export const LoginForm: FC<LoginFormProps> = ({ isSubmitting }) => {
   return (
     <Box p={25} pos="relative">
-      <Image src={Img2} w="100%" h="100%" borderRadius={50} />
+      <Image src={bgImg} w="100%" h="100%" borderRadius={50} />
       <Box
         pos="absolute"
-        top={200}
-        bottom={200}
-        left={200}
-        right={200}
+        top="50%"
+        left="50%"
+        transform="translate(-50%, -50%)"
         bg="white"
         borderRadius={25}
         p={10}

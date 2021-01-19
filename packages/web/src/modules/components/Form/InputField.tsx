@@ -7,6 +7,7 @@ import {
   Input,
   FormErrorMessage,
   InputProps,
+  FormHelperText,
 } from "@chakra-ui/react";
 
 type Props = InputProps & {
@@ -17,11 +18,17 @@ type Props = InputProps & {
 export const InputField: FC<Props> = ({ label, name, ...props }) => {
   const [field, meta] = useField({ name });
 
+  const isInvalid = !!meta.error && meta.touched;
+
   return (
-    <FormControl isInvalid={!!meta.error && meta.touched}>
+    <FormControl isInvalid={isInvalid}>
       <FormLabel htmlFor={field.name}>{label}</FormLabel>
       <Input {...field} {...props} id={field.name} />
-      <FormErrorMessage>{meta.error}</FormErrorMessage>
+      {isInvalid ? (
+        <FormErrorMessage>{meta.error}</FormErrorMessage>
+      ) : (
+        <FormHelperText>&nbsp;</FormHelperText>
+      )}
     </FormControl>
   );
 };

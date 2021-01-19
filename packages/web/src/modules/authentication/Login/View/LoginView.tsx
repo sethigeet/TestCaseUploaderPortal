@@ -3,6 +3,8 @@ import { FC } from "react";
 import { Form, Formik, FormikHelpers } from "formik";
 import { Box, Heading, List, ListIcon, ListItem, Text } from "@chakra-ui/react";
 
+import { loginSchema } from "@portal/common";
+
 import {
   CheckCircleIcon,
   BeakerIcon,
@@ -71,6 +73,7 @@ export const LoginView: FC<LoginProps> = ({ onSubmit }) => {
         <Formik
           initialValues={{ username: "", password: "" }}
           onSubmit={onSubmit}
+          validationSchema={loginSchema}
         >
           {({ isSubmitting }) => (
             <Form>
