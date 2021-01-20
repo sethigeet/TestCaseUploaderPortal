@@ -94,7 +94,7 @@ describe("Get a test case", () => {
     expect(response.data.getTestCase?.expectedResult).toEqual(
       correctInput.expectedResult
     );
-    expect(response.data.getTestCase?.createdBy).toEqual(user1.id);
+    expect(response.data.getTestCase?.createdBy.id).toEqual(user1.id);
 
     done();
   });
@@ -158,7 +158,7 @@ describe("Get a test case", () => {
     expect(response.data.getTestCase?.expectedResult).toEqual(
       correctInput.expectedResult
     );
-    expect(response.data.getTestCase?.createdBy).toEqual(user1.id);
+    expect(response.data.getTestCase?.createdBy.id).toEqual(user1.id);
 
     done();
   });
@@ -189,7 +189,7 @@ describe("Get a test case", () => {
     expect(response.data.getTestCase?.expectedResult).toEqual(
       correctInput.expectedResult
     );
-    expect(response.data.getTestCase?.createdBy).toEqual(user1.id);
+    expect(response.data.getTestCase?.createdBy.id).toEqual(user1.id);
 
     done();
   });

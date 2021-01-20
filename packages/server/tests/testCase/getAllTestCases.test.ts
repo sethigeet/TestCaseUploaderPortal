@@ -88,7 +88,7 @@ describe("Get many test cases", () => {
     const response = await client.getTestCases(limit);
 
     expect(response.data.getTestCases.testCases.length).toEqual(1);
-    expect(response.data.getTestCases.testCases[0]?.createdBy).toEqual(
+    expect(response.data.getTestCases.testCases[0]?.createdBy.id).toEqual(
       user1.id
     );
     expect(response.data.getTestCases.hasMore).toEqual(false);
@@ -103,10 +103,10 @@ describe("Get many test cases", () => {
     const response = await client.getTestCases(limit);
 
     expect(response.data.getTestCases.testCases.length).toEqual(2);
-    expect(response.data.getTestCases.testCases[0]?.createdBy).toEqual(
+    expect(response.data.getTestCases.testCases[0]?.createdBy.id).toEqual(
       user2.id
     );
-    expect(response.data.getTestCases.testCases[1]?.createdBy).toEqual(
+    expect(response.data.getTestCases.testCases[1]?.createdBy.id).toEqual(
       user1.id
     );
     expect(response.data.getTestCases.hasMore).toEqual(false);
@@ -122,7 +122,7 @@ describe("Get many test cases", () => {
     const response = await client.getTestCases(limit);
 
     expect(response.data.getTestCases.testCases.length).toEqual(1);
-    expect(response.data.getTestCases.testCases[0]?.createdBy).toEqual(
+    expect(response.data.getTestCases.testCases[0]?.createdBy.id).toEqual(
       user2.id
     );
     expect(response.data.getTestCases.hasMore).toEqual(true);
@@ -164,7 +164,7 @@ describe("Get many test cases", () => {
     const response = await client.getTestCases(limit, `${cursor}`);
 
     expect(response.data.getTestCases.testCases.length).toEqual(1);
-    expect(response.data.getTestCases.testCases[0].createdBy).toEqual(
+    expect(response.data.getTestCases.testCases[0].createdBy.id).toEqual(
       testCase1.createdBy
     );
     expect(response.data.getTestCases.testCases[0].description).toEqual(

@@ -80,7 +80,7 @@ describe("Create test cases", () => {
       expect(testCase?.testingScope).toEqual(input.testingScope);
       expect(testCase?.description).toEqual(input.cases[i].description);
       expect(testCase?.expectedResult).toEqual(input.cases[i].expectedResult);
-      expect(testCase?.createdBy).toEqual(user.id);
+      expect(testCase?.createdBy.id).toEqual(user.id);
     });
 
     response.data.createTestCases.testCases?.forEach(async (testCase) => {

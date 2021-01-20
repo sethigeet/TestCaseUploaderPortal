@@ -1,9 +1,18 @@
-import { Arg, Int, Query, Resolver } from "type-graphql";
+import {
+  Arg,
+  Ctx,
+  FieldResolver,
+  Int,
+  Query,
+  Resolver,
+  Root,
+} from "type-graphql";
 
 import { UserRoles } from "@portal/common";
 
 import { isAuthenticated } from "../../../shared/decorators/isAuthenticated";
 import { CurrentUser } from "../../../shared/decorators";
+import { Context } from "../../../shared/types";
 import { User } from "../../../user/userEntity";
 
 import { TestCase } from "../../testCaseEntity";
@@ -12,6 +21,25 @@ import { getConnection } from "typeorm";
 
 @Resolver(() => TestCase)
 export class GetTestCaseResolver {
+  @FieldResolver(() => User)
+  createdBy(
+    @Root() testCase: TestCase,
+    @Ctx() { userLoader }: Context
+  ): Promise<User> {
+    return userLoader.load(testCase.createdBy);
+  }
+
+  @FieldResolver(() => User, { nullable: true })
+  updatedBy(
+    @Root() testCase: TestCase,
+    @Ctx() { userLoader }: Context
+  ): Promise<User | undefined> {
+    if (testCase.updatedBy) {
+      return userLoader.load(testCase.updatedBy);
+    }
+    return Promise.resolve(undefined);
+  }
+
   @isAuthenticated()
   @Query(() => TestCase, { nullable: true })
   async getTestCase(

@@ -72,7 +72,6 @@ export class TestCase extends BaseEntity {
   @CreateDateColumn()
   createdAt!: Date;
 
-  @Field()
   @Column({ type: "varchar", length: 36 })
   createdBy!: string;
 
@@ -80,7 +79,6 @@ export class TestCase extends BaseEntity {
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @Field()
   @Column({ type: "varchar", length: 36, nullable: true })
   updatedBy!: string;
 

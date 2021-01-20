@@ -158,7 +158,9 @@ createTestCase(
       testingScope
       description
       expectedResult
-      createdBy
+      createdBy {
+        id
+      }
     }
   }
 }
@@ -204,7 +206,9 @@ createTestCases(
       testingScope
       description
       expectedResult
-      createdBy
+      createdBy {
+        id
+      }
     }
   }
 }
@@ -215,7 +219,11 @@ createTestCases(
   async getTestCase(
     id: string
   ): Promise<{
-    data: { getTestCase: TestCase | undefined };
+    data: {
+      getTestCase:
+        | (TestCase & { createdBy: User; updatedBy: User | undefined })
+        | undefined;
+    };
     errors: any[];
   }> {
     return rp.post(
@@ -231,7 +239,9 @@ query {
     testingScope
     description
     expectedResult
-    createdBy
+    createdBy {
+      id
+    }
   }
 }
 `)
@@ -242,7 +252,15 @@ query {
     limit: number,
     cursor?: string
   ): Promise<{
-    data: { getTestCases: { testCases: TestCase[]; hasMore: boolean } };
+    data: {
+      getTestCases: {
+        testCases: (TestCase & {
+          createdBy: User;
+          updatedBy: User | undefined;
+        })[];
+        hasMore: boolean;
+      };
+    };
     errors: any[];
   }> {
     return rp.post(
@@ -259,7 +277,9 @@ query {
       testingScope
       description
       expectedResult
-      createdBy
+      createdBy {
+        id
+      }
       createdAt
     }
     hasMore

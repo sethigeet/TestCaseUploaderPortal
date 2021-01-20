@@ -27,6 +27,7 @@ import { __prod__ } from "../constants";
 
 // Types
 import { Context } from "../types";
+import { createUserLoader } from "../dataLoaders";
 
 export const createTypeormConnection = async (): Promise<Connection> => {
   const connectionOptions = await getConnectionOptions(process.env.NODE_ENV);
@@ -99,6 +100,7 @@ export const startServer = async (): Promise<
       req,
       res,
       redisClient,
+      userLoader: createUserLoader(),
     }),
   });
   // add the middleware

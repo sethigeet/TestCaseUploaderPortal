@@ -5,13 +5,13 @@ import { User } from "../../user/userEntity";
 
 export const CurrentUser = (): ParameterDecorator => {
   return createParamDecorator<Context>(
-    ({ context: { req } }): Promise<User | undefined> => {
+    ({ context: { req, userLoader } }): Promise<User | undefined> => {
       const { userId } = req.session;
       if (!userId) {
         return Promise.resolve(undefined);
       }
 
-      return User.findOne(userId);
+      return userLoader.load(userId);
     }
   );
 };
