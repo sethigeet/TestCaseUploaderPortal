@@ -40,6 +40,7 @@ export class TestTestCaseResolver {
       testCase.passed = input.passed;
       testCase.actualResult = input.actualResult;
       testCase.userRemarks = input.userRemarks;
+      testCase.updatedBy = user.id;
 
       await testCase.save();
     } catch (e) {

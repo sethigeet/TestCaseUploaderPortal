@@ -21,8 +21,16 @@ export class VerifyTestCaseResolver {
       return false;
     }
 
+    const testCase = await TestCase.findOne(id);
+
+    if (!testCase) {
+      return false;
+    }
+
     try {
-      await TestCase.update({ id }, { verified: true, updatedBy: user.id });
+      testCase.verified = true;
+      testCase.updatedBy = user.id;
+      await testCase.save();
     } catch (e) {
       return false;
     }
