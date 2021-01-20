@@ -32,7 +32,7 @@ describe("Register a user", () => {
     const username = correctUsername;
     const password = correctPassword;
 
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     const response = await client.register(username, password);
 
@@ -55,7 +55,7 @@ describe("Register a user", () => {
     const username = correctUsername;
     const password = correctPassword;
 
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     const response = await client.register(username, password);
 
@@ -71,7 +71,7 @@ describe("Register a user", () => {
     const username = "abdad@";
     const password = correctPassword;
 
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     const response = await client.register(username, password);
 
@@ -87,7 +87,7 @@ describe("Register a user", () => {
     const username = "ab";
     const password = "bd";
 
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     const response = await client.register(username, password);
 
@@ -104,7 +104,7 @@ describe("Register a user", () => {
     const username = "";
     const password = "";
 
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     const response = await client.register(username, password);
 

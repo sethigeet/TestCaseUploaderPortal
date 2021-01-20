@@ -34,7 +34,7 @@ afterAll(async (done) => {
 
 describe("Check the me query", () => {
   test("Check without loggin in", async (done) => {
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     const response = await client.me();
 
@@ -44,7 +44,7 @@ describe("Check the me query", () => {
   });
 
   test("Check after loggin in", async (done) => {
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     // Login the user before running further tests
     await client.login(correctUsername, correctPassword);

@@ -21,5 +21,5 @@ export class CreateTestCaseInput {
   description!: string;
 
   @Field()
-  exprectedResult!: string;
+  expectedResult!: string;
 }

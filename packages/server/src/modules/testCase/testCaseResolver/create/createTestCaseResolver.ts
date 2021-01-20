@@ -16,7 +16,7 @@ const PRODUCT_CODES = ["PROD-1", "PROD-2", "PROD-3", "PROD-4"];
 const MODULE_CODES = ["MOD-1", "MOD-2", "MOD-3", "MOD-4"];
 const MENU_CODES = ["MEN-1", "MEN-2", "MEN-3", "MEN-4"];
 const TESTING_FOR_CODES = ["TFOR-1", "TFOR-2", "TFOR-3", "TFOR-4"];
-const TESTING_SCOPE_CODES = ["TFOR-1", "TFOR-2", "TFOR-3", "TFOR-4"];
+const TESTING_SCOPE_CODES = ["TSCO-1", "TSCO-2", "TSCO-3", "TSCO-4"];
 
 @Resolver(() => TestCase)
 export class CreateTestCaseResolver {
@@ -75,7 +75,8 @@ export class CreateTestCaseResolver {
         ...input,
         userId: req.session.userId,
       }).save();
-    } catch {
+    } catch (e) {
+      console.log(e);
       return {
         errors: [
           {

@@ -53,6 +53,5 @@
     "test": "NODE_ENV=test jest --detectOpenHandles --watch",
     "build": "tsc",
     "gen-env": "gen-env-types .env -o ./src/modules/shared/types/env.d.ts -e ."
-  },
-  "typings": "./src/**/*.d.ts"
+  }
 }

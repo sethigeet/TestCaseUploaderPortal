@@ -33,7 +33,7 @@ afterAll(async (done) => {
 
 describe("Login a user", () => {
   test("Check with a username that is not registered", async (done) => {
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     const username = "dsahddsa";
     const password = correctPassword;
@@ -60,7 +60,7 @@ describe("Login a user", () => {
 
     // -----------------------------------------------
 
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     const username = correctUsername;
     const password = "dasgdjga";
@@ -76,7 +76,7 @@ describe("Login a user", () => {
   });
 
   test("Check with missing credentials", async (done) => {
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     const username = "";
     const password = "";
@@ -96,7 +96,7 @@ describe("Login a user", () => {
   });
 
   test("Check with a correct username and correct passowrd", async (done) => {
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     const username = correctUsername;
     const password = correctPassword;

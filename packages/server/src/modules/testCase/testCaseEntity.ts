@@ -66,7 +66,6 @@ export class TestCase extends BaseEntity {
   @Column()
   userId!: string;
 
-  @Field()
   @ManyToOne(() => User, (user) => user.testCases)
   user!: User;
 

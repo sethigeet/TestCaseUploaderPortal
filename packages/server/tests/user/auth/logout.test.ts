@@ -35,7 +35,7 @@ afterAll(async (done) => {
 
 describe("Logout a user", () => {
   test("Logout when no user is logged in", async (done) => {
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     // Make sure that the user is logged out
     const meResponse = await client.me();
@@ -54,7 +54,7 @@ describe("Logout a user", () => {
   });
 
   test("Singlie session: Logout when a user is logged in", async (done) => {
-    const client = new TestClient(process.env.TEST_HOST);
+    const client = new TestClient(process.env.TEST_HOST as string);
 
     // Login the user
     await client.login(correctUsername, correctPassword);
@@ -77,8 +77,8 @@ describe("Logout a user", () => {
   });
 
   test("Multiple sessions: Logout when a user is logged in", async (done) => {
-    const client1 = new TestClient(process.env.TEST_HOST);
-    const client2 = new TestClient(process.env.TEST_HOST);
+    const client1 = new TestClient(process.env.TEST_HOST as string);
+    const client2 = new TestClient(process.env.TEST_HOST as string);
 
     // Login the user
     await client1.login(correctUsername, correctPassword);

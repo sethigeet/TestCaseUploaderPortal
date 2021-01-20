@@ -12,5 +12,5 @@ export const createTestCaseSchema = yup.object().shape({
     .required(getRequiredMessage("testingScope"))
     .max(255),
   description: yup.string().required(getRequiredMessage("description")),
-  exprectedResult: yup.string().required(getRequiredMessage("exprectedResult")),
+  expectedResult: yup.string().required(getRequiredMessage("expectedResult")),
 });

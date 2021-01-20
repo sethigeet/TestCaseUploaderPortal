@@ -1,1 +1,1 @@
-export { GetTestCaseResolver } from "./createTestCaseResolver";
+export { GetTestCaseResolver } from "./getTestCaseResolver";
