@@ -1,4 +1,4 @@
-import { Arg, Query, Resolver } from "type-graphql";
+import { Arg, Mutation, Resolver } from "type-graphql";
 
 import { UserRoles } from "@portal/common";
 
@@ -9,7 +9,7 @@ import { TestCase } from "../../testCaseEntity";
 @Resolver(() => TestCase)
 export class VerifyTestCaseResolver {
   @isAuthenticated([UserRoles.SUPERVISOR, UserRoles.ADMIN])
-  @Query(() => Boolean)
+  @Mutation(() => Boolean)
   async verifyTestCase(@Arg("id") id: string): Promise<boolean> {
     if (!id) {
       return false;
