@@ -54,7 +54,7 @@ export class TestCase extends BaseEntity {
   verified!: boolean;
 
   @Field()
-  @Column({ type: "boolean", default: false })
+  @Column({ type: "boolean", nullable: true })
   passed!: boolean;
 
   @Field()

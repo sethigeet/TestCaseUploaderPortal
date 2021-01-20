@@ -92,7 +92,7 @@ describe("Create a test case", () => {
     }
 
     expect(createdTestCase.verified).toEqual(false);
-    expect(createdTestCase.passed).toEqual(false);
+    expect(createdTestCase.passed).toBeNull();
 
     done();
   });

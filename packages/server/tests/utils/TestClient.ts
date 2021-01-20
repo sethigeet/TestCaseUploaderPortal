@@ -6,14 +6,13 @@ import { UserResponse } from "../../src/modules/user/auth/UserResponse";
 import { User } from "../../src/modules/user/userEntity";
 
 import {
-  TestCaseResponse,
-  TestCasesResponse,
-} from "../../src/modules/testCase/testCaseResolver/TestCaseResponse";
-import {
   CreateTestCaseInput,
   CreateTestCasesInput,
 } from "../../src/modules/testCase/testCaseResolver/create/inputTypes";
 import { TestCase } from "../../src/modules/testCase/testCaseEntity";
+import { FieldError } from "../../src/modules/shared/responseTypes";
+
+import { TestTestCaseInput } from "../../src/modules/testCase/testCaseResolver/test/inputTypes";
 
 export class TestClient {
   url: string;
@@ -125,7 +124,12 @@ mutation {
     testingScope,
     case: { description, expectedResult },
   }: CreateTestCaseInput): Promise<{
-    data: { createTestCase: TestCaseResponse };
+    data: {
+      createTestCase: {
+        errors?: FieldError[];
+        testCase?: TestCase & { createdBy: User; updatedBy: User | undefined };
+      };
+    };
     errors: any[];
   }> {
     return rp.post(
@@ -176,7 +180,15 @@ createTestCase(
     testingScope,
     cases,
   }: CreateTestCasesInput): Promise<{
-    data: { createTestCases: TestCasesResponse };
+    data: {
+      createTestCases: {
+        errors?: FieldError[];
+        testCases?: (TestCase & {
+          createdBy: User;
+          updatedBy: User | undefined;
+        })[];
+      };
+    };
     errors: any[];
   }> {
     return rp.post(
@@ -300,6 +312,42 @@ query {
       this.getOptions(`
 mutation {
   verifyTestCase(id: "${id}") 
+}
+`)
+    );
+  }
+
+  async testTestCase({
+    id,
+    passed,
+    actualResult,
+    userRemarks,
+  }: TestTestCaseInput): Promise<{
+    data: {
+      testTestCase: TestCase & {
+        createdBy: User;
+        updatedBy: User | undefined;
+      };
+    };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+mutation {
+  testTestCase(
+    input: {
+      id: "${id}"
+      passed: ${passed}
+      actualResult: "${actualResult}"
+      userRemarks: "${userRemarks}"
+    }
+  ) {
+    id
+    passed
+    actualResult
+    userRemarks
+  }
 }
 `)
     );

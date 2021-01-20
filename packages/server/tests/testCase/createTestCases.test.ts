@@ -35,7 +35,7 @@ const correctInput = {
   ],
 };
 
-seed(Date.now() + 5);
+seed(Date.now() + 6);
 const correctUsername = internet.userName();
 const correctPassword = internet.password(7);
 
@@ -91,7 +91,7 @@ describe("Create test cases", () => {
       }
 
       expect(createdTestCase.verified).toEqual(false);
-      expect(createdTestCase.passed).toEqual(false);
+      expect(createdTestCase.passed).toBeNull();
     });
 
     done();
