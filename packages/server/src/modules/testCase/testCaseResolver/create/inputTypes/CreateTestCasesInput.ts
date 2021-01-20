@@ -3,7 +3,7 @@ import { InputType, Field } from "type-graphql";
 import { CaseType } from "./CaseType";
 
 @InputType()
-export class CreateTestCaseInput {
+export class CreateTestCasesInput {
   @Field()
   productCode!: string;
 
@@ -19,6 +19,6 @@ export class CreateTestCaseInput {
   @Field()
   testingScope!: string;
 
-  @Field(() => CaseType)
-  case!: CaseType;
+  @Field(() => [CaseType])
+  cases!: CaseType[];
 }

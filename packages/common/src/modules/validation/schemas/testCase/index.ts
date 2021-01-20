@@ -1,1 +1,1 @@
-export { createTestCaseSchema } from "./create";
+export { createTestCaseSchema, createTestCasesSchema } from "./create";

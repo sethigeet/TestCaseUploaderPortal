@@ -1,11 +1,18 @@
 import rp from "request-promise";
 import { CoreOptions } from "request";
+import { inspect } from "util";
 
 import { UserResponse } from "../../src/modules/user/auth/UserResponse";
 import { User } from "../../src/modules/user/userEntity";
 
-import { TestCaseResponse } from "../../src/modules/testCase/testCaseResolver/TestCaseResponse";
-import { CreateTestCaseInput } from "../../src/modules/testCase/testCaseResolver/create/inputTypes";
+import {
+  TestCaseResponse,
+  TestCasesResponse,
+} from "../../src/modules/testCase/testCaseResolver/TestCaseResponse";
+import {
+  CreateTestCaseInput,
+  CreateTestCasesInput,
+} from "../../src/modules/testCase/testCaseResolver/create/inputTypes";
 import { TestCase } from "../../src/modules/testCase/testCaseEntity";
 
 export class TestClient {
@@ -116,8 +123,7 @@ mutation {
     menuCode,
     testingFor,
     testingScope,
-    description,
-    expectedResult,
+    case: { description, expectedResult },
   }: CreateTestCaseInput): Promise<{
     data: { createTestCase: TestCaseResponse };
     errors: any[];
@@ -133,8 +139,10 @@ createTestCase(
       menuCode: "${menuCode}"
       testingFor: "${testingFor}"
       testingScope: "${testingScope}"
-      description: "${description}"
-      expectedResult: "${expectedResult}"
+      case: {
+        description: "${description}"
+        expectedResult: "${expectedResult}"
+      }
     }
   ) {
     errors {
@@ -142,6 +150,52 @@ createTestCase(
       message
     }
     testCase {
+      id
+      productCode
+      moduleCode
+      menuCode
+      testingFor
+      testingScope
+      description
+      expectedResult
+      createdBy
+    }
+  }
+}
+`)
+    );
+  }
+
+  async createTestCases({
+    productCode,
+    moduleCode,
+    menuCode,
+    testingFor,
+    testingScope,
+    cases,
+  }: CreateTestCasesInput): Promise<{
+    data: { createTestCases: TestCasesResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+mutation {
+createTestCases(
+    input: {
+      productCode: "${productCode}"
+      moduleCode: "${moduleCode}"
+      menuCode: "${menuCode}"
+      testingFor: "${testingFor}"
+      testingScope: "${testingScope}"
+      cases: ${inspect(cases).replace(/'/g, '"')}
+    }
+  ) {
+    errors {
+      field
+      message
+    }
+    testCases {
       id
       productCode
       moduleCode

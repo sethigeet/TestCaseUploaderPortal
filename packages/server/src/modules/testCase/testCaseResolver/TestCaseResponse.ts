@@ -11,3 +11,12 @@ export class TestCaseResponse {
   @Field(() => TestCase, { nullable: true })
   testCase?: TestCase;
 }
+
+@ObjectType()
+export class TestCasesResponse {
+  @Field(() => [FieldError], { nullable: true })
+  errors?: FieldError[];
+
+  @Field(() => [TestCase], { nullable: true })
+  testCases?: TestCase[];
+}

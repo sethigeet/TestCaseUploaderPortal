@@ -15,10 +15,24 @@ const correctInput = {
   menuCode: "MEN-1",
   testingFor: "TFOR-1",
   testingScope: "TSCO-1",
-  case: {
-    description: "This is a valid description for a test case!",
-    expectedResult: "This should not expect any errors",
-  },
+  cases: [
+    {
+      description: "This is a valid description for a test case!1",
+      expectedResult: "This should not expect any errors1",
+    },
+    {
+      description: "This is a valid description for a test case!2",
+      expectedResult: "This should not expect any errors2",
+    },
+    {
+      description: "This is a valid description for a test case!3",
+      expectedResult: "This should not expect any errors3",
+    },
+    {
+      description: "This is a valid description for a test case!4",
+      expectedResult: "This should not expect any errors4",
+    },
+  ],
 };
 
 seed(Date.now() + 5);
@@ -48,49 +62,37 @@ afterAll(async (done) => {
   done();
 });
 
-describe("Create a test case", () => {
+describe("Create test cases", () => {
   test("Check with correct inputs", async (done) => {
     const input = { ...correctInput };
 
     const client = new TestClient(process.env.TEST_HOST as string);
     await client.login(correctUsername, correctPassword);
 
-    const response = await client.createTestCase(input);
+    const response = await client.createTestCases(input);
 
-    expect(response.data.createTestCase.errors).toBeNull();
-    expect(response.data.createTestCase.testCase?.productCode).toEqual(
-      input.productCode
-    );
-    expect(response.data.createTestCase.testCase?.moduleCode).toEqual(
-      input.moduleCode
-    );
-    expect(response.data.createTestCase.testCase?.menuCode).toEqual(
-      input.menuCode
-    );
-    expect(response.data.createTestCase.testCase?.testingFor).toEqual(
-      input.testingFor
-    );
-    expect(response.data.createTestCase.testCase?.testingScope).toEqual(
-      input.testingScope
-    );
-    expect(response.data.createTestCase.testCase?.description).toEqual(
-      input.case.description
-    );
-    expect(response.data.createTestCase.testCase?.expectedResult).toEqual(
-      input.case.expectedResult
-    );
-    expect(response.data.createTestCase.testCase?.createdBy).toEqual(user.id);
+    expect(response.data.createTestCases.errors).toBeNull();
+    response.data.createTestCases.testCases?.forEach((testCase, i) => {
+      expect(testCase?.productCode).toEqual(input.productCode);
+      expect(testCase?.moduleCode).toEqual(input.moduleCode);
+      expect(testCase?.menuCode).toEqual(input.menuCode);
+      expect(testCase?.testingFor).toEqual(input.testingFor);
+      expect(testCase?.testingScope).toEqual(input.testingScope);
+      expect(testCase?.description).toEqual(input.cases[i].description);
+      expect(testCase?.expectedResult).toEqual(input.cases[i].expectedResult);
+      expect(testCase?.createdBy).toEqual(user.id);
+    });
 
-    const createdTestCase = await TestCase.findOne(
-      response.data.createTestCase.testCase?.id
-    );
+    response.data.createTestCases.testCases?.forEach(async (testCase) => {
+      const createdTestCase = await TestCase.findOne(testCase.id);
 
-    if (!createdTestCase) {
-      throw new Error("Test case was not created in the databse!");
-    }
+      if (!createdTestCase) {
+        throw new Error("Test case was not created in the databse!");
+      }
 
-    expect(createdTestCase.verified).toEqual(false);
-    expect(createdTestCase.passed).toEqual(false);
+      expect(createdTestCase.verified).toEqual(false);
+      expect(createdTestCase.passed).toEqual(false);
+    });
 
     done();
   });
@@ -100,7 +102,7 @@ describe("Create a test case", () => {
 
     const client = new TestClient(process.env.TEST_HOST as string);
 
-    const response = await client.createTestCase(input);
+    const response = await client.createTestCases(input);
 
     expect(response.errors).toBeTruthy();
     expect(response.data).toBeNull();
@@ -121,9 +123,9 @@ describe("Create a test case", () => {
     const client = new TestClient(process.env.TEST_HOST as string);
     await client.login(correctUsername, correctPassword);
 
-    const response = await client.createTestCase(input);
+    const response = await client.createTestCases(input);
 
-    expect(response.data.createTestCase.errors).toEqual([
+    expect(response.data.createTestCases.errors).toEqual([
       { field: "productCode", message: getDoesNotExistMessage("productCode") },
       { field: "moduleCode", message: getDoesNotExistMessage("moduleCode") },
       { field: "menuCode", message: getDoesNotExistMessage("menuCode") },
@@ -133,7 +135,7 @@ describe("Create a test case", () => {
         message: getDoesNotExistMessage("testingScope"),
       },
     ]);
-    expect(response.data.createTestCase.testCase).toBeNull();
+    expect(response.data.createTestCases.testCases).toBeNull();
 
     done();
   });
@@ -141,25 +143,25 @@ describe("Create a test case", () => {
   test("Check with missing inputs", async (done) => {
     const input = {
       ...correctInput,
-      case: {
-        description: "",
-        expectedResult: "",
-      },
+      cases: [{ description: "", expectedResult: "" }],
     };
 
     const client = new TestClient(process.env.TEST_HOST as string);
     await client.login(correctUsername, correctPassword);
 
-    const response = await client.createTestCase(input);
+    const response = await client.createTestCases(input);
 
-    expect(response.data.createTestCase.errors).toEqual([
-      { field: "case.description", message: getRequiredMessage("description") },
+    expect(response.data.createTestCases.errors).toEqual([
       {
-        field: "case.expectedResult",
+        field: "cases[0].description",
+        message: getRequiredMessage("description"),
+      },
+      {
+        field: "cases[0].expectedResult",
         message: getRequiredMessage("expectedResult"),
       },
     ]);
-    expect(response.data.createTestCase.testCase).toBeNull();
+    expect(response.data.createTestCases.testCases).toBeNull();
 
     done();
   });

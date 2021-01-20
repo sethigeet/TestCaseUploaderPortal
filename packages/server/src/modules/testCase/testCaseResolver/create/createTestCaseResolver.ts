@@ -1,6 +1,10 @@
 import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
 
-import { createTestCaseSchema, getDoesNotExistMessage } from "@portal/common";
+import {
+  createTestCaseSchema,
+  createTestCasesSchema,
+  getDoesNotExistMessage,
+} from "@portal/common";
 
 import { ValidateArgs } from "../../../shared/decorators";
 import { FieldError } from "../../../shared/responseTypes";
@@ -8,9 +12,9 @@ import { Context } from "../../../shared/types";
 import { isAuthenticated } from "../../../shared/decorators/isAuthenticated";
 
 import { TestCase } from "../../testCaseEntity";
-import { TestCaseResponse } from "../TestCaseResponse";
+import { TestCaseResponse, TestCasesResponse } from "../TestCaseResponse";
 
-import { CreateTestCaseInput } from "./inputTypes";
+import { CreateTestCaseInput, CreateTestCasesInput } from "./inputTypes";
 
 const PRODUCT_CODES = ["PROD-1", "PROD-2", "PROD-3", "PROD-4"];
 const MODULE_CODES = ["MOD-1", "MOD-2", "MOD-3", "MOD-4"];
@@ -24,40 +28,48 @@ export class CreateTestCaseResolver {
   @ValidateArgs<TestCaseResponse>(createTestCaseSchema, "input")
   @Mutation(() => TestCaseResponse)
   async createTestCase(
-    @Arg("input") input: CreateTestCaseInput,
+    @Arg("input", () => CreateTestCaseInput)
+    {
+      case: { description, expectedResult },
+      testingScope,
+      testingFor,
+      menuCode,
+      moduleCode,
+      productCode,
+    }: CreateTestCaseInput,
     @Ctx() { req }: Context
   ): Promise<TestCaseResponse> {
     const errors: FieldError[] = [];
 
-    if (!PRODUCT_CODES.includes(input.productCode)) {
+    if (!PRODUCT_CODES.includes(productCode)) {
       errors.push({
         field: "productCode",
         message: getDoesNotExistMessage("productCode"),
       });
     }
 
-    if (!MODULE_CODES.includes(input.moduleCode)) {
+    if (!MODULE_CODES.includes(moduleCode)) {
       errors.push({
         field: "moduleCode",
         message: getDoesNotExistMessage("moduleCode"),
       });
     }
 
-    if (!MENU_CODES.includes(input.menuCode)) {
+    if (!MENU_CODES.includes(menuCode)) {
       errors.push({
         field: "menuCode",
         message: getDoesNotExistMessage("menuCode"),
       });
     }
 
-    if (!TESTING_FOR_CODES.includes(input.testingFor)) {
+    if (!TESTING_FOR_CODES.includes(testingFor)) {
       errors.push({
         field: "testingFor",
         message: getDoesNotExistMessage("testingFor"),
       });
     }
 
-    if (!TESTING_SCOPE_CODES.includes(input.testingScope)) {
+    if (!TESTING_SCOPE_CODES.includes(testingScope)) {
       errors.push({
         field: "testingScope",
         message: getDoesNotExistMessage("testingScope"),
@@ -72,7 +84,13 @@ export class CreateTestCaseResolver {
 
     try {
       testCase = await TestCase.create({
-        ...input,
+        description,
+        expectedResult,
+        testingScope,
+        testingFor,
+        menuCode,
+        moduleCode,
+        productCode,
         createdBy: req.session.userId,
       }).save();
     } catch (e) {
@@ -88,5 +106,81 @@ export class CreateTestCaseResolver {
     }
 
     return { testCase };
+  }
+
+  @isAuthenticated()
+  @ValidateArgs<TestCasesResponse>(createTestCasesSchema, "input")
+  @Mutation(() => TestCasesResponse)
+  async createTestCases(
+    @Arg("input", () => CreateTestCasesInput)
+    { cases, ...rest }: CreateTestCasesInput,
+    @Ctx() { req }: Context
+  ): Promise<TestCasesResponse> {
+    const errors: FieldError[] = [];
+
+    if (!PRODUCT_CODES.includes(rest.productCode)) {
+      errors.push({
+        field: "productCode",
+        message: getDoesNotExistMessage("productCode"),
+      });
+    }
+
+    if (!MODULE_CODES.includes(rest.moduleCode)) {
+      errors.push({
+        field: "moduleCode",
+        message: getDoesNotExistMessage("moduleCode"),
+      });
+    }
+
+    if (!MENU_CODES.includes(rest.menuCode)) {
+      errors.push({
+        field: "menuCode",
+        message: getDoesNotExistMessage("menuCode"),
+      });
+    }
+
+    if (!TESTING_FOR_CODES.includes(rest.testingFor)) {
+      errors.push({
+        field: "testingFor",
+        message: getDoesNotExistMessage("testingFor"),
+      });
+    }
+
+    if (!TESTING_SCOPE_CODES.includes(rest.testingScope)) {
+      errors.push({
+        field: "testingScope",
+        message: getDoesNotExistMessage("testingScope"),
+      });
+    }
+
+    if (errors.length > 0) {
+      return { errors };
+    }
+
+    let testCases: TestCase[];
+
+    try {
+      const toBeSaved = TestCase.create(
+        cases.map((_, i) => ({
+          ...rest,
+          description: cases[i].description,
+          expectedResult: cases[i].expectedResult,
+          createdBy: req.session.userId,
+        }))
+      );
+      testCases = await TestCase.save(toBeSaved);
+    } catch (e) {
+      console.log(e);
+      return {
+        errors: [
+          {
+            field: "createTestCase",
+            message: "There was an error while creating your test cases!",
+          },
+        ],
+      };
+    }
+
+    return { testCases };
   }
 }
