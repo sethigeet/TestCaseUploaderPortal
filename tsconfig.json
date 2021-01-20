@@ -6,6 +6,7 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
     "removeComments": true,
     "noImplicitAny": true,
