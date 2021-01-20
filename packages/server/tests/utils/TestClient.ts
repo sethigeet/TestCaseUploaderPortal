@@ -150,7 +150,7 @@ createTestCase(
       testingScope
       description
       expectedResult
-      userId
+      createdBy
     }
   }
 }
@@ -177,7 +177,7 @@ query {
     testingScope
     description
     expectedResult
-    userId
+    createdBy
   }
 }
 `)
@@ -205,7 +205,7 @@ query {
       testingScope
       description
       expectedResult
-      userId
+      createdBy
       createdAt
     }
     hasMore

@@ -73,7 +73,7 @@ export class CreateTestCaseResolver {
     try {
       testCase = await TestCase.create({
         ...input,
-        userId: req.session.userId,
+        createdBy: req.session.userId,
       }).save();
     } catch (e) {
       console.log(e);

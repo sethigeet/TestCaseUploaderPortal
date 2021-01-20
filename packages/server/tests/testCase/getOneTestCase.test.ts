@@ -51,11 +51,11 @@ beforeAll(async (done) => {
   // create a user to test on
   testCase1 = await TestCase.create({
     ...correctInput,
-    userId: user1.id,
+    createdBy: user1.id,
   }).save();
   testCase2 = await TestCase.create({
     ...correctInput,
-    userId: user2.id,
+    createdBy: user2.id,
   }).save();
 
   done();
@@ -94,7 +94,7 @@ describe("Get a test case", () => {
     expect(response.data.getTestCase?.expectedResult).toEqual(
       correctInput.expectedResult
     );
-    expect(response.data.getTestCase?.userId).toEqual(user1.id);
+    expect(response.data.getTestCase?.createdBy).toEqual(user1.id);
 
     done();
   });
@@ -158,7 +158,7 @@ describe("Get a test case", () => {
     expect(response.data.getTestCase?.expectedResult).toEqual(
       correctInput.expectedResult
     );
-    expect(response.data.getTestCase?.userId).toEqual(user1.id);
+    expect(response.data.getTestCase?.createdBy).toEqual(user1.id);
 
     done();
   });
@@ -189,7 +189,7 @@ describe("Get a test case", () => {
     expect(response.data.getTestCase?.expectedResult).toEqual(
       correctInput.expectedResult
     );
-    expect(response.data.getTestCase?.userId).toEqual(user1.id);
+    expect(response.data.getTestCase?.createdBy).toEqual(user1.id);
 
     done();
   });

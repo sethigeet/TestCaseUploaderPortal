@@ -77,7 +77,7 @@ describe("Create a test case", () => {
     expect(response.data.createTestCase.testCase?.expectedResult).toEqual(
       input.expectedResult
     );
-    expect(response.data.createTestCase.testCase?.userId).toEqual(user.id);
+    expect(response.data.createTestCase.testCase?.createdBy).toEqual(user.id);
 
     const createdTestCase = await TestCase.findOne(
       response.data.createTestCase.testCase?.id

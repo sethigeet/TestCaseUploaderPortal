@@ -29,7 +29,7 @@ export class GetTestCaseResolver {
     }
 
     if (user.role === UserRoles.TESTER) {
-      if (testCase.userId !== user.id) {
+      if (testCase.createdBy !== user.id) {
         throw new Error("Not allowed");
       }
     }
@@ -55,7 +55,7 @@ export class GetTestCaseResolver {
     const query = conn.createQueryBuilder().select("*").from(TestCase, "t");
 
     if (user.role === UserRoles.TESTER) {
-      query.where('t."userId" = :userId', { userId: user.id });
+      query.where('t."createdBy" = :userId', { userId: user.id });
       if (cursor) {
         query.andWhere('t."createdAt" < :cursor', {
           cursor: new Date(parseInt(cursor)),

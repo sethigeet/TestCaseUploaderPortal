@@ -60,11 +60,11 @@ beforeAll(async (done) => {
   // create a user to test on
   testCase1 = await TestCase.create({
     ...correctInput,
-    userId: user1.id,
+    createdBy: user1.id,
   }).save();
   testCase2 = await TestCase.create({
     ...correctInput,
-    userId: user2.id,
+    createdBy: user2.id,
   }).save();
 
   done();
@@ -77,7 +77,7 @@ afterAll(async (done) => {
   done();
 });
 
-describe("Get many test cases", () => {
+describe("Verify a test case", () => {
   test("Check without logging in", async (done) => {
     const client = new TestClient(process.env.TEST_HOST as string);
 
@@ -119,8 +119,8 @@ describe("Get many test cases", () => {
 
     const response = await client.verifyTestCase(testCase1.id);
 
-    expect(response.errors).toBeNull();
-    expect(response.data).toEqual(true);
+    expect(response.errors).toBeUndefined();
+    expect(response.data.verifyTestCase).toEqual(true);
 
     const changedTestCase = await TestCase.findOne(testCase1.id);
     if (!changedTestCase) {
@@ -137,8 +137,8 @@ describe("Get many test cases", () => {
 
     const response = await client.verifyTestCase(testCase2.id);
 
-    expect(response.errors).toBeNull();
-    expect(response.data).toEqual(true);
+    expect(response.errors).toBeUndefined();
+    expect(response.data.verifyTestCase).toEqual(true);
 
     const changedTestCase = await TestCase.findOne(testCase2.id);
     if (!changedTestCase) {

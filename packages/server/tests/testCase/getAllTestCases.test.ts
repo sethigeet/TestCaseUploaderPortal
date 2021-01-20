@@ -63,11 +63,11 @@ beforeAll(async (done) => {
   // create a user to test on
   testCase1 = await TestCase.create({
     ...correctInput1,
-    userId: user1.id,
+    createdBy: user1.id,
   }).save();
   await TestCase.create({
     ...correctInput2,
-    userId: user2.id,
+    createdBy: user2.id,
   }).save();
 
   done();
@@ -88,7 +88,9 @@ describe("Get many test cases", () => {
     const response = await client.getTestCases(limit);
 
     expect(response.data.getTestCases.testCases.length).toEqual(1);
-    expect(response.data.getTestCases.testCases[0]?.userId).toEqual(user1.id);
+    expect(response.data.getTestCases.testCases[0]?.createdBy).toEqual(
+      user1.id
+    );
     expect(response.data.getTestCases.hasMore).toEqual(false);
 
     done();
@@ -101,8 +103,12 @@ describe("Get many test cases", () => {
     const response = await client.getTestCases(limit);
 
     expect(response.data.getTestCases.testCases.length).toEqual(2);
-    expect(response.data.getTestCases.testCases[0]?.userId).toEqual(user2.id);
-    expect(response.data.getTestCases.testCases[1]?.userId).toEqual(user1.id);
+    expect(response.data.getTestCases.testCases[0]?.createdBy).toEqual(
+      user2.id
+    );
+    expect(response.data.getTestCases.testCases[1]?.createdBy).toEqual(
+      user1.id
+    );
     expect(response.data.getTestCases.hasMore).toEqual(false);
 
     done();
@@ -116,7 +122,9 @@ describe("Get many test cases", () => {
     const response = await client.getTestCases(limit);
 
     expect(response.data.getTestCases.testCases.length).toEqual(1);
-    expect(response.data.getTestCases.testCases[0]?.userId).toEqual(user2.id);
+    expect(response.data.getTestCases.testCases[0]?.createdBy).toEqual(
+      user2.id
+    );
     expect(response.data.getTestCases.hasMore).toEqual(true);
 
     cursor = response.data.getTestCases.testCases[0]?.createdAt;
@@ -156,8 +164,8 @@ describe("Get many test cases", () => {
     const response = await client.getTestCases(limit, `${cursor}`);
 
     expect(response.data.getTestCases.testCases.length).toEqual(1);
-    expect(response.data.getTestCases.testCases[0].userId).toEqual(
-      testCase1.userId
+    expect(response.data.getTestCases.testCases[0].createdBy).toEqual(
+      testCase1.createdBy
     );
     expect(response.data.getTestCases.testCases[0].description).toEqual(
       testCase1.description
