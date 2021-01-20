@@ -1,7 +1,6 @@
 import { ObjectType, Field } from "type-graphql";
 
 import { FieldError } from "../../shared/responseTypes";
-import { User } from "../../user/userEntity";
 
 import { TestCase } from "../testCaseEntity";
 
@@ -11,7 +10,7 @@ export class TestCaseResponse {
   errors?: FieldError[];
 
   @Field(() => TestCase, { nullable: true })
-  testCase?: TestCase & { createdBy: User; updatedBy: User | undefined };
+  testCase?: TestCase;
 }
 
 @ObjectType()
@@ -20,5 +19,5 @@ export class TestCasesResponse {
   errors?: FieldError[];
 
   @Field(() => [TestCase], { nullable: true })
-  testCases?: (TestCase & { createdBy: User; updatedBy: User | undefined })[];
+  testCases?: TestCase[];
 }
