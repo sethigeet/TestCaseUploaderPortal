@@ -29,11 +29,11 @@ const correctInput2 = {
   expectedResult: "This should not expect any errors2",
 };
 
-seed(Date.now() + 6);
+seed(Date.now() + 8);
 const correctUsername1 = internet.userName();
 const correctPassword1 = internet.password(7);
 
-seed(Date.now() + 7);
+seed(Date.now() + 9);
 const correctUsername2 = internet.userName();
 const correctPassword2 = internet.password(7);
 
@@ -44,7 +44,6 @@ let conn: Connection;
 let user1: User;
 let user2: User;
 let testCase1: TestCase;
-let testCase2: TestCase;
 
 beforeAll(async (done) => {
   // create the connection to the db
@@ -66,7 +65,7 @@ beforeAll(async (done) => {
     ...correctInput1,
     userId: user1.id,
   }).save();
-  testCase2 = await TestCase.create({
+  await TestCase.create({
     ...correctInput2,
     userId: user2.id,
   }).save();

@@ -214,4 +214,20 @@ query {
 `)
     );
   }
+
+  async verifyTestCase(
+    id: string
+  ): Promise<{
+    data: { verifyTestCase: boolean };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+mutation {
+  verifyTestCase(id: "${id}") 
+}
+`)
+    );
+  }
 }
