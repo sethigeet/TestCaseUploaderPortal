@@ -1,0 +1,11 @@
+mutation CreateTestCases($input: CreateTestCasesInput!) {
+  createTestCases(input: $input) {
+    errors {
+      field
+      message
+    }
+    testCases {
+      ...RegularTestCase
+    }
+  }
+}

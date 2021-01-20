@@ -1,0 +1,3 @@
+mutation VerifyTestCase($id: String!) {
+  verifyTestCase(id: $id)
+}

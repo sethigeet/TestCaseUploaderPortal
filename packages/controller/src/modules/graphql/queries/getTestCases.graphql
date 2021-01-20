@@ -1,0 +1,8 @@
+query GetTestCases($limit: Int!, $cursor: String) {
+  getTestCases(limit: $limit, cursor: $cursor) {
+    testCases {
+      ...RegularTestCase
+    }
+    hasMore
+  }
+}

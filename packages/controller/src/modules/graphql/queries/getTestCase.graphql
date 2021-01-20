@@ -1,0 +1,5 @@
+query GetTestCase($id: String!) {
+  getTestCase(id: $id) {
+    ...RegularTestCase
+  }
+}

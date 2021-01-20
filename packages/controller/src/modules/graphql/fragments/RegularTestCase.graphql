@@ -1,0 +1,22 @@
+fragment RegularTestCase on TestCase {
+  id
+  productCode
+  moduleCode
+  menuCode
+  testingFor
+  testingScope
+  description
+  expectedResult
+  verified
+  passed
+  actualResult
+  userRemarks
+  createdAt
+  createdBy {
+    username
+  }
+  updatedAt
+  updatedBy {
+    username
+  }
+}
