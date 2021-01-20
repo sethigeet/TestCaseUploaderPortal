@@ -8,6 +8,7 @@ import { createTypeormConnection } from "../../src/modules/shared/utils";
 
 import { TestClient } from "../utils";
 import { TestCase } from "../../src/modules/testCase/testCaseEntity";
+import { TestCaseHistory } from "../../src/modules/testCase/testCaseHistoryEntity";
 
 const correctInput = {
   productCode: "PROD-1",
@@ -41,7 +42,7 @@ beforeAll(async (done) => {
   // create the connection to the db
   conn = await createTypeormConnection();
 
-  // create a user to test on
+  // create users to test on
   user1 = await User.create({
     username: correctUsername1,
     password: correctPassword1,
@@ -57,7 +58,7 @@ beforeAll(async (done) => {
     role: UserRoles.ADMIN,
   }).save();
 
-  // create a user to test on
+  // create test cases to test on
   testCase1 = await TestCase.create({
     ...correctInput,
     createdBy: user1.id,
@@ -128,6 +129,14 @@ describe("Verify a test case", () => {
     }
     expect(changedTestCase.verified).toEqual(true);
 
+    const changedTestCaseInHistory = await TestCaseHistory.find({
+      where: { tsid: testCase1.id },
+      order: { createdAt: "DESC" },
+    });
+    if (!changedTestCaseInHistory) {
+      throw new Error("Test case was not even created in the history");
+    }
+
     done();
   });
 
@@ -145,6 +154,15 @@ describe("Verify a test case", () => {
       throw new Error("Test case was not even created");
     }
     expect(changedTestCase.verified).toEqual(true);
+
+    const changedTestCaseInHistory = await TestCaseHistory.find({
+      where: { tsid: testCase2.id },
+      order: { createdAt: "DESC" },
+    });
+    if (!changedTestCaseInHistory) {
+      throw new Error("Test case was not even created in the history");
+    }
+    expect(changedTestCaseInHistory[0].verified).toEqual(true);
 
     done();
   });

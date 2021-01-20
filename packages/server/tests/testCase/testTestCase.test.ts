@@ -8,6 +8,7 @@ import { createTypeormConnection } from "../../src/modules/shared/utils";
 
 import { TestClient } from "../utils";
 import { TestCase } from "../../src/modules/testCase/testCaseEntity";
+import { TestCaseHistory } from "../../src/modules/testCase/testCaseHistoryEntity";
 
 const creationInput = {
   productCode: "PROD-1",
@@ -53,7 +54,7 @@ beforeAll(async (done) => {
   // create the connection to the db
   conn = await createTypeormConnection();
 
-  // create a user to test on
+  // create users to test on
   user1 = await User.create({
     username: correctUsername1,
     password: correctPassword1,
@@ -73,7 +74,7 @@ beforeAll(async (done) => {
     role: UserRoles.ADMIN,
   }).save();
 
-  // create a user to test on
+  // create test cases to test on
   testCase1 = await TestCase.create({
     ...creationInput,
     createdBy: user1.id,
@@ -170,6 +171,19 @@ describe("Test a test case", () => {
     expect(changedTestCase.actualResult).toEqual(input.actualResult);
     expect(changedTestCase.userRemarks).toEqual(input.userRemarks);
 
+    const changedTestCaseInHistory = await TestCaseHistory.find({
+      where: { tsid: testCase1.id },
+      order: { createdAt: "DESC" },
+    });
+    if (!changedTestCaseInHistory) {
+      throw new Error("Test case was not even created");
+    }
+    expect(changedTestCaseInHistory[0].passed).toEqual(input.passed);
+    expect(changedTestCaseInHistory[0].actualResult).toEqual(
+      input.actualResult
+    );
+    expect(changedTestCaseInHistory[0].userRemarks).toEqual(input.userRemarks);
+
     done();
   });
 
@@ -216,6 +230,19 @@ describe("Test a test case", () => {
     expect(changedTestCase.actualResult).toEqual(input.actualResult);
     expect(changedTestCase.userRemarks).toEqual(input.userRemarks);
 
+    const changedTestCaseInHistory = await TestCaseHistory.find({
+      where: { tsid: testCase2.id },
+      order: { createdAt: "DESC" },
+    });
+    if (!changedTestCaseInHistory) {
+      throw new Error("Test case was not even created");
+    }
+    expect(changedTestCaseInHistory[0].passed).toEqual(input.passed);
+    expect(changedTestCaseInHistory[0].actualResult).toEqual(
+      input.actualResult
+    );
+    expect(changedTestCaseInHistory[0].userRemarks).toEqual(input.userRemarks);
+
     done();
   });
 
@@ -239,6 +266,19 @@ describe("Test a test case", () => {
     expect(changedTestCase.passed).toEqual(input.passed);
     expect(changedTestCase.actualResult).toEqual(input.actualResult);
     expect(changedTestCase.userRemarks).toEqual(input.userRemarks);
+
+    const changedTestCaseInHistory = await TestCaseHistory.find({
+      where: { tsid: testCase3.id },
+      order: { createdAt: "DESC" },
+    });
+    if (!changedTestCaseInHistory) {
+      throw new Error("Test case was not even created");
+    }
+    expect(changedTestCaseInHistory[0].passed).toEqual(input.passed);
+    expect(changedTestCaseInHistory[0].actualResult).toEqual(
+      input.actualResult
+    );
+    expect(changedTestCaseInHistory[0].userRemarks).toEqual(input.userRemarks);
 
     done();
   });

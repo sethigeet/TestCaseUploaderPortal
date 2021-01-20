@@ -37,7 +37,7 @@ beforeAll(async (done) => {
   // create the connection to the db
   conn = await createTypeormConnection();
 
-  // create a user to test on
+  // create users to test on
   user1 = await User.create({
     username: correctUsername1,
     password: correctPassword1,
@@ -48,7 +48,7 @@ beforeAll(async (done) => {
     role: UserRoles.SUPERVISOR,
   }).save();
 
-  // create a user to test on
+  // create test cases to test on
   testCase1 = await TestCase.create({
     ...correctInput,
     createdBy: user1.id,

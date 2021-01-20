@@ -8,6 +8,7 @@ import { createTypeormConnection } from "../../src/modules/shared/utils";
 
 import { TestClient } from "../utils";
 import { TestCase } from "../../src/modules/testCase/testCaseEntity";
+import { TestCaseHistory } from "../../src/modules/testCase/testCaseHistoryEntity";
 
 const correctInput = {
   productCode: "PROD-1",
@@ -73,17 +74,17 @@ describe("Create test cases", () => {
 
     expect(response.data.createTestCases.errors).toBeNull();
     response.data.createTestCases.testCases?.forEach((testCase, i) => {
-      expect(testCase?.productCode).toEqual(input.productCode);
-      expect(testCase?.moduleCode).toEqual(input.moduleCode);
-      expect(testCase?.menuCode).toEqual(input.menuCode);
-      expect(testCase?.testingFor).toEqual(input.testingFor);
-      expect(testCase?.testingScope).toEqual(input.testingScope);
-      expect(testCase?.description).toEqual(input.cases[i].description);
-      expect(testCase?.expectedResult).toEqual(input.cases[i].expectedResult);
-      expect(testCase?.createdBy.id).toEqual(user.id);
+      expect(testCase.productCode).toEqual(input.productCode);
+      expect(testCase.moduleCode).toEqual(input.moduleCode);
+      expect(testCase.menuCode).toEqual(input.menuCode);
+      expect(testCase.testingFor).toEqual(input.testingFor);
+      expect(testCase.testingScope).toEqual(input.testingScope);
+      expect(testCase.description).toEqual(input.cases[i].description);
+      expect(testCase.expectedResult).toEqual(input.cases[i].expectedResult);
+      expect(testCase.createdBy.id).toEqual(user.id);
     });
 
-    response.data.createTestCases.testCases?.forEach(async (testCase) => {
+    response.data.createTestCases.testCases?.forEach(async (testCase, i) => {
       const createdTestCase = await TestCase.findOne(testCase.id);
 
       if (!createdTestCase) {
@@ -92,6 +93,29 @@ describe("Create test cases", () => {
 
       expect(createdTestCase.verified).toEqual(false);
       expect(createdTestCase.passed).toBeNull();
+
+      const createdTestCaseInHistory = await TestCaseHistory.findOne({
+        where: { tsid: testCase.id },
+      });
+
+      if (!createdTestCaseInHistory) {
+        throw new Error("Test case was not created in the history!");
+      }
+
+      expect(createdTestCaseInHistory.productCode).toEqual(input.productCode);
+      expect(createdTestCaseInHistory.moduleCode).toEqual(input.moduleCode);
+      expect(createdTestCaseInHistory.menuCode).toEqual(input.menuCode);
+      expect(createdTestCaseInHistory.testingFor).toEqual(input.testingFor);
+      expect(createdTestCaseInHistory.testingScope).toEqual(input.testingScope);
+      expect(createdTestCaseInHistory.description).toEqual(
+        input.cases[i].description
+      );
+      expect(createdTestCaseInHistory.expectedResult).toEqual(
+        input.cases[i].expectedResult
+      );
+      expect(createdTestCaseInHistory.createdBy).toEqual(user.id);
+      expect(createdTestCaseInHistory.verified).toEqual(false);
+      expect(createdTestCaseInHistory.passed).toBeNull();
     });
 
     done();

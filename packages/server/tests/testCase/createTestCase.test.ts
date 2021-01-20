@@ -8,6 +8,7 @@ import { createTypeormConnection } from "../../src/modules/shared/utils";
 
 import { TestClient } from "../utils";
 import { TestCase } from "../../src/modules/testCase/testCaseEntity";
+import { TestCaseHistory } from "../../src/modules/testCase/testCaseHistoryEntity";
 
 const correctInput = {
   productCode: "PROD-1",
@@ -93,6 +94,30 @@ describe("Create a test case", () => {
 
     expect(createdTestCase.verified).toEqual(false);
     expect(createdTestCase.passed).toBeNull();
+
+    const createdTestCaseInHistory = await TestCaseHistory.findOne({
+      where: { tsid: response.data.createTestCase.testCase?.id },
+    });
+
+    if (!createdTestCaseInHistory) {
+      throw new Error("Test case was not created in the history!");
+    }
+
+    expect(createdTestCaseInHistory.verified).toEqual(false);
+    expect(createdTestCaseInHistory.passed).toBeNull();
+
+    expect(createdTestCaseInHistory.productCode).toEqual(input.productCode);
+    expect(createdTestCaseInHistory.moduleCode).toEqual(input.moduleCode);
+    expect(createdTestCaseInHistory.menuCode).toEqual(input.menuCode);
+    expect(createdTestCaseInHistory.testingFor).toEqual(input.testingFor);
+    expect(createdTestCaseInHistory.testingScope).toEqual(input.testingScope);
+    expect(createdTestCaseInHistory.description).toEqual(
+      input.case.description
+    );
+    expect(createdTestCaseInHistory.expectedResult).toEqual(
+      input.case.expectedResult
+    );
+    expect(createdTestCaseInHistory.createdBy).toEqual(user.id);
 
     done();
   });

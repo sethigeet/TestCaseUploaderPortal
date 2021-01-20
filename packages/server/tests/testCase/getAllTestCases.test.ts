@@ -60,7 +60,7 @@ beforeAll(async (done) => {
     role: UserRoles.SUPERVISOR,
   }).save();
 
-  // create a user to test on
+  // create test cases to test on
   testCase1 = await TestCase.create({
     ...correctInput1,
     createdBy: user1.id,
