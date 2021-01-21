@@ -1,13 +1,17 @@
 import { FC } from "react";
 
+import { ApiProvider } from "@portal/controller";
+
 import { ThemeProvider } from "./modules/theme";
 import { Routes } from "./modules/routes";
 
 const App: FC = () => {
   return (
-    <ThemeProvider>
-      <Routes />
-    </ThemeProvider>
+    <ApiProvider>
+      <ThemeProvider>
+        <Routes />
+      </ThemeProvider>
+    </ApiProvider>
   );
 };
 
