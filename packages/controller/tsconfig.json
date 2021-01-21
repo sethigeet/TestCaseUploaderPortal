@@ -5,7 +5,6 @@
     "module": "esnext",
     "lib": ["dom", "dom.iterable", "esnext"],
     "isolatedModules": true,
-    "noEmit": true,
     "jsx": "react-jsx",
     "outDir": "./dist",
     "declaration": true

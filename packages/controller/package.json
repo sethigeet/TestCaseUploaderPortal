@@ -21,8 +21,8 @@
     "gen-env-types": "^1.0.5"
   },
   "scripts": {
-    "build": "tsc",
-    "dev": "tsc --watch",
+    "build": "rm -rf ./dist && tsc",
+    "dev": "rm -rf && tsc --watch",
     "gql:gen-types": "graphql-codegen --config codegen.yml",
     "gen-env": "gen-env-types .env -o ./src/modules/types/env.d.ts -e ."
   }

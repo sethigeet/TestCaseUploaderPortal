@@ -6,7 +6,8 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    "allowJs": true
   },
   "include": ["src"]
 }
