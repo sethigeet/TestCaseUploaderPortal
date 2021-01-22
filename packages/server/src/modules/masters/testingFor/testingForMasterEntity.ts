@@ -51,11 +51,11 @@ export class TestingForMaster extends BaseEntity {
   @ManyToOne(() => User, (user) => user.id)
   createdBy!: User;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @Field(() => User)
+  @Field(() => User, { nullable: true })
   @ManyToOne(() => User, (user) => user.id, { nullable: true })
   updatedBy!: User;
 }
