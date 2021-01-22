@@ -12,7 +12,6 @@ import { ObjectType, Field } from "type-graphql";
 
 import { User } from "../../user";
 
-import { ModuleMaster } from "../module";
 import { MenuMaster } from "../menu";
 import { TestingScopeMaster } from "../testingScope";
 
@@ -31,16 +30,16 @@ export class TestingForMaster extends BaseEntity {
   @Column({ type: "boolean", default: false })
   deprecated!: boolean;
 
-  @Field()
+  @Field(() => MenuMaster)
   @ManyToOne(() => MenuMaster, (menu) => menu.testingFors)
-  menu!: ModuleMaster;
+  menu!: MenuMaster;
 
-  @Field()
+  @Field(() => [TestingScopeMaster], { nullable: true })
   @OneToMany(
     () => TestingScopeMaster,
     (testingScope) => testingScope.testingFor
   )
-  tesingScopes!: TestingScopeMaster;
+  tesingScopes!: TestingScopeMaster[];
 
   // DEFAULT COLUMNS
 

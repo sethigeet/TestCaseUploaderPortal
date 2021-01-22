@@ -29,7 +29,7 @@ export class ProductMaster extends BaseEntity {
   @Column({ type: "boolean", default: false })
   deprecated!: boolean;
 
-  @Field()
+  @Field(() => [ModuleMaster], { nullable: true })
   @OneToMany(() => ModuleMaster, (module) => module.product)
   modules!: ModuleMaster[];
 

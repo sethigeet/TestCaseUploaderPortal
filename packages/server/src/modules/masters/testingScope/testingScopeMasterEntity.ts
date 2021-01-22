@@ -28,6 +28,7 @@ export class TestingScopeMaster extends BaseEntity {
   @Column({ type: "boolean", default: false })
   deprecated!: boolean;
 
+  @Field(() => TestingForMaster)
   @ManyToOne(() => TestingForMaster, (testingFor) => testingFor.tesingScopes)
   testingFor!: TestingForMaster;
 

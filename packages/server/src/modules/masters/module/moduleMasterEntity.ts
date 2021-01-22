@@ -30,9 +30,11 @@ export class ModuleMaster extends BaseEntity {
   @Column({ type: "boolean", default: false })
   deprecated!: boolean;
 
-  @ManyToOne(() => ProductMaster, (product) => product.id)
+  @Field(() => ProductMaster)
+  @ManyToOne(() => ProductMaster, (product) => product.modules)
   product!: ProductMaster;
 
+  @Field(() => [MenuMaster], { nullable: true })
   @OneToMany(() => MenuMaster, (menu) => menu.module)
   menus!: MenuMaster[];
 
