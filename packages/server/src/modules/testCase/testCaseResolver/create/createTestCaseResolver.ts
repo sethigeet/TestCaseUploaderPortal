@@ -98,7 +98,6 @@ export class CreateTestCaseResolver {
         createdBy: user,
       }).save();
     } catch (e) {
-      console.log(e);
       return {
         errors: [
           {
@@ -174,7 +173,6 @@ export class CreateTestCaseResolver {
       );
       testCases = await TestCase.save(toBeSaved);
     } catch (e) {
-      console.log(e);
       return {
         errors: [
           {
