@@ -68,7 +68,7 @@ afterAll(async (done) => {
   done();
 });
 
-describe("Create a test case", () => {
+describe("Create a product", () => {
   test("Check with correct and all inputs", async (done) => {
     const input = { ...correctInput1, deprecated: true };
 

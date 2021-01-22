@@ -14,6 +14,7 @@ import {
 import { TestCase } from "../../src/modules/testCase";
 import { TestTestCaseInput } from "../../src/modules/testCase/testCaseResolver/test/inputTypes";
 
+import { ProductMaster } from "../../src/modules/masters/product";
 import { CreateProductInput } from "../../src/modules/masters/product/resolver/create/inputTypes";
 import { ProductMasterResponse } from "../../src/modules/masters/product/resolver/ProductMasterResponse";
 
@@ -390,6 +391,52 @@ mutation {
       modules {
         id
       }
+    }
+  }
+}
+`)
+    );
+  }
+
+  async getProduct(
+    id: string
+  ): Promise<{
+    data: { getProduct: ProductMaster | null };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+query {
+  getProduct(id: "${id}") {
+    id
+    code
+    name
+    deprecated
+    createdBy {
+      id
+    }
+  }
+}
+`)
+    );
+  }
+
+  async getProducts(): Promise<{
+    data: { getProducts: ProductMaster[] };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+query {
+  getProducts {
+    id
+    code
+    name
+    deprecated
+    createdBy {
+      id
     }
   }
 }
