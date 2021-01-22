@@ -2,6 +2,8 @@ import rp from "request-promise";
 import { CoreOptions } from "request";
 import { inspect } from "util";
 
+import { FieldError } from "../../src/modules/shared/responseTypes";
+
 import { UserResponse } from "../../src/modules/user/auth/UserResponse";
 import { User } from "../../src/modules/user";
 
@@ -10,9 +12,10 @@ import {
   CreateTestCasesInput,
 } from "../../src/modules/testCase/testCaseResolver/create/inputTypes";
 import { TestCase } from "../../src/modules/testCase";
-import { FieldError } from "../../src/modules/shared/responseTypes";
-
 import { TestTestCaseInput } from "../../src/modules/testCase/testCaseResolver/test/inputTypes";
+
+import { CreateProductInput } from "../../src/modules/masters/product/resolver/create/inputTypes";
+import { ProductMasterResponse } from "../../src/modules/masters/product/resolver/ProductMasterResponse";
 
 export class TestClient {
   url: string;
@@ -347,6 +350,47 @@ mutation {
     passed
     actualResult
     userRemarks
+  }
+}
+`)
+    );
+  }
+
+  async createProduct({
+    code,
+    name,
+    deprecated,
+  }: CreateProductInput): Promise<{
+    data: { createProduct: ProductMasterResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+mutation {
+  createProduct(
+    input: {
+      code: "${code}"
+      name: "${name}"
+      ${deprecated ? `deprecated: ${deprecated}` : ""}
+    }
+  ) {
+    errors {
+      field
+      message
+    }
+    product {
+      id
+      code
+      name
+      deprecated
+      createdBy {
+        id
+      }
+      modules {
+        id
+      }
+    }
   }
 }
 `)
