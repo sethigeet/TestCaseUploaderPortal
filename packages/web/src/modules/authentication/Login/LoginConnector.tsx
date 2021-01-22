@@ -1,9 +1,13 @@
 import { FC, useState } from "react";
 
 import { FormikHelpers } from "formik";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory, useLocation } from "react-router-dom";
 
-import { getLoginMutationOptions, useLoginMutation } from "@portal/controller";
+import {
+  getLoginMutationOptions,
+  useLoginMutation,
+  useMeQuery,
+} from "@portal/controller";
 
 import { toFormikError } from "../../utils";
 
@@ -16,8 +20,11 @@ export interface LoginFormValues {
 
 export const LoginConnector: FC = () => {
   const history = useHistory();
+  const location = useLocation<{ next?: string }>();
+
   const [error, setError] = useState(false);
   const [login, { error: loginError }] = useLoginMutation();
+  const { data } = useMeQuery();
 
   const onSubmit: (
     values: LoginFormValues,
@@ -38,13 +45,21 @@ export const LoginConnector: FC = () => {
       return;
     }
 
-    history.push("/");
+    if (location.state.next) {
+      history.push(location.state.next);
+    } else {
+      history.push("/");
+    }
 
     setSubmitting(false);
   };
 
   if (loginError && !error) {
     setError(true);
+  }
+
+  if (data?.me) {
+    return <Redirect to="/" />;
   }
 
   return (

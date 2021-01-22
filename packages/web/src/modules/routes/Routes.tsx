@@ -2,13 +2,16 @@ import { FC } from "react";
 
 import { BrowserRouter, Route, RouteProps, Switch } from "react-router-dom";
 
+import { useMeQuery } from "@portal/controller";
+
 import { AuthenticationRoutes } from "../authentication";
 import { TestCaseRoutes } from "../testCase";
 
 import { Home } from "./Home";
 import { NotFound } from "./NotFound";
+import { PrivateRoute } from "./PrivateRoute";
 
-const routes: RouteProps[] = [
+const routes: (RouteProps & { private?: boolean })[] = [
   { path: ["/", "/home"], component: Home },
   ...AuthenticationRoutes,
   ...TestCaseRoutes,
@@ -16,12 +19,27 @@ const routes: RouteProps[] = [
 ];
 
 export const Routes: FC = () => {
+  const { data } = useMeQuery();
+
+  const isAuthenticated = data?.me ? true : false;
+
   return (
     <BrowserRouter>
       <Switch>
-        {routes.map((route, i) => (
-          <Route exact {...route} key={i} />
-        ))}
+        {routes.map((route, i) => {
+          if (route.private) {
+            return (
+              <PrivateRoute
+                key={i}
+                exact
+                {...route}
+                isAuthenticated={isAuthenticated}
+              />
+            );
+          }
+
+          return <Route key={i} exact {...route} />;
+        })}
       </Switch>
     </BrowserRouter>
   );

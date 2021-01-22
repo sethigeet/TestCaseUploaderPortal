@@ -95,7 +95,7 @@ export const Navbar: FC = () => {
         {data?.me ? (
           <Menu>
             <MenuButton as={Avatar} cursor="pointer">
-              <Avatar name={data.me.username} />
+              <Avatar name={data.me.username} bg="blue.800" fontWeight="bold" />
             </MenuButton>
             <MenuList>
               <MenuGroup title="Profile">
