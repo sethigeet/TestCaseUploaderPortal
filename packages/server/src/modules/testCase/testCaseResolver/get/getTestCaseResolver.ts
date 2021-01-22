@@ -1,45 +1,17 @@
-import {
-  Arg,
-  Ctx,
-  FieldResolver,
-  Int,
-  Query,
-  Resolver,
-  Root,
-} from "type-graphql";
+import { FindConditions, LessThan } from "typeorm";
+import { Arg, Int, Query, Resolver } from "type-graphql";
 
 import { UserRoles } from "@portal/common";
 
-import { isAuthenticated } from "../../../shared/decorators/isAuthenticated";
-import { CurrentUser } from "../../../shared/decorators";
-import { Context } from "../../../shared/types";
+import { isAuthenticated, CurrentUser } from "../../../shared/decorators";
+
 import { User } from "../../../user/userEntity";
 
 import { TestCase } from "../../testCaseEntity";
 import { PaginatedTestCases } from "./responseTypes";
-import { getConnection } from "typeorm";
 
 @Resolver(() => TestCase)
 export class GetTestCaseResolver {
-  @FieldResolver(() => User)
-  createdBy(
-    @Root() testCase: TestCase,
-    @Ctx() { userLoader }: Context
-  ): Promise<User> {
-    return userLoader.load(testCase.createdBy);
-  }
-
-  @FieldResolver(() => User, { nullable: true })
-  updatedBy(
-    @Root() testCase: TestCase,
-    @Ctx() { userLoader }: Context
-  ): Promise<User | undefined> {
-    if (testCase.updatedBy) {
-      return userLoader.load(testCase.updatedBy);
-    }
-    return Promise.resolve(undefined);
-  }
-
   @isAuthenticated()
   @Query(() => TestCase, { nullable: true })
   async getTestCase(
@@ -50,14 +22,16 @@ export class GetTestCaseResolver {
       return undefined;
     }
 
-    const testCase = await TestCase.findOne(id);
+    const testCase = await TestCase.findOne(id, {
+      relations: ["createdBy", "updatedBy"],
+    });
 
     if (!testCase) {
       return undefined;
     }
 
     if (user.role === UserRoles.TESTER) {
-      if (testCase.createdBy !== user.id) {
+      if (testCase.createdBy.id !== user.id) {
         throw new Error("Not allowed");
       }
     }
@@ -79,32 +53,22 @@ export class GetTestCaseResolver {
     const realLimit = Math.min(30, limit);
     const realLimitPlusOne = realLimit + 1;
 
-    const conn = getConnection();
-    const query = conn.createQueryBuilder().select("*").from(TestCase, "t");
-
-    if (user.role === UserRoles.TESTER) {
-      query.where('t."createdBy" = :userId', { userId: user.id });
-      if (cursor) {
-        query.andWhere('t."createdAt" < :cursor', {
-          cursor: new Date(parseInt(cursor)),
-        });
-      }
-    } else {
-      if (cursor) {
-        query.andWhere('t."createdAt" < :cursor', {
-          cursor: new Date(parseInt(cursor)),
-        });
-      }
-    }
-
-    query.orderBy('t."createdAt"', "DESC");
-    query.take(realLimitPlusOne);
-
-    let testCases: any;
+    let testCases: TestCase[];
     try {
-      testCases = await query.execute();
+      const where: FindConditions<TestCase> = {};
+      if (user.role === UserRoles.TESTER) {
+        where.createdBy = { id: user.id };
+      }
+      if (cursor) {
+        where.createdAt = LessThan(new Date(parseInt(cursor)));
+      }
+      testCases = await TestCase.find({
+        order: { createdAt: "DESC" },
+        take: realLimitPlusOne,
+        relations: ["createdBy", "updatedBy"],
+        where,
+      });
     } catch (e) {
-      // console.log(e);
       throw new Error(`An error occurred while fetching the results!, ${e}`);
     }
 

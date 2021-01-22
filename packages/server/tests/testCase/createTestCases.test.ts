@@ -85,7 +85,9 @@ describe("Create test cases", () => {
     });
 
     response.data.createTestCases.testCases?.forEach(async (testCase, i) => {
-      const createdTestCase = await TestCase.findOne(testCase.id);
+      const createdTestCase = await TestCase.findOne(testCase.id, {
+        relations: ["createdBy"],
+      });
 
       if (!createdTestCase) {
         throw new Error("Test case was not created in the databse!");
@@ -96,6 +98,7 @@ describe("Create test cases", () => {
 
       const createdTestCaseInHistory = await TestCaseHistory.findOne({
         where: { tsid: testCase.id },
+        relations: ["createdBy"],
       });
 
       if (!createdTestCaseInHistory) {
@@ -113,7 +116,7 @@ describe("Create test cases", () => {
       expect(createdTestCaseInHistory.expectedResult).toEqual(
         input.cases[i].expectedResult
       );
-      expect(createdTestCaseInHistory.createdBy).toEqual(user.id);
+      expect(createdTestCaseInHistory.createdBy.id).toEqual(user.id);
       expect(createdTestCaseInHistory.verified).toEqual(false);
       expect(createdTestCaseInHistory.passed).toBeNull();
     });

@@ -6,6 +6,7 @@ import {
   getMustNotContainMessage,
   getRequiredMessage,
   getUnavailableMessage,
+  UserRoles,
 } from "@portal/common";
 
 import { User } from "../../../src/modules/user/userEntity";
@@ -17,9 +18,19 @@ seed(Date.now() + 0);
 const correctUsername = internet.userName();
 const correctPassword = internet.password(7);
 
+const usernameForLogin = "username";
+const passwordForLogin = internet.password(7);
+
 let conn: Connection;
 beforeAll(async (done) => {
   conn = await createTypeormConnection();
+
+  await User.create({
+    username: usernameForLogin,
+    password: passwordForLogin,
+    role: UserRoles.ADMIN,
+  }).save();
+
   done();
 });
 afterAll(async (done) => {
@@ -33,6 +44,7 @@ describe("Register a user", () => {
     const password = correctPassword;
 
     const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(usernameForLogin, passwordForLogin);
 
     const response = await client.register(username, password);
 
@@ -56,6 +68,7 @@ describe("Register a user", () => {
     const password = correctPassword;
 
     const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(usernameForLogin, passwordForLogin);
 
     const response = await client.register(username, password);
 
@@ -72,6 +85,7 @@ describe("Register a user", () => {
     const password = correctPassword;
 
     const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(usernameForLogin, passwordForLogin);
 
     const response = await client.register(username, password);
 
@@ -88,6 +102,7 @@ describe("Register a user", () => {
     const password = "bd";
 
     const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(usernameForLogin, passwordForLogin);
 
     const response = await client.register(username, password);
 
@@ -105,6 +120,7 @@ describe("Register a user", () => {
     const password = "";
 
     const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(usernameForLogin, passwordForLogin);
 
     const response = await client.register(username, password);
 

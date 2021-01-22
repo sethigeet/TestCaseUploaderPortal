@@ -85,7 +85,8 @@ describe("Create a test case", () => {
     );
 
     const createdTestCase = await TestCase.findOne(
-      response.data.createTestCase.testCase?.id
+      response.data.createTestCase.testCase?.id,
+      { relations: ["createdBy"] }
     );
 
     if (!createdTestCase) {
@@ -97,6 +98,7 @@ describe("Create a test case", () => {
 
     const createdTestCaseInHistory = await TestCaseHistory.findOne({
       where: { tsid: response.data.createTestCase.testCase?.id },
+      relations: ["createdBy"],
     });
 
     if (!createdTestCaseInHistory) {
@@ -117,7 +119,7 @@ describe("Create a test case", () => {
     expect(createdTestCaseInHistory.expectedResult).toEqual(
       input.case.expectedResult
     );
-    expect(createdTestCaseInHistory.createdBy).toEqual(user.id);
+    expect(createdTestCaseInHistory.createdBy.id).toEqual(user.id);
 
     done();
   });

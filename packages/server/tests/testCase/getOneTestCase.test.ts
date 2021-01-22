@@ -51,11 +51,11 @@ beforeAll(async (done) => {
   // create test cases to test on
   testCase1 = await TestCase.create({
     ...correctInput,
-    createdBy: user1.id,
+    createdBy: user1,
   }).save();
   testCase2 = await TestCase.create({
     ...correctInput,
-    createdBy: user2.id,
+    createdBy: user2,
   }).save();
 
   done();

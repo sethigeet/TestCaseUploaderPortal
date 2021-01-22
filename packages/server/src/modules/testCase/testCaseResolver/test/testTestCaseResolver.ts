@@ -2,8 +2,11 @@ import { Arg, Mutation, Resolver } from "type-graphql";
 
 import { UserRoles, testTestCaseSchema } from "@portal/common";
 
-import { isAuthenticated } from "../../../shared/decorators/isAuthenticated";
-import { CurrentUser, ValidateArgs } from "../../../shared/decorators";
+import {
+  isAuthenticated,
+  CurrentUser,
+  ValidateArgs,
+} from "../../../shared/decorators";
 
 import { User } from "../../../user/userEntity";
 
@@ -20,7 +23,9 @@ export class TestTestCaseResolver {
     @Arg("input", () => TestTestCaseInput) input: TestTestCaseInput,
     @CurrentUser() user: User
   ): Promise<TestCase> {
-    const testCase = await TestCase.findOne(input.id);
+    const testCase = await TestCase.findOne(input.id, {
+      relations: ["createdBy", "updatedBy"],
+    });
 
     if (!testCase) {
       throw new Error("That test case does not exist!");
@@ -31,7 +36,7 @@ export class TestTestCaseResolver {
     }
 
     if (user.role === UserRoles.TESTER) {
-      if (testCase.createdBy !== user.id) {
+      if (testCase.createdBy.id !== user.id) {
         throw new Error("Insufficient Permissions!");
       }
     }
@@ -40,7 +45,7 @@ export class TestTestCaseResolver {
       testCase.passed = input.passed;
       testCase.actualResult = input.actualResult;
       testCase.userRemarks = input.userRemarks;
-      testCase.updatedBy = user.id;
+      testCase.updatedBy = user;
 
       await testCase.save();
     } catch (e) {

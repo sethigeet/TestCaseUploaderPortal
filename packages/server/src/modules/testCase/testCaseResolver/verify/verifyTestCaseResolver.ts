@@ -2,8 +2,7 @@ import { Arg, Mutation, Resolver } from "type-graphql";
 
 import { UserRoles } from "@portal/common";
 
-import { isAuthenticated } from "../../../shared/decorators/isAuthenticated";
-import { CurrentUser } from "../../../shared/decorators";
+import { isAuthenticated, CurrentUser } from "../../../shared/decorators";
 
 import { User } from "../../../user/userEntity";
 
@@ -21,7 +20,9 @@ export class VerifyTestCaseResolver {
       return false;
     }
 
-    const testCase = await TestCase.findOne(id);
+    const testCase = await TestCase.findOne(id, {
+      relations: ["createdBy", "updatedBy"],
+    });
 
     if (!testCase) {
       return false;
@@ -29,7 +30,7 @@ export class VerifyTestCaseResolver {
 
     try {
       testCase.verified = true;
-      testCase.updatedBy = user.id;
+      testCase.updatedBy = user;
       await testCase.save();
     } catch (e) {
       return false;

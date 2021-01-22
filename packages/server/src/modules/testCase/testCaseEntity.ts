@@ -65,22 +65,23 @@ export class TestCase extends BaseEntity {
   @Column({ type: "text", nullable: true })
   userRemarks!: string;
 
-  @ManyToOne(() => User, (user) => user.testCases)
-  user!: User;
+  // DEFAULT COLUMNS
 
   @Field(() => String)
   @CreateDateColumn()
   createdAt!: Date;
 
-  @Column({ type: "varchar", length: 36 })
-  createdBy!: string;
+  @Field(() => User)
+  @ManyToOne(() => User, (user) => user.testCases)
+  createdBy!: User;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @UpdateDateColumn()
   updatedAt!: Date;
 
-  @Column({ type: "varchar", length: 36, nullable: true })
-  updatedBy!: string;
+  @Field(() => User, { nullable: true })
+  @ManyToOne(() => User, (user) => user.testCases, { nullable: true })
+  updatedBy!: User;
 
   @AfterInsert()
   async insertIntoHistory(): Promise<void> {
@@ -97,7 +98,6 @@ export class TestCase extends BaseEntity {
       passed: this.passed,
       actualResult: this.actualResult,
       userRemarks: this.userRemarks,
-      user: this.user,
       createdAt: this.createdAt,
       createdBy: this.createdBy,
     }).save();
@@ -118,7 +118,6 @@ export class TestCase extends BaseEntity {
       passed: this.passed,
       actualResult: this.actualResult,
       userRemarks: this.userRemarks,
-      user: this.user,
       updatedAt: this.updatedAt,
       updatedBy: this.updatedBy,
     }).save();

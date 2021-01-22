@@ -30,7 +30,7 @@ export class User extends BaseEntity {
   @Column({ type: "varchar", length: 255, unique: true })
   username!: string;
 
-  @OneToMany(() => TestCase, (testCase) => testCase.user)
+  @OneToMany(() => TestCase, (testCase) => testCase.createdBy)
   testCases!: TestCase[];
 
   @Column({ type: "text" })

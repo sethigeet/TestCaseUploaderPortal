@@ -7,11 +7,10 @@ import {
 } from "@portal/common";
 
 import { UserResponse } from "../UserResponse";
-import { ValidateArgs } from "../../../shared/decorators";
+import { isAuthenticated, ValidateArgs } from "../../../shared/decorators";
 
 import { RegisterInput } from "./inputTypes";
 import { User } from "../../userEntity";
-import { isAuthenticated } from "../../../shared/decorators/isAuthenticated";
 
 @Resolver(() => User)
 export class RegisterResolver {

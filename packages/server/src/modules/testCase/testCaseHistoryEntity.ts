@@ -64,20 +64,19 @@ export class TestCaseHistory extends BaseEntity {
   @Column({ type: "text", nullable: true })
   userRemarks!: string;
 
-  @ManyToOne(() => User, (user) => user.testCases)
-  user!: User;
-
   @Field(() => String)
   @Column({ type: "timestamp without time zone", nullable: true })
   createdAt!: Date;
 
-  @Column({ type: "varchar", length: 36, nullable: true })
-  createdBy!: string;
+  @Field(() => User)
+  @ManyToOne(() => User, (user) => user.testCases)
+  createdBy!: User;
 
-  @Field(() => String)
+  @Field(() => String, { nullable: true })
   @Column({ type: "timestamp without time zone", nullable: true })
   updatedAt!: Date;
 
-  @Column({ type: "varchar", length: 36, nullable: true })
-  updatedBy!: string;
+  @Field(() => User, { nullable: true })
+  @ManyToOne(() => User, (user) => user.testCases, { nullable: true })
+  updatedBy!: User;
 }

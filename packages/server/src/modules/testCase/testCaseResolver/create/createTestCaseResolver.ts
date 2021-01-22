@@ -1,4 +1,4 @@
-import { Arg, Ctx, Mutation, Resolver } from "type-graphql";
+import { Arg, Mutation, Resolver } from "type-graphql";
 
 import {
   createTestCaseSchema,
@@ -6,10 +6,14 @@ import {
   getDoesNotExistMessage,
 } from "@portal/common";
 
-import { ValidateArgs } from "../../../shared/decorators";
+import {
+  isAuthenticated,
+  CurrentUser,
+  ValidateArgs,
+} from "../../../shared/decorators";
 import { FieldError } from "../../../shared/responseTypes";
-import { Context } from "../../../shared/types";
-import { isAuthenticated } from "../../../shared/decorators/isAuthenticated";
+
+import { User } from "../../../user/userEntity";
 
 import { TestCase } from "../../testCaseEntity";
 import { TestCaseResponse, TestCasesResponse } from "../TestCaseResponse";
@@ -37,7 +41,7 @@ export class CreateTestCaseResolver {
       moduleCode,
       productCode,
     }: CreateTestCaseInput,
-    @Ctx() { req }: Context
+    @CurrentUser() user: User
   ): Promise<TestCaseResponse> {
     const errors: FieldError[] = [];
 
@@ -91,7 +95,7 @@ export class CreateTestCaseResolver {
         menuCode,
         moduleCode,
         productCode,
-        createdBy: req.session.userId,
+        createdBy: user,
       }).save();
     } catch (e) {
       console.log(e);
@@ -114,7 +118,7 @@ export class CreateTestCaseResolver {
   async createTestCases(
     @Arg("input", () => CreateTestCasesInput)
     { cases, ...rest }: CreateTestCasesInput,
-    @Ctx() { req }: Context
+    @CurrentUser() user: User
   ): Promise<TestCasesResponse> {
     const errors: FieldError[] = [];
 
@@ -165,7 +169,7 @@ export class CreateTestCaseResolver {
           ...rest,
           description: cases[i].description,
           expectedResult: cases[i].expectedResult,
-          createdBy: req.session.userId,
+          createdBy: user,
         }))
       );
       testCases = await TestCase.save(toBeSaved);

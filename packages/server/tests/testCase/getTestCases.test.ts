@@ -63,11 +63,11 @@ beforeAll(async (done) => {
   // create test cases to test on
   testCase1 = await TestCase.create({
     ...correctInput1,
-    createdBy: user1.id,
+    createdBy: user1,
   }).save();
   await TestCase.create({
     ...correctInput2,
-    createdBy: user2.id,
+    createdBy: user2,
   }).save();
 
   done();
@@ -86,6 +86,8 @@ describe("Get many test cases", () => {
     await client.login(correctUsername1, correctPassword1);
 
     const response = await client.getTestCases(limit);
+
+    expect(response.errors).toBeUndefined();
 
     expect(response.data.getTestCases.testCases.length).toEqual(1);
     expect(response.data.getTestCases.testCases[0]?.createdBy.id).toEqual(
@@ -165,7 +167,7 @@ describe("Get many test cases", () => {
 
     expect(response.data.getTestCases.testCases.length).toEqual(1);
     expect(response.data.getTestCases.testCases[0].createdBy.id).toEqual(
-      testCase1.createdBy
+      testCase1.createdBy.id
     );
     expect(response.data.getTestCases.testCases[0].description).toEqual(
       testCase1.description
