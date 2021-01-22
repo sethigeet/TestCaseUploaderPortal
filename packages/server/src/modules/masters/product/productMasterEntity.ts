@@ -5,7 +5,7 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
@@ -18,8 +18,12 @@ import { ModuleMaster } from "../module";
 @Entity()
 export class ProductMaster extends BaseEntity {
   @Field()
-  @PrimaryColumn({ type: "varchar", length: 10, unique: true })
+  @PrimaryGeneratedColumn("uuid")
   id!: string;
+
+  @Field()
+  @Column({ type: "varchar", length: 10, unique: true })
+  code!: string;
 
   @Field()
   @Column({ type: "varchar", length: 50, unique: true })

@@ -1,6 +1,10 @@
 import { Arg, Mutation, Resolver } from "type-graphql";
 
-import { createProductSchema, UserRoles } from "@portal/common";
+import {
+  createProductSchema,
+  getUnavailableMessage,
+  UserRoles,
+} from "@portal/common";
 
 import {
   isAuthenticated,
@@ -23,19 +27,31 @@ export class CreateProductResolver {
   @Mutation(() => ProductMasterResponse)
   async createProduct(
     @Arg("input", () => CreateProductInput)
-    { id, name, deprecated }: CreateProductInput,
+    { code, name, deprecated }: CreateProductInput,
     @CurrentUser() user: User
   ): Promise<ProductMasterResponse> {
     let product: ProductMaster;
 
     try {
       product = await ProductMaster.create({
-        id,
+        code,
         name,
         deprecated: deprecated ? deprecated : undefined,
         createdBy: user,
       }).save();
-    } catch (e) {
+    } catch (err) {
+      if (err.code === "23505") {
+        if (err.detail.includes("Key (code)")) {
+          return {
+            errors: [
+              {
+                field: "code",
+                message: getUnavailableMessage("code"),
+              },
+            ],
+          };
+        }
+      }
       return {
         errors: [
           {
