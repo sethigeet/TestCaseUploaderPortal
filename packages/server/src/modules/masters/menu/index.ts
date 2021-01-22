@@ -1,0 +1,1 @@
+export { MenuMaster } from "./menuMasterEntity";

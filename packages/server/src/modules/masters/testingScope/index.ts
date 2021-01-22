@@ -1,0 +1,1 @@
+export { TestingScopeMaster } from "./testingScopeMasterEntity";
