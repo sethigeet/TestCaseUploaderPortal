@@ -4,7 +4,7 @@ import { UserRoles } from "@portal/common";
 
 import { isAuthenticated, CurrentUser } from "../../../shared/decorators";
 
-import { User } from "../../../user/userEntity";
+import { User } from "../../../user";
 
 import { TestCase } from "../../testCaseEntity";
 

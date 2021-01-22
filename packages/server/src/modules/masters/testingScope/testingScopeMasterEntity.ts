@@ -9,7 +9,7 @@ import {
 } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
-import { User } from "../../user/userEntity";
+import { User } from "../../user";
 
 import { TestingForMaster } from "../testingFor";
 

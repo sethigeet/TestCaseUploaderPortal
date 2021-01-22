@@ -2,7 +2,7 @@ import { Connection } from "typeorm";
 import { internet, seed } from "faker";
 
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
-import { User } from "../../../src/modules/user/userEntity";
+import { User } from "../../../src/modules/user";
 
 import { TestClient } from "../../utils";
 

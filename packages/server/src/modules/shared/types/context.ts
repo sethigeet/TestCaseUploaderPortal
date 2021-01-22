@@ -3,7 +3,7 @@ import { SessionData } from "express-session";
 import { Redis } from "ioredis";
 import DataLoader from "dataloader";
 
-import { User } from "../../user/userEntity";
+import { User } from "../../user";
 
 export type Context = {
   req: Request & { session: SessionData & { userId?: string } };

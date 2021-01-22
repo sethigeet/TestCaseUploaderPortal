@@ -11,7 +11,7 @@ import { ObjectType, Field, registerEnumType } from "type-graphql";
 import { hash } from "argon2";
 
 import { UserRoles } from "@portal/common";
-import { TestCase } from "../testCase/testCaseEntity";
+import { TestCase } from "../testCase";
 
 registerEnumType(UserRoles, { name: "UserRoles" });
 

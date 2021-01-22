@@ -2,6 +2,8 @@ import { GraphQLSchema } from "graphql";
 import { buildSchema } from "type-graphql";
 
 // Resolvers
+import { userResolvers } from "../../user";
+import { testCaseResolvers } from "../../testCase";
 import { mastersResolvers } from "../../masters";
 
 const resolvers: any = [

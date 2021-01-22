@@ -1,7 +1,7 @@
 import { createParamDecorator } from "type-graphql";
 
 import { Context } from "../types";
-import { User } from "../../user/userEntity";
+import { User } from "../../user";
 
 export const CurrentUser = (): ParameterDecorator => {
   return createParamDecorator<Context>(

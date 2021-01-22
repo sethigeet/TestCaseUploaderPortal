@@ -8,7 +8,7 @@ import {
   ValidateArgs,
 } from "../../../shared/decorators";
 
-import { User } from "../../../user/userEntity";
+import { User } from "../../../user";
 
 import { TestCase } from "../../testCaseEntity";
 

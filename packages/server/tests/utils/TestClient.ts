@@ -3,13 +3,13 @@ import { CoreOptions } from "request";
 import { inspect } from "util";
 
 import { UserResponse } from "../../src/modules/user/auth/UserResponse";
-import { User } from "../../src/modules/user/userEntity";
+import { User } from "../../src/modules/user";
 
 import {
   CreateTestCaseInput,
   CreateTestCasesInput,
 } from "../../src/modules/testCase/testCaseResolver/create/inputTypes";
-import { TestCase } from "../../src/modules/testCase/testCaseEntity";
+import { TestCase } from "../../src/modules/testCase";
 import { FieldError } from "../../src/modules/shared/responseTypes";
 
 import { TestTestCaseInput } from "../../src/modules/testCase/testCaseResolver/test/inputTypes";

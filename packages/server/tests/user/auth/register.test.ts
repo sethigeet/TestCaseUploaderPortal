@@ -9,7 +9,7 @@ import {
   UserRoles,
 } from "@portal/common";
 
-import { User } from "../../../src/modules/user/userEntity";
+import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { TestClient } from "../../utils";

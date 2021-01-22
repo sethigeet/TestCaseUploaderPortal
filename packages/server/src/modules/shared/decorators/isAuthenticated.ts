@@ -3,7 +3,7 @@ import { createMethodDecorator } from "type-graphql";
 import { UserRoles } from "@portal/common";
 
 import { Context } from "../types";
-import { User } from "../../user/userEntity";
+import { User } from "../../user";
 
 export const isAuthenticated = (
   requiredRole?: UserRoles | UserRoles[]

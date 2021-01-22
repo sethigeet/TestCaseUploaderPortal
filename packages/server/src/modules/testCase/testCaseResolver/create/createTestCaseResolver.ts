@@ -13,7 +13,7 @@ import {
 } from "../../../shared/decorators";
 import { FieldError } from "../../../shared/responseTypes";
 
-import { User } from "../../../user/userEntity";
+import { User } from "../../../user";
 
 import { TestCase } from "../../testCaseEntity";
 import { TestCaseResponse, TestCasesResponse } from "../TestCaseResponse";
