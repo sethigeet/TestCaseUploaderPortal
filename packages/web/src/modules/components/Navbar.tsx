@@ -50,7 +50,7 @@ export const Navbar: FC = () => {
   if (!logoutLoading && logoutError) {
     displayErrorToast({
       message:
-        "There was an error while loggin you out!. Make sure that you are connected to the internet!",
+        "There was an error while logging you out!. Make sure that you are connected to the internet!",
     });
   }
 

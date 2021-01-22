@@ -6,7 +6,6 @@ import { useHistory } from "react-router-dom";
 import { getLoginMutationOptions, useLoginMutation } from "@portal/controller";
 
 import { toFormikError } from "../../utils";
-import { displayErrorToast } from "../../components";
 
 import { LoginView } from "./View";
 
@@ -44,22 +43,23 @@ export const LoginConnector: FC = () => {
     setSubmitting(false);
   };
 
-  if (loginError) {
-    if (!error) {
-      setError(true);
-    }
-  }
-
-  if (error) {
-    displayErrorToast({
-      message:
-        "There was an error while loggin you in. Make sure that you are connected to the internet!",
-    });
+  if (loginError && !error) {
+    setError(true);
   }
 
   return (
     <div>
-      <LoginView onSubmit={onSubmit} />
+      <LoginView
+        onSubmit={onSubmit}
+        errorMessage={
+          error
+            ? {
+                message:
+                  "There was an error while loggin you in. Make sure that you are connected to the internet!",
+              }
+            : undefined
+        }
+      />
     </div>
   );
 };

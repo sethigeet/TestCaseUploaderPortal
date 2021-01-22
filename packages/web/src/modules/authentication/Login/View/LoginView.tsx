@@ -22,15 +22,18 @@ interface LoginProps {
     values: LoginFormValues,
     formikHelpers: FormikHelpers<LoginFormValues>
   ) => void;
+  errorMessage?: { title?: string; message?: string };
 }
 
-export const LoginView: FC<LoginProps> = ({ onSubmit }) => {
+export const LoginView: FC<LoginProps> = ({ onSubmit, errorMessage }) => {
   return (
     <Wrapper
       display="flex"
       justifyContent="flex-end"
       alignItems="center"
       px={50}
+      errorMessage={errorMessage}
+      errorIsToast
     >
       <Box
         flex={1}

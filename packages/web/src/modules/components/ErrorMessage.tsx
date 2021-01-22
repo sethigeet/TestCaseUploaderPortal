@@ -8,7 +8,7 @@ import { FC } from "react";
 
 interface ErrorProps {
   title?: string;
-  message: string;
+  message?: string;
 }
 
 export const ErrorMessage: FC<ErrorProps> = ({ title, message }) => {
