@@ -1,19 +1,27 @@
 import { FC } from "react";
 
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, Route, RouteProps, Switch } from "react-router-dom";
 
 import { AuthenticationRoutes } from "../authentication";
+import { TestCaseRoutes } from "../testCase";
+
 import { Home } from "./Home";
 import { NotFound } from "./NotFound";
+
+const routes: RouteProps[] = [
+  { path: ["/", "/home"], component: Home },
+  ...AuthenticationRoutes,
+  ...TestCaseRoutes,
+  { component: NotFound },
+];
 
 export const Routes: FC = () => {
   return (
     <BrowserRouter>
       <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/home" component={Home} />
-        <AuthenticationRoutes />
-        <Route component={NotFound} />
+        {routes.map((route, i) => (
+          <Route exact {...route} key={i} />
+        ))}
       </Switch>
     </BrowserRouter>
   );

@@ -1,9 +1,5 @@
-import { FC } from "react";
+import { RouteProps } from "react-router-dom";
 
 import { LoginRoute } from "./Login";
 
-export const AuthenticationRoutes: FC = () => (
-  <>
-    <LoginRoute />
-  </>
-);
+export const AuthenticationRoutes: RouteProps[] = [LoginRoute];
