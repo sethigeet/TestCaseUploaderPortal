@@ -1,2 +1,2 @@
-export { createApolloClient } from "./createApolloClient";
+export { createApiClient } from "./createApiClient";
 export { useApiClient } from "./useApiClient";
