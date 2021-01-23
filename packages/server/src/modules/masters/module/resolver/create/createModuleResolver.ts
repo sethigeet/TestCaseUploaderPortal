@@ -3,6 +3,7 @@ import { Arg, Mutation, Resolver } from "type-graphql";
 import {
   createModuleSchema,
   getDoesNotExistMessage,
+  getRequiredMessage,
   getUnavailableMessage,
   UserRoles,
 } from "@portal/common";
@@ -21,7 +22,7 @@ import { ModuleMaster } from "../../moduleMasterEntity";
 
 import { ModuleMasterResponse } from "../ModuleMasterResponse";
 
-import { CreateModuleInput } from "./inputTypes";
+import { CreateModuleInput, EditModuleInput } from "./inputTypes";
 
 @Resolver(() => ModuleMaster)
 export class CreateModuleResolver {
@@ -72,6 +73,64 @@ export class CreateModuleResolver {
           {
             field: "createProduct",
             message: "There was an error while creating your product!",
+          },
+        ],
+      };
+    }
+
+    return { module };
+  }
+
+  @isAuthenticated(UserRoles.ADMIN)
+  @ValidateArgs<ModuleMasterResponse>(createModuleSchema, "input")
+  @Mutation(() => ModuleMasterResponse)
+  async editModule(
+    @Arg("id") id: string,
+    @Arg("input", () => EditModuleInput)
+    { code, name, deprecated }: EditModuleInput,
+    @CurrentUser() user: User
+  ): Promise<ModuleMasterResponse> {
+    if (!id) {
+      return { errors: [{ field: "id", message: getRequiredMessage("id") }] };
+    }
+
+    const module = await ModuleMaster.findOne(id, {
+      relations: ["createdBy", "updatedBy", "modules"],
+    });
+    if (!module) {
+      return {
+        errors: [{ field: "id", message: getDoesNotExistMessage("id") }],
+      };
+    }
+
+    module.code = code;
+    module.name = name;
+    if (deprecated) {
+      module.deprecated = deprecated;
+    }
+    module.updatedBy = user;
+
+    try {
+      await module.save();
+    } catch (err) {
+      if (err.code === "23505") {
+        if (err.detail.includes("Key (code)")) {
+          return {
+            errors: [
+              {
+                field: "code",
+                message: getUnavailableMessage("code"),
+              },
+            ],
+          };
+        }
+      }
+
+      return {
+        errors: [
+          {
+            field: "editProduct",
+            message: "There was an error while updating your product!",
           },
         ],
       };
