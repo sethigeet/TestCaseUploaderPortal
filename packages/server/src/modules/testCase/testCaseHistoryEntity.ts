@@ -79,4 +79,12 @@ export class TestCaseHistory extends BaseEntity {
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, (user) => user.testCases, { nullable: true })
   updatedBy!: User;
+
+  @Field(() => String, { nullable: true })
+  @Column({ type: "timestamp without time zone", nullable: true })
+  deletedAt!: Date;
+
+  @Field(() => User, { nullable: true })
+  @ManyToOne(() => User, (user) => user.testCases, { nullable: true })
+  deletedBy!: User;
 }

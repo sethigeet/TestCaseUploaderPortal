@@ -1,9 +1,11 @@
 import {
   AfterInsert,
+  AfterRemove,
   AfterUpdate,
   BaseEntity,
   Column,
   CreateDateColumn,
+  DeleteDateColumn,
   Entity,
   ManyToOne,
   PrimaryGeneratedColumn,
@@ -83,6 +85,14 @@ export class TestCase extends BaseEntity {
   @ManyToOne(() => User, (user) => user.testCases, { nullable: true })
   updatedBy!: User;
 
+  @Field(() => String, { nullable: true })
+  @DeleteDateColumn()
+  deletedAt!: Date;
+
+  @Field(() => User, { nullable: true })
+  @ManyToOne(() => User, (user) => user.testCases, { nullable: true })
+  deletedBy!: User;
+
   @AfterInsert()
   async insertIntoHistory(): Promise<void> {
     await TestCaseHistory.create({
@@ -120,6 +130,26 @@ export class TestCase extends BaseEntity {
       userRemarks: this.userRemarks,
       updatedAt: this.updatedAt,
       updatedBy: this.updatedBy,
+    }).save();
+  }
+
+  @AfterRemove()
+  async deleteIntoHistory(): Promise<void> {
+    await TestCaseHistory.create({
+      tsid: this.id,
+      productCode: this.productCode,
+      moduleCode: this.moduleCode,
+      menuCode: this.menuCode,
+      testingFor: this.testingFor,
+      testingScope: this.testingScope,
+      description: this.description,
+      expectedResult: this.expectedResult,
+      verified: this.verified,
+      passed: this.passed,
+      actualResult: this.actualResult,
+      userRemarks: this.userRemarks,
+      deletedAt: this.deletedAt,
+      deletedBy: this.deletedBy,
     }).save();
   }
 }
