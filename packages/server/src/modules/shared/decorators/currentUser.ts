@@ -11,7 +11,7 @@ export const CurrentUser = (): ParameterDecorator => {
         return Promise.resolve(undefined);
       }
 
-      return userLoader.load(userId);
+      return userLoader.load({ id: userId });
     }
   );
 };

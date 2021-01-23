@@ -1,12 +1,16 @@
 import DataLoader from "dataloader";
 
+import { FindConditions } from "typeorm";
+
 import { User } from "../../user";
 
-export const createUserLoader = (): DataLoader<string, User> =>
-  new DataLoader<string, User>(async (userIds) => {
-    const users = await User.findByIds(userIds as string[]);
+export const createUserLoader = (): DataLoader<FindConditions<User>, User> =>
+  new DataLoader<FindConditions<User>, User>(async (whereConds) => {
+    const users = await User.find({
+      where: whereConds as FindConditions<User>[],
+    });
     const userIdsToUser: Record<string, User> = {};
     users.forEach((user) => (userIdsToUser[user.id] = user));
 
-    return userIds.map((userId) => userIdsToUser[userId]);
+    return whereConds.map(({ id }) => userIdsToUser[id as string]);
   });
