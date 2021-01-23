@@ -26,19 +26,19 @@ const getCorrectInput = (id: string, passed: boolean) => ({
   actualResult: "this is the actual result of the test",
 });
 
-seed(Date.now() + 14);
+seed(Date.now());
 const correctUsername1 = internet.userName();
 const correctPassword1 = internet.password(7);
 
-seed(Date.now() + 15);
+seed(Date.now() + 1);
 const correctUsername2 = internet.userName();
 const correctPassword2 = internet.password(7);
 
-seed(Date.now() + 16);
+seed(Date.now() + 2);
 const correctUsername3 = internet.userName();
 const correctPassword3 = internet.password(7);
 
-seed(Date.now() + 17);
+seed(Date.now() + 3);
 const correctUsername4 = internet.userName();
 const correctPassword4 = internet.password(7);
 

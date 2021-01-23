@@ -29,11 +29,11 @@ const correctInput2 = {
   expectedResult: "This should not expect any errors2",
 };
 
-seed(Date.now() + 9);
+seed(Date.now());
 const correctUsername1 = internet.userName();
 const correctPassword1 = internet.password(7);
 
-seed(Date.now() + 10);
+seed(Date.now() + 1);
 const correctUsername2 = internet.userName();
 const correctPassword2 = internet.password(7);
 

@@ -9,7 +9,7 @@ import { ModuleMaster } from "../../../src/modules/masters/module";
 import { TestClient } from "../../utils";
 import { ProductMaster } from "../../../src/modules/masters/product";
 
-seed(Date.now() + 21);
+seed(Date.now());
 const correctUsername = internet.userName();
 const correctPassword = internet.password(7);
 

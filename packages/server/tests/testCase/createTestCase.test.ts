@@ -22,7 +22,7 @@ const correctInput = {
   },
 };
 
-seed(Date.now() + 5);
+seed(Date.now());
 const correctUsername = internet.userName();
 const correctPassword = internet.password(7);
 

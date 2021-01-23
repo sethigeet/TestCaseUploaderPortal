@@ -6,7 +6,7 @@ import { User } from "../../../src/modules/user";
 
 import { TestClient } from "../../utils";
 
-seed(Date.now() + 3);
+seed(Date.now());
 const correctUsername = internet.userName();
 const correctPassword = internet.password(7);
 

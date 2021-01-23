@@ -1,21 +1,22 @@
 import { Connection } from "typeorm";
 import { internet, seed } from "faker";
 
+import { UserRoles } from "@portal/common";
+
 import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { ProductMaster } from "../../../src/modules/masters/product";
 
 import { TestClient } from "../../utils";
-import { UserRoles } from "@portal/common";
 
-seed(Date.now() + 22);
+seed(Date.now());
 const correctUsername1 = internet.userName();
 const correctPassword1 = internet.password(7);
-seed(Date.now() + 23);
+seed(Date.now() + 1);
 const correctUsername2 = internet.userName();
 const correctPassword2 = internet.password(7);
-seed(Date.now() + 24);
+seed(Date.now() + 2);
 const correctUsername3 = internet.userName();
 const correctPassword3 = internet.password(7);
 
@@ -111,7 +112,7 @@ describe("Delete a product", () => {
     const client = new TestClient(process.env.TEST_HOST as string);
     await client.login(correctUsername3, correctPassword3);
 
-    const response = await client.deleteProduct("");
+    const response = await client.deleteProduct("dhsjadgsa dskagd shkad");
 
     expect(response.errors).toBeTruthy();
 

@@ -14,7 +14,7 @@ import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { TestClient } from "../../utils";
 
-seed(Date.now() + 0);
+seed(Date.now());
 const correctUsername = internet.userName();
 const correctPassword = internet.password(7);
 

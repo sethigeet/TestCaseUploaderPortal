@@ -29,15 +29,15 @@ const correctInput3 = {
   name: "Module 3 of Product 1",
 };
 
-seed(Date.now() + 18);
+seed(Date.now());
 const correctUsername1 = internet.userName();
 const correctPassword1 = internet.password(7);
 
-seed(Date.now() + 19);
+seed(Date.now() + 1);
 const correctUsername2 = internet.userName();
 const correctPassword2 = internet.password(7);
 
-seed(Date.now() + 20);
+seed(Date.now() + 2);
 const correctUsername3 = internet.userName();
 const correctPassword3 = internet.password(7);
 

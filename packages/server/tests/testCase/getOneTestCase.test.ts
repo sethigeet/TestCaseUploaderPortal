@@ -19,11 +19,11 @@ const correctInput = {
   expectedResult: "This should not expect any errors",
 };
 
-seed(Date.now() + 7);
+seed(Date.now());
 const correctUsername1 = internet.userName();
 const correctPassword1 = internet.password(7);
 
-seed(Date.now() + 8);
+seed(Date.now() + 1);
 const correctUsername2 = internet.userName();
 const correctPassword2 = internet.password(7);
 

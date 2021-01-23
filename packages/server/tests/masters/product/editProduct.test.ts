@@ -23,15 +23,15 @@ const correctInput2 = {
   name: "Product 2 - NEW",
 };
 
-seed(Date.now() + 18);
+seed(Date.now());
 const correctUsername1 = internet.userName();
 const correctPassword1 = internet.password(7);
 
-seed(Date.now() + 19);
+seed(Date.now() + 1);
 const correctUsername2 = internet.userName();
 const correctPassword2 = internet.password(7);
 
-seed(Date.now() + 20);
+seed(Date.now() + 2);
 const correctUsername3 = internet.userName();
 const correctPassword3 = internet.password(7);
 
@@ -44,7 +44,7 @@ beforeAll(async (done) => {
   // create the connection to the db
   conn = await createTypeormConnection();
 
-  // create a user to test on
+  // create users to test on
   user = await User.create({
     username: correctUsername1,
     password: correctPassword1,
@@ -60,7 +60,7 @@ beforeAll(async (done) => {
     role: UserRoles.SUPERVISOR,
   }).save();
 
-  // create a user to test on
+  // create products to test on
   product1 = await ProductMaster.create({
     code: "PROD-1",
     name: "Product 1",
@@ -102,7 +102,7 @@ describe("Edit a product", () => {
 
     const createdProduct = await ProductMaster.findOne(
       response.data.editProduct.product?.id,
-      { relations: ["createdBy"] }
+      { relations: ["updatedBy"] }
     );
 
     if (!createdProduct) {
@@ -112,6 +112,7 @@ describe("Edit a product", () => {
     expect(createdProduct.code).toEqual(input.code);
     expect(createdProduct.name).toEqual(input.name);
     expect(createdProduct.deprecated).toEqual(input.deprecated);
+    expect(createdProduct.updatedBy.id).toEqual(user.id);
 
     done();
   });
@@ -133,7 +134,7 @@ describe("Edit a product", () => {
 
     const createdProduct = await ProductMaster.findOne(
       response.data.editProduct.product?.id,
-      { relations: ["createdBy"] }
+      { relations: ["updatedBy"] }
     );
 
     if (!createdProduct) {
@@ -143,6 +144,7 @@ describe("Edit a product", () => {
     expect(createdProduct.code).toEqual(input.code);
     expect(createdProduct.name).toEqual(input.name);
     expect(createdProduct.deprecated).toEqual(true);
+    expect(createdProduct.updatedBy.id).toEqual(user.id);
 
     done();
   });

@@ -20,15 +20,15 @@ const correctInput = {
   expectedResult: "This should not expect any errors",
 };
 
-seed(Date.now() + 11);
+seed(Date.now());
 const correctUsername1 = internet.userName();
 const correctPassword1 = internet.password(7);
 
-seed(Date.now() + 12);
+seed(Date.now() + 1);
 const correctUsername2 = internet.userName();
 const correctPassword2 = internet.password(7);
 
-seed(Date.now() + 13);
+seed(Date.now() + 2);
 const correctUsername3 = internet.userName();
 const correctPassword3 = internet.password(7);
 

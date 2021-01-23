@@ -36,7 +36,7 @@ const correctInput = {
   ],
 };
 
-seed(Date.now() + 6);
+seed(Date.now());
 const correctUsername = internet.userName();
 const correctPassword = internet.password(7);
 

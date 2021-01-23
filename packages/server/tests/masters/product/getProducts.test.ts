@@ -8,7 +8,7 @@ import { ProductMaster } from "../../../src/modules/masters/product";
 
 import { TestClient } from "../../utils";
 
-seed(Date.now() + 22);
+seed(Date.now());
 const correctUsername = internet.userName();
 const correctPassword = internet.password(7);
 
