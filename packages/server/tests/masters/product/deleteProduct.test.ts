@@ -126,6 +126,9 @@ describe("Delete a product", () => {
 
     expect(response.data.deleteProduct).toEqual(true);
 
+    const deletedProduct = await ProductMaster.findOne(product.id);
+    expect(deletedProduct).toBeUndefined();
+
     done();
   });
 });
