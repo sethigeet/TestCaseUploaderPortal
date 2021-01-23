@@ -1,0 +1,1 @@
+export { GetModuleResolver } from "./getModuleResolver";

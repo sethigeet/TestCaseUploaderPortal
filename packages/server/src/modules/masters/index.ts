@@ -1,7 +1,4 @@
-import { BuildSchemaOptions } from "type-graphql";
-
 import { productResolvers } from "./product";
+import { moduleResolvers } from "./module";
 
-export const mastersResolvers: BuildSchemaOptions["resolvers"] = [
-  ...productResolvers,
-];
+export const mastersResolvers: any = [...productResolvers, ...moduleResolvers];

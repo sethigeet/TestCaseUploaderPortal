@@ -12,12 +12,16 @@ export class GetProductResolver {
     if (!id) {
       throw new Error("Id is required!");
     }
-    return ProductMaster.findOne(id, { relations: ["createdBy", "updatedBy"] });
+    return ProductMaster.findOne(id, {
+      relations: ["createdBy", "updatedBy", "modules"],
+    });
   }
 
   @isAuthenticated()
   @Query(() => [ProductMaster])
   getProducts(): Promise<ProductMaster[]> {
-    return ProductMaster.find({ relations: ["createdBy", "updatedBy"] });
+    return ProductMaster.find({
+      relations: ["createdBy", "updatedBy", "modules"],
+    });
   }
 }
