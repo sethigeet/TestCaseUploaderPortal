@@ -26,7 +26,7 @@ export class ProductMaster extends BaseEntity {
   code!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 50, unique: true })
+  @Column({ type: "varchar", length: 50 })
   name!: string;
 
   @Field()

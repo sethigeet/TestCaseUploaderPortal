@@ -5,7 +5,7 @@ import {
   Entity,
   ManyToOne,
   OneToMany,
-  PrimaryColumn,
+  PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
@@ -19,11 +19,11 @@ import { TestingScopeMaster } from "../testingScope";
 @Entity()
 export class TestingForMaster extends BaseEntity {
   @Field()
-  @PrimaryColumn({ type: "varchar", length: 10, unique: true })
+  @PrimaryGeneratedColumn("uuid")
   id!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 50, unique: true })
+  @Column({ type: "varchar", length: 50 })
   name!: string;
 
   @Field()
@@ -31,7 +31,9 @@ export class TestingForMaster extends BaseEntity {
   deprecated!: boolean;
 
   @Field(() => MenuMaster)
-  @ManyToOne(() => MenuMaster, (menu) => menu.testingFors)
+  @ManyToOne(() => MenuMaster, (menu) => menu.testingFors, {
+    onDelete: "CASCADE",
+  })
   menu!: MenuMaster;
 
   @Field(() => [TestingScopeMaster], { nullable: true })
