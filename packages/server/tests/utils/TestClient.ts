@@ -601,4 +601,61 @@ query {
 `)
     );
   }
+
+  async editModule(
+    id: string,
+    { code, name, deprecated }: CreateProductInput
+  ): Promise<{
+    data: { editModule: ModuleMasterResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+mutation {
+  editModule(
+    id: "${id}"
+    input: {
+      code: "${code}"
+      name: "${name}"
+      ${deprecated ? `deprecated: ${deprecated}` : ""}
+    }
+  ) {
+    errors {
+      field
+      message
+    }
+    module {
+      id
+      code
+      name
+      deprecated
+      createdBy {
+        id
+      }
+      product {
+        id
+      }
+    }
+  }
+}
+`)
+    );
+  }
+
+  async deleteModule(
+    id: string
+  ): Promise<{
+    data: { deleteModule: boolean };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+mutation {
+  deleteModule(id: "${id}")
+}
+`)
+    );
+  }
 }
