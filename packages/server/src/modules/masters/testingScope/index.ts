@@ -1,1 +1,4 @@
-export { TestingScopeMaster } from "./testingScopeMasterEntity";
+export {
+  TestingScopeMaster,
+  TestingScopeMasterHistory,
+} from "./testingScopeMasterEntity";

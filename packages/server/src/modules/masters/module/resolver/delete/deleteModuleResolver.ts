@@ -2,15 +2,19 @@ import { Arg, Mutation, Resolver } from "type-graphql";
 
 import { UserRoles } from "@portal/common";
 
-import { isAuthenticated } from "../../../../shared/decorators";
+import { CurrentUser, isAuthenticated } from "../../../../shared/decorators";
+import { User } from "../../../../user";
 
-import { ModuleMaster } from "../../moduleMasterEntity";
+import { ModuleMaster, ModuleMasterHistory } from "../../moduleMasterEntity";
 
 @Resolver(() => ModuleMaster)
 export class DeleteModuleResolver {
   @isAuthenticated(UserRoles.ADMIN)
   @Mutation(() => Boolean)
-  async deleteModule(@Arg("id") id: string): Promise<boolean> {
+  async deleteModule(
+    @Arg("id") id: string,
+    @CurrentUser() user: User
+  ): Promise<boolean> {
     if (!id) {
       throw new Error("Id is required!");
     }
@@ -21,6 +25,14 @@ export class DeleteModuleResolver {
     }
 
     try {
+      await ModuleMasterHistory.create({
+        pid: module.id,
+        code: module.code,
+        name: module.name,
+        deprecated: module.deprecated,
+        deletedAt: new Date(Date.now()),
+        deletedBy: user,
+      }).save();
       await module.remove();
     } catch {
       return false;

@@ -1,1 +1,1 @@
-export { MenuMaster } from "./menuMasterEntity";
+export { MenuMaster, MenuMasterHistory } from "./menuMasterEntity";

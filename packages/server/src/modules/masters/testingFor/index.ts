@@ -1,1 +1,4 @@
-export { TestingForMaster } from "./testingForMasterEntity";
+export {
+  TestingForMaster,
+  TestingForMasterHistory,
+} from "./testingForMasterEntity";

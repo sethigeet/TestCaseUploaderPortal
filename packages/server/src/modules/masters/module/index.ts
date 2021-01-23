@@ -1,2 +1,2 @@
-export { ModuleMaster } from "./moduleMasterEntity";
+export { ModuleMaster, ModuleMasterHistory } from "./moduleMasterEntity";
 export { moduleResolvers } from "./resolver";
