@@ -2,6 +2,7 @@ import { Arg, Mutation, Resolver } from "type-graphql";
 
 import {
   createModuleSchema,
+  editModuleSchema,
   getDoesNotExistMessage,
   getRequiredMessage,
   getUnavailableMessage,
@@ -82,7 +83,7 @@ export class CreateModuleResolver {
   }
 
   @isAuthenticated(UserRoles.ADMIN)
-  @ValidateArgs<ModuleMasterResponse>(createModuleSchema, "input")
+  @ValidateArgs<ModuleMasterResponse>(editModuleSchema, "input")
   @Mutation(() => ModuleMasterResponse)
   async editModule(
     @Arg("id") id: string,
@@ -95,7 +96,7 @@ export class CreateModuleResolver {
     }
 
     const module = await ModuleMaster.findOne(id, {
-      relations: ["createdBy", "updatedBy", "modules"],
+      relations: ["createdBy", "updatedBy", "product"],
     });
     if (!module) {
       return {
