@@ -10,7 +10,7 @@ import { ModuleMaster } from "../../moduleMasterEntity";
 export class DeleteModuleResolver {
   @isAuthenticated(UserRoles.ADMIN)
   @Mutation(() => Boolean)
-  async deleteProduct(@Arg("id") id: string): Promise<boolean> {
+  async deleteModule(@Arg("id") id: string): Promise<boolean> {
     if (!id) {
       throw new Error("Id is required!");
     }
