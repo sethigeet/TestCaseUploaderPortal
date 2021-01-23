@@ -1,0 +1,1 @@
+export { DeleteProductResolver } from "./deleteProductResolver";

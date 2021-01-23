@@ -2,6 +2,8 @@ import { Arg, Mutation, Resolver } from "type-graphql";
 
 import {
   createProductSchema,
+  getDoesNotExistMessage,
+  getRequiredMessage,
   getUnavailableMessage,
   UserRoles,
 } from "@portal/common";
@@ -57,6 +59,49 @@ export class CreateProductResolver {
           {
             field: "createProduct",
             message: "There was an error while creating your product!",
+          },
+        ],
+      };
+    }
+
+    return { product };
+  }
+
+  @isAuthenticated(UserRoles.ADMIN)
+  @ValidateArgs<ProductMasterResponse>(createProductSchema, "input")
+  @Mutation(() => ProductMasterResponse)
+  async editProduct(
+    @Arg("id") id: string,
+    @Arg("input", () => CreateProductInput)
+    { code, name, deprecated }: CreateProductInput,
+    @CurrentUser() user: User
+  ): Promise<ProductMasterResponse> {
+    if (!id) {
+      return { errors: [{ field: "id", message: getRequiredMessage("id") }] };
+    }
+
+    const product = await ProductMaster.findOne(id);
+    if (!product) {
+      return {
+        errors: [{ field: "id", message: getDoesNotExistMessage("id") }],
+      };
+    }
+
+    product.code = code;
+    product.name = name;
+    if (deprecated) {
+      product.deprecated = deprecated;
+    }
+    product.updatedBy = user;
+
+    try {
+      product.save();
+    } catch (err) {
+      return {
+        errors: [
+          {
+            field: "editProduct",
+            message: "There was an error while updating your product!",
           },
         ],
       };
