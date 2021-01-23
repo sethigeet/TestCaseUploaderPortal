@@ -447,6 +447,64 @@ query {
 `)
     );
   }
+
+  async editProduct(
+    id: string,
+    { code, name, deprecated }: CreateProductInput
+  ): Promise<{
+    data: { editProduct: ProductMasterResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+mutation {
+  editProduct(
+    id: "${id}"
+    input: {
+      code: "${code}"
+      name: "${name}"
+      ${deprecated ? `deprecated: ${deprecated}` : ""}
+    }
+  ) {
+    errors {
+      field
+      message
+    }
+    product {
+      id
+      code
+      name
+      deprecated
+      createdBy {
+        id
+      }
+      modules {
+        id
+      }
+    }
+  }
+}
+`)
+    );
+  }
+
+  async deleteProduct(
+    id: string
+  ): Promise<{
+    data: { deleteProduct: boolean };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+mutation {
+  deleteProduct(id: "${id}")
+}
+`)
+    );
+  }
+
   async createModule({
     productId,
     code,

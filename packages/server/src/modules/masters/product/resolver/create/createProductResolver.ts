@@ -80,7 +80,9 @@ export class CreateProductResolver {
       return { errors: [{ field: "id", message: getRequiredMessage("id") }] };
     }
 
-    const product = await ProductMaster.findOne(id);
+    const product = await ProductMaster.findOne(id, {
+      relations: ["createdBy", "updatedBy", "modules"],
+    });
     if (!product) {
       return {
         errors: [{ field: "id", message: getDoesNotExistMessage("id") }],
@@ -95,8 +97,21 @@ export class CreateProductResolver {
     product.updatedBy = user;
 
     try {
-      product.save();
+      await product.save();
     } catch (err) {
+      if (err.code === "23505") {
+        if (err.detail.includes("Key (code)")) {
+          return {
+            errors: [
+              {
+                field: "code",
+                message: getUnavailableMessage("code"),
+              },
+            ],
+          };
+        }
+      }
+
       return {
         errors: [
           {
