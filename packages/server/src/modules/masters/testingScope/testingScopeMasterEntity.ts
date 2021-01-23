@@ -1,54 +1,15 @@
-import {
-  BaseEntity,
-  Column,
-  CreateDateColumn,
-  Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-  UpdateDateColumn,
-} from "typeorm";
+import { Entity, ManyToOne } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
-import { User } from "../../user";
-
 import { TestingForMaster } from "../testingFor";
+import { BaseMaster } from "../baseClasses";
 
 @ObjectType()
 @Entity()
-export class TestingScopeMaster extends BaseEntity {
-  @Field()
-  @PrimaryGeneratedColumn("uuid")
-  id!: string;
-
-  @Field()
-  @Column({ type: "varchar", length: 50 })
-  name!: string;
-
-  @Field()
-  @Column({ type: "boolean", default: false })
-  deprecated!: boolean;
-
+export class TestingScopeMaster extends BaseMaster {
   @Field(() => TestingForMaster)
   @ManyToOne(() => TestingForMaster, (testingFor) => testingFor.tesingScopes, {
     onDelete: "CASCADE",
   })
   testingFor!: TestingForMaster;
-
-  // DEFAULT COLUMNS
-
-  @Field(() => String)
-  @CreateDateColumn()
-  createdAt!: Date;
-
-  @Field(() => User)
-  @ManyToOne(() => User, (user) => user.id)
-  createdBy!: User;
-
-  @Field(() => String, { nullable: true })
-  @UpdateDateColumn()
-  updatedAt!: Date;
-
-  @Field(() => User, { nullable: true })
-  @ManyToOne(() => User, (user) => user.id, { nullable: true })
-  updatedBy!: User;
 }

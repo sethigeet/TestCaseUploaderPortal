@@ -22,6 +22,7 @@ export class GetProductResolver {
   getProducts(): Promise<ProductMaster[]> {
     return ProductMaster.find({
       relations: ["createdBy", "updatedBy", "modules"],
+      order: { code: "ASC" },
     });
   }
 }

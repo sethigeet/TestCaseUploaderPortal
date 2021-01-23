@@ -1,0 +1,1 @@
+export { BaseMaster } from "./baseMasterEntityClass";

@@ -26,6 +26,7 @@ export class GetModuleResolver {
     return ModuleMaster.find({
       where: { product: { id: productId } },
       relations: ["createdBy", "updatedBy", "product"],
+      order: { code: "ASC" },
     });
   }
 }
