@@ -18,6 +18,10 @@ import { ProductMaster } from "../../src/modules/masters/product";
 import { CreateProductInput } from "../../src/modules/masters/product/resolver/create/inputTypes";
 import { ProductMasterResponse } from "../../src/modules/masters/product/resolver/ProductMasterResponse";
 
+import { ModuleMaster } from "../../src/modules/masters/module";
+import { CreateModuleInput } from "../../src/modules/masters/module/resolver/create/inputTypes";
+import { ModuleMasterResponse } from "../../src/modules/masters/module/resolver/ModuleMasterResponse";
+
 export class TestClient {
   url: string;
   jar: ReturnType<typeof rp.jar>;
@@ -436,6 +440,102 @@ query {
     name
     deprecated
     createdBy {
+      id
+    }
+  }
+}
+`)
+    );
+  }
+  async createModule({
+    productId,
+    code,
+    name,
+    deprecated,
+  }: CreateModuleInput): Promise<{
+    data: { createModule: ModuleMasterResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+mutation {
+  createModule(
+    input: {
+      productId: "${productId}"
+      code: "${code}"
+      name: "${name}"
+      ${deprecated ? `deprecated: ${deprecated}` : ""}
+    }
+  ) {
+    errors {
+      field
+      message
+    }
+    module {
+      id
+      code
+      name
+      deprecated
+      createdBy {
+        id
+      }
+      product {
+        id
+      }
+    }
+  }
+}
+`)
+    );
+  }
+
+  async getModule(
+    id: string
+  ): Promise<{
+    data: { getModule: ModuleMaster | null };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+query {
+  getModule(id: "${id}") {
+    id
+    code
+    name
+    deprecated
+    createdBy {
+      id
+    }
+    product {
+      id
+    }
+  }
+}
+`)
+    );
+  }
+
+  async getModules(
+    productId: string
+  ): Promise<{
+    data: { getModules: ModuleMaster[] };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(`
+query {
+  getModules(productId: "${productId}") {
+    id
+    code
+    name
+    deprecated
+    createdBy {
+      id
+    }
+    product {
       id
     }
   }
