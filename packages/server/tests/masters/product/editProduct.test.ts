@@ -10,7 +10,10 @@ import {
 import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
-import { ProductMaster } from "../../../src/modules/masters/product";
+import {
+  ProductMaster,
+  ProductMasterHistory,
+} from "../../../src/modules/masters/product";
 
 import { TestClient } from "../../utils";
 
@@ -98,7 +101,7 @@ describe("Edit a product", () => {
     expect(response.data.editProduct.product?.deprecated).toEqual(
       input.deprecated
     );
-    expect(response.data.editProduct.product?.createdBy.id).toEqual(user.id);
+    expect(response.data.editProduct.product?.updatedBy.id).toEqual(user.id);
 
     const createdProduct = await ProductMaster.findOne(
       response.data.editProduct.product?.id,
@@ -113,6 +116,21 @@ describe("Edit a product", () => {
     expect(createdProduct.name).toEqual(input.name);
     expect(createdProduct.deprecated).toEqual(input.deprecated);
     expect(createdProduct.updatedBy.id).toEqual(user.id);
+
+    const createdProductInHistory = await ProductMasterHistory.find({
+      where: { pid: response.data.editProduct.product?.id },
+      relations: ["updatedBy"],
+    });
+
+    if (!createdProductInHistory) {
+      throw new Error("Product was not created in the history!");
+    }
+
+    expect(createdProductInHistory[1].code).toEqual(input.code);
+    expect(createdProductInHistory[1].name).toEqual(input.name);
+    expect(createdProductInHistory[1].deprecated).toEqual(input.deprecated);
+    expect(createdProductInHistory[1].updatedAt).toBeTruthy();
+    expect(createdProductInHistory[1].updatedBy.id).toEqual(user.id);
 
     done();
   });
@@ -130,7 +148,7 @@ describe("Edit a product", () => {
     expect(response.data.editProduct.product?.name).toEqual(input.name);
     expect(response.data.editProduct.product?.deprecated).toEqual(true);
     expect(response.data.editProduct.product?.modules).toEqual([]);
-    expect(response.data.editProduct.product?.createdBy.id).toEqual(user.id);
+    expect(response.data.editProduct.product?.updatedBy.id).toEqual(user.id);
 
     const createdProduct = await ProductMaster.findOne(
       response.data.editProduct.product?.id,
@@ -145,6 +163,21 @@ describe("Edit a product", () => {
     expect(createdProduct.name).toEqual(input.name);
     expect(createdProduct.deprecated).toEqual(true);
     expect(createdProduct.updatedBy.id).toEqual(user.id);
+
+    const createdProductInHistory = await ProductMasterHistory.find({
+      where: { pid: response.data.editProduct.product?.id },
+      relations: ["updatedBy"],
+    });
+
+    if (!createdProductInHistory) {
+      throw new Error("Product was not created in the history!");
+    }
+
+    expect(createdProductInHistory[2].code).toEqual(input.code);
+    expect(createdProductInHistory[2].name).toEqual(input.name);
+    expect(createdProductInHistory[2].deprecated).toEqual(true);
+    expect(createdProductInHistory[2].updatedAt).toBeTruthy();
+    expect(createdProductInHistory[2].updatedBy.id).toEqual(user.id);
 
     done();
   });

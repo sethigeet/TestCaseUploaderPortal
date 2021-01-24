@@ -13,15 +13,18 @@ import { createTypeormConnection } from "../../../src/modules/shared/utils";
 import { ProductMaster } from "../../../src/modules/masters/product";
 
 import { TestClient } from "../../utils";
-import { ModuleMaster } from "../../../src/modules/masters/module";
+import {
+  ModuleMaster,
+  ModuleMasterHistory,
+} from "../../../src/modules/masters/module";
 
 const correctInput1 = {
-  code: "PROD-1-N",
-  name: "Product 1 - NEW",
+  code: "MOD-1-N",
+  name: "Module 1 - NEW",
 };
 const correctInput2 = {
-  code: "PROD-2-N",
-  name: "Product 2 - NEW",
+  code: "MOD-2-N",
+  name: "Module 2 - NEW",
 };
 
 seed(Date.now());
@@ -110,6 +113,7 @@ describe("Edit a module", () => {
       input.deprecated
     );
     expect(response.data.editModule.module?.createdBy.id).toEqual(user.id);
+    expect(response.data.editModule.module?.updatedBy.id).toEqual(user.id);
 
     const createdModule = await ModuleMaster.findOne(
       response.data.editModule.module?.id,
@@ -124,6 +128,21 @@ describe("Edit a module", () => {
     expect(createdModule.name).toEqual(input.name);
     expect(createdModule.deprecated).toEqual(input.deprecated);
     expect(createdModule.updatedBy.id).toEqual(user.id);
+
+    const createdModuleInHistory = await ModuleMasterHistory.find({
+      where: { pid: response.data.editModule.module?.id },
+      relations: ["updatedBy"],
+    });
+
+    if (!createdModuleInHistory) {
+      throw new Error("Module was not created in the history!");
+    }
+
+    expect(createdModuleInHistory[1].code).toEqual(input.code);
+    expect(createdModuleInHistory[1].name).toEqual(input.name);
+    expect(createdModuleInHistory[1].deprecated).toEqual(input.deprecated);
+    expect(createdModuleInHistory[1].updatedAt).toBeTruthy();
+    expect(createdModuleInHistory[1].updatedBy.id).toEqual(user.id);
 
     done();
   });
@@ -142,6 +161,7 @@ describe("Edit a module", () => {
     expect(response.data.editModule.module?.deprecated).toEqual(true);
     expect(response.data.editModule.module?.product.id).toEqual(product.id);
     expect(response.data.editModule.module?.createdBy.id).toEqual(user.id);
+    expect(response.data.editModule.module?.updatedBy.id).toEqual(user.id);
 
     const createdModule = await ModuleMaster.findOne(
       response.data.editModule.module?.id,
@@ -156,6 +176,21 @@ describe("Edit a module", () => {
     expect(createdModule.name).toEqual(input.name);
     expect(createdModule.deprecated).toEqual(true);
     expect(createdModule.updatedBy.id).toEqual(user.id);
+
+    const createdModuleInHistory = await ModuleMasterHistory.find({
+      where: { pid: response.data.editModule.module?.id },
+      relations: ["updatedBy"],
+    });
+
+    if (!createdModuleInHistory) {
+      throw new Error("Module was not created in the history!");
+    }
+
+    expect(createdModuleInHistory[2].code).toEqual(input.code);
+    expect(createdModuleInHistory[2].name).toEqual(input.name);
+    expect(createdModuleInHistory[2].deprecated).toEqual(true);
+    expect(createdModuleInHistory[2].updatedAt).toBeTruthy();
+    expect(createdModuleInHistory[2].updatedBy.id).toEqual(user.id);
 
     done();
   });

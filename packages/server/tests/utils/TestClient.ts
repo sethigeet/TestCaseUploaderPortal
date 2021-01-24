@@ -476,7 +476,7 @@ mutation {
       code
       name
       deprecated
-      createdBy {
+      updatedBy {
         id
       }
       modules {
@@ -631,6 +631,9 @@ mutation {
       name
       deprecated
       createdBy {
+        id
+      }
+      updatedBy {
         id
       }
       product {

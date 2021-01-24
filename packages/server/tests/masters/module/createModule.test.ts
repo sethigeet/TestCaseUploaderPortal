@@ -14,7 +14,10 @@ import { createTypeormConnection } from "../../../src/modules/shared/utils";
 import { ProductMaster } from "../../../src/modules/masters/product";
 
 import { TestClient } from "../../utils";
-import { ModuleMaster } from "../../../src/modules/masters/module";
+import {
+  ModuleMaster,
+  ModuleMasterHistory,
+} from "../../../src/modules/masters/module";
 
 const correctInput1 = {
   code: "P1-MOD-1",
@@ -114,6 +117,22 @@ describe("Create a module", () => {
     expect(createdModule.name).toEqual(input.name);
     expect(createdModule.deprecated).toEqual(input.deprecated);
     expect(createdModule.product.id).toEqual(input.productId);
+    expect(createdModule.createdBy.id).toEqual(user.id);
+
+    const createdModuleInHistory = await ModuleMasterHistory.findOne({
+      where: { pid: response.data.createModule.module?.id },
+      relations: ["createdBy"],
+    });
+
+    if (!createdModuleInHistory) {
+      throw new Error("Module was not created in the history!");
+    }
+
+    expect(createdModuleInHistory.code).toEqual(input.code);
+    expect(createdModuleInHistory.name).toEqual(input.name);
+    expect(createdModuleInHistory.deprecated).toEqual(input.deprecated);
+    expect(createdModuleInHistory.createdAt).toBeTruthy();
+    expect(createdModuleInHistory.createdBy.id).toEqual(user.id);
 
     done();
   });
@@ -148,6 +167,22 @@ describe("Create a module", () => {
     expect(createdModule.name).toEqual(input.name);
     expect(createdModule.deprecated).toEqual(false);
     expect(createdModule.product.id).toEqual(input.productId);
+    expect(createdModule.createdBy.id).toEqual(user.id);
+
+    const createdModuleInHistory = await ModuleMasterHistory.findOne({
+      where: { pid: response.data.createModule.module?.id },
+      relations: ["createdBy"],
+    });
+
+    if (!createdModuleInHistory) {
+      throw new Error("Product was not created in the history!");
+    }
+
+    expect(createdModuleInHistory.code).toEqual(input.code);
+    expect(createdModuleInHistory.name).toEqual(input.name);
+    expect(createdModuleInHistory.deprecated).toEqual(false);
+    expect(createdModuleInHistory.createdAt).toBeTruthy();
+    expect(createdModuleInHistory.createdBy.id).toEqual(user.id);
 
     done();
   });

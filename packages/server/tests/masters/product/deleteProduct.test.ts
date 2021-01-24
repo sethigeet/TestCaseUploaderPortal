@@ -6,7 +6,10 @@ import { UserRoles } from "@portal/common";
 import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
-import { ProductMaster } from "../../../src/modules/masters/product";
+import {
+  ProductMaster,
+  ProductMasterHistory,
+} from "../../../src/modules/masters/product";
 
 import { TestClient } from "../../utils";
 
@@ -29,7 +32,7 @@ beforeAll(async (done) => {
   conn = await createTypeormConnection();
 
   // create a user to test on
-  user = await User.create({
+  await User.create({
     username: correctUsername1,
     password: correctPassword1,
   }).save();
@@ -38,7 +41,7 @@ beforeAll(async (done) => {
     password: correctPassword2,
     role: UserRoles.SUPERVISOR,
   }).save();
-  await User.create({
+  user = await User.create({
     username: correctUsername3,
     password: correctPassword3,
     role: UserRoles.ADMIN,
@@ -129,6 +132,18 @@ describe("Delete a product", () => {
 
     const deletedProduct = await ProductMaster.findOne(product.id);
     expect(deletedProduct).toBeUndefined();
+
+    const deletedProductInHistory = await ProductMasterHistory.find({
+      where: { pid: product.id },
+      relations: ["deletedBy"],
+    });
+
+    if (!deletedProductInHistory) {
+      throw new Error("Product was not created in the history!");
+    }
+
+    expect(deletedProductInHistory[1].deletedAt).toBeTruthy();
+    expect(deletedProductInHistory[1].deletedBy.id).toEqual(user.id);
 
     done();
   });

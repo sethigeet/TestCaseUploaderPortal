@@ -7,7 +7,10 @@ import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { ProductMaster } from "../../../src/modules/masters/product";
-import { ModuleMaster } from "../../../src/modules/masters/module";
+import {
+  ModuleMaster,
+  ModuleMasterHistory,
+} from "../../../src/modules/masters/module";
 
 import { TestClient } from "../../utils";
 
@@ -30,7 +33,7 @@ beforeAll(async (done) => {
   conn = await createTypeormConnection();
 
   // create a user to test on
-  user = await User.create({
+  await User.create({
     username: correctUsername1,
     password: correctPassword1,
   }).save();
@@ -39,7 +42,7 @@ beforeAll(async (done) => {
     password: correctPassword2,
     role: UserRoles.SUPERVISOR,
   }).save();
-  await User.create({
+  user = await User.create({
     username: correctUsername3,
     password: correctPassword3,
     role: UserRoles.ADMIN,
@@ -138,6 +141,18 @@ describe("Delete a module", () => {
 
     const deletedModule = await ModuleMaster.findOne(myModule.id);
     expect(deletedModule).toBeUndefined();
+
+    const deletedModuleInHistory = await ModuleMasterHistory.find({
+      where: { pid: myModule.id },
+      relations: ["deletedBy"],
+    });
+
+    if (!deletedModuleInHistory) {
+      throw new Error("Module was not created in the history!");
+    }
+
+    expect(deletedModuleInHistory[1].deletedAt).toBeTruthy();
+    expect(deletedModuleInHistory[1].deletedBy.id).toEqual(user.id);
 
     done();
   });

@@ -10,7 +10,10 @@ import {
 import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
-import { ProductMaster } from "../../../src/modules/masters/product";
+import {
+  ProductMaster,
+  ProductMasterHistory,
+} from "../../../src/modules/masters/product";
 
 import { TestClient } from "../../utils";
 
@@ -98,6 +101,22 @@ describe("Create a product", () => {
     expect(createdProduct.code).toEqual(input.code);
     expect(createdProduct.name).toEqual(input.name);
     expect(createdProduct.deprecated).toEqual(input.deprecated);
+    expect(createdProduct.createdBy.id).toEqual(user.id);
+
+    const createdProductInHistory = await ProductMasterHistory.findOne({
+      where: { pid: response.data.createProduct.product?.id },
+      relations: ["createdBy"],
+    });
+
+    if (!createdProductInHistory) {
+      throw new Error("Product was not created in the history!");
+    }
+
+    expect(createdProductInHistory.code).toEqual(input.code);
+    expect(createdProductInHistory.name).toEqual(input.name);
+    expect(createdProductInHistory.deprecated).toEqual(input.deprecated);
+    expect(createdProductInHistory.createdAt).toBeTruthy();
+    expect(createdProductInHistory.createdBy.id).toEqual(user.id);
 
     done();
   });
@@ -129,6 +148,22 @@ describe("Create a product", () => {
     expect(createdProduct.code).toEqual(input.code);
     expect(createdProduct.name).toEqual(input.name);
     expect(createdProduct.deprecated).toEqual(false);
+    expect(createdProduct.createdBy.id).toEqual(user.id);
+
+    const createdProductInHistory = await ProductMasterHistory.findOne({
+      where: { pid: response.data.createProduct.product?.id },
+      relations: ["createdBy"],
+    });
+
+    if (!createdProductInHistory) {
+      throw new Error("Product was not created in the history!");
+    }
+
+    expect(createdProductInHistory.code).toEqual(input.code);
+    expect(createdProductInHistory.name).toEqual(input.name);
+    expect(createdProductInHistory.deprecated).toEqual(false);
+    expect(createdProductInHistory.createdAt).toBeTruthy();
+    expect(createdProductInHistory.createdBy.id).toEqual(user.id);
 
     done();
   });
