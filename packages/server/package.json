@@ -52,7 +52,7 @@
   "scripts": {
     "dev": "NODE_ENV=development ts-node-dev --respawn src/index.ts",
     "test": "NODE_ENV=test jest --detectOpenHandles --watch",
-    "build": "tsc",
+    "build": "NODE_ENV=production tsc",
     "gen-env": "gen-env-types .env -o ./src/modules/shared/types/env.d.ts -e ."
   }
 }

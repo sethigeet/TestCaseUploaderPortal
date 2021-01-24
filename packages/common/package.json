@@ -17,6 +17,6 @@
   },
   "scripts": {
     "dev": "tsc --watch",
-    "build": "tsc"
+    "build": "rm -rf ./dist && NODE_ENV=production tsc"
   }
 }

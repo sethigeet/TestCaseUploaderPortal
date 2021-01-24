@@ -20,7 +20,7 @@
     "gen-env-types": "^1.0.5"
   },
   "scripts": {
-    "build": "rm -rf ./dist && tsc",
+    "build": "rm -rf ./dist && NODE_ENV=production tsc",
     "dev": "rm -rf && tsc --watch",
     "gql:gen-types": "graphql-codegen --config codegen.yml"
   }
