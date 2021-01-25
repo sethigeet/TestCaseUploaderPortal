@@ -25,6 +25,9 @@ import {
 import { ModuleMasterResponse } from "../../src/modules/masters/module/resolver/ModuleMasterResponse";
 
 import * as queries from "./graphql";
+import { MenuMaster } from "../../src/modules/masters/menu";
+import { MenuMasterResponse } from "../../src/modules/masters/menu/resolver/MenuMasterResponse";
+import { CreateMenuInput } from "../../src/modules/masters/menu/resolver/create/inputTypes";
 
 export class TestClient {
   url: string;
@@ -289,6 +292,64 @@ export class TestClient {
     return rp.post(
       this.url,
       this.getOptions(queries.getDeleteModuleMutation(id))
+    );
+  }
+
+  async createMenu(
+    input: CreateMenuInput
+  ): Promise<{
+    data: { createMenu: MenuMasterResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getCreateMenuMutation(input))
+    );
+  }
+
+  async getMenu(
+    id: string
+  ): Promise<{
+    data: { getMenu: MenuMaster | null };
+    errors: any[];
+  }> {
+    return rp.post(this.url, this.getOptions(queries.getGetMenuQuery(id)));
+  }
+
+  async getMenus(
+    moduleId: string
+  ): Promise<{
+    data: { getMenus: MenuMaster[] };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getGetMenusQuery(moduleId))
+    );
+  }
+
+  async editMenu(
+    id: string,
+    input: EditModuleInput
+  ): Promise<{
+    data: { editMenu: MenuMasterResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getEditMenuMutation(id, input))
+    );
+  }
+
+  async deleteMenu(
+    id: string
+  ): Promise<{
+    data: { deleteMenu: boolean };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getDeleteMenuMutation(id))
     );
   }
 }
