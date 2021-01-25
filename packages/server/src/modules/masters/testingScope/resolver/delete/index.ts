@@ -1,0 +1,1 @@
+export { DeleteTestingScopeResolver } from "./deleteTestingScopeResolver";

@@ -1,0 +1,1 @@
+export { GetTestingForResolver } from "./getTestingForResolver";

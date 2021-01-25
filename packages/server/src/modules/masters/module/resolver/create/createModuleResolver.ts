@@ -53,7 +53,7 @@ export class CreateModuleResolver {
         product,
         code,
         name,
-        deprecated: deprecated ? deprecated : undefined,
+        deprecated: deprecated || undefined,
         createdBy: user,
       }).save();
     } catch (err) {
@@ -72,8 +72,8 @@ export class CreateModuleResolver {
       return {
         errors: [
           {
-            field: "createProduct",
-            message: "There was an error while creating your product!",
+            field: "createModule",
+            message: "There was an error while creating your module!",
           },
         ],
       };

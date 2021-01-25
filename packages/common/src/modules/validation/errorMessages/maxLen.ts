@@ -4,7 +4,7 @@ export const getMaxLenMessage = (
   fieldName: string,
   maxLen?: number
 ): string => {
-  const realMaxLen = maxLen ? maxLen : MAX_LEN;
+  const realMaxLen = maxLen || MAX_LEN;
 
   return `${
     fieldName.charAt(0).toUpperCase() + fieldName.slice(1)

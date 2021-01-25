@@ -1,0 +1,1 @@
+export { GetTestingScopeResolver } from "./getTestingScopeResolver";

@@ -1,7 +1,8 @@
 import { Arg, Mutation, Resolver } from "type-graphql";
 
 import {
-  createProductSchema,
+  createMenuSchema,
+  editMenuSchema,
   getDoesNotExistMessage,
   getRequiredMessage,
   getUnavailableMessage,
@@ -15,27 +16,40 @@ import {
 } from "../../../../shared/decorators";
 
 import { User } from "../../../../user";
+import { ModuleMaster } from "../../../module";
 
-import { ProductMaster } from "../../productMasterEntity";
+import { MenuMaster } from "../../menuMasterEntity";
 
-import { ProductMasterResponse } from "../ProductMasterResponse";
+import { MenuMasterResponse } from "../MenuMasterResponse";
 
-import { CreateProductInput } from "./inputTypes";
+import { CreateMenuInput, EditMenuInput } from "./inputTypes";
 
-@Resolver(() => ProductMaster)
-export class CreateProductResolver {
+@Resolver(() => MenuMaster)
+export class CreateMenuResolver {
   @isAuthenticated(UserRoles.ADMIN)
-  @ValidateArgs<ProductMasterResponse>(createProductSchema, "input")
-  @Mutation(() => ProductMasterResponse)
-  async createProduct(
-    @Arg("input", () => CreateProductInput)
-    { code, name, deprecated }: CreateProductInput,
+  @ValidateArgs<MenuMasterResponse>(createMenuSchema, "input")
+  @Mutation(() => MenuMasterResponse)
+  async createMenu(
+    @Arg("input", () => CreateMenuInput)
+    { moduleId, code, name, deprecated }: CreateMenuInput,
     @CurrentUser() user: User
-  ): Promise<ProductMasterResponse> {
-    let product: ProductMaster;
+  ): Promise<MenuMasterResponse> {
+    const product = await ModuleMaster.findOne(moduleId);
+    if (!product) {
+      return {
+        errors: [
+          {
+            field: "moduleId",
+            message: getDoesNotExistMessage("moduleId"),
+          },
+        ],
+      };
+    }
 
+    let menu: MenuMaster;
     try {
-      product = await ProductMaster.create({
+      menu = await MenuMaster.create({
+        module,
         code,
         name,
         deprecated: deprecated || undefined,
@@ -57,47 +71,47 @@ export class CreateProductResolver {
       return {
         errors: [
           {
-            field: "createProduct",
-            message: "There was an error while creating your product!",
+            field: "createMenu",
+            message: "There was an error while creating your menu!",
           },
         ],
       };
     }
 
-    return { product };
+    return { menu };
   }
 
   @isAuthenticated(UserRoles.ADMIN)
-  @ValidateArgs<ProductMasterResponse>(createProductSchema, "input")
-  @Mutation(() => ProductMasterResponse)
-  async editProduct(
+  @ValidateArgs<MenuMasterResponse>(editMenuSchema, "input")
+  @Mutation(() => MenuMasterResponse)
+  async editMenu(
     @Arg("id") id: string,
-    @Arg("input", () => CreateProductInput)
-    { code, name, deprecated }: CreateProductInput,
+    @Arg("input", () => EditMenuInput)
+    { code, name, deprecated }: EditMenuInput,
     @CurrentUser() user: User
-  ): Promise<ProductMasterResponse> {
+  ): Promise<MenuMasterResponse> {
     if (!id) {
       return { errors: [{ field: "id", message: getRequiredMessage("id") }] };
     }
 
-    const product = await ProductMaster.findOne(id, {
-      relations: ["createdBy", "updatedBy", "modules"],
+    const menu = await MenuMaster.findOne(id, {
+      relations: ["createdBy", "updatedBy", "module"],
     });
-    if (!product) {
+    if (!menu) {
       return {
         errors: [{ field: "id", message: getDoesNotExistMessage("id") }],
       };
     }
 
-    product.code = code;
-    product.name = name;
+    menu.code = code;
+    menu.name = name;
     if (deprecated) {
-      product.deprecated = deprecated;
+      menu.deprecated = deprecated;
     }
-    product.updatedBy = user;
+    menu.updatedBy = user;
 
     try {
-      await product.save();
+      await menu.save();
     } catch (err) {
       if (err.code === "23505") {
         if (err.detail.includes("Key (code)")) {
@@ -115,13 +129,13 @@ export class CreateProductResolver {
       return {
         errors: [
           {
-            field: "editProduct",
-            message: "There was an error while updating your product!",
+            field: "editMenu",
+            message: "There was an error while updating your menu!",
           },
         ],
       };
     }
 
-    return { product };
+    return { menu };
   }
 }
