@@ -34,8 +34,8 @@ export class CreateMenuResolver {
     { moduleId, code, name, deprecated }: CreateMenuInput,
     @CurrentUser() user: User
   ): Promise<MenuMasterResponse> {
-    const product = await ModuleMaster.findOne(moduleId);
-    if (!product) {
+    const module = await ModuleMaster.findOne(moduleId);
+    if (!module) {
       return {
         errors: [
           {
