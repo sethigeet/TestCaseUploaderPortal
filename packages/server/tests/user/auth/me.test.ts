@@ -1,14 +1,14 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 import { User } from "../../../src/modules/user";
 
-import { TestClient } from "../../utils";
+import { fakeData, TestClient } from "../../utils";
 
-seed(Date.now());
-const correctUsername = internet.userName();
-const correctPassword = internet.password(7);
+const {
+  username: correctUsername,
+  password: correctPassword,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 

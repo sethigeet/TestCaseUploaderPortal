@@ -26,7 +26,7 @@ export class GetMenuResolver {
     return MenuMaster.find({
       where: { module: { id: moduleId } },
       relations: ["createdBy", "updatedBy", "module"],
-      order: { code: "ASC" },
+      order: { createdAt: "DESC" },
     });
   }
 }

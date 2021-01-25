@@ -1,5 +1,4 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
 import {
   getRequiredMessage,
@@ -7,36 +6,31 @@ import {
   UserRoles,
 } from "@portal/common";
 
-import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
+import { User } from "../../../src/modules/user";
 import {
   ProductMaster,
   ProductMasterHistory,
 } from "../../../src/modules/masters/product";
 
-import { TestClient } from "../../utils";
+import { fakeData, TestClient } from "../../utils";
 
-const correctInput1 = {
-  code: "PROD-1",
-  name: "Product 1",
-};
-const correctInput2 = {
-  code: "PROD-2",
-  name: "Product 2",
-};
+const correctInput1 = fakeData.getProductVals();
+const correctInput2 = fakeData.getProductVals();
 
-seed(Date.now());
-const correctUsername1 = internet.userName();
-const correctPassword1 = internet.password(7);
-
-seed(Date.now() + 1);
-const correctUsername2 = internet.userName();
-const correctPassword2 = internet.password(7);
-
-seed(Date.now() + 2);
-const correctUsername3 = internet.userName();
-const correctPassword3 = internet.password(7);
+const {
+  username: correctUsername1,
+  password: correctPassword1,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername2,
+  password: correctPassword2,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername3,
+  password: correctPassword3,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user: User;

@@ -1,16 +1,16 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
-import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
+import { User } from "../../../src/modules/user";
 import { ProductMaster } from "../../../src/modules/masters/product";
 
-import { TestClient } from "../../utils";
+import { fakeData, TestClient } from "../../utils";
 
-seed(Date.now());
-const correctUsername = internet.userName();
-const correctPassword = internet.password(7);
+const {
+  username: correctUsername,
+  password: correctPassword,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user: User;
@@ -29,13 +29,11 @@ beforeAll(async (done) => {
 
   // create products to test on
   product1 = await ProductMaster.create({
-    code: "PROD-TEST2",
-    name: "Product for testing 2",
+    ...fakeData.getProductVals(),
     createdBy: user,
   }).save();
   product2 = await ProductMaster.create({
-    code: "PROD-TEST3",
-    name: "Product for testing 3",
+    ...fakeData.getProductVals(),
     createdBy: user,
   }).save();
 
@@ -56,17 +54,17 @@ describe("Get a product", () => {
 
     const response = await client.getProducts();
 
-    expect(response.data.getProducts[0]?.code).toEqual(product1.code);
-    expect(response.data.getProducts[0]?.name).toEqual(product1.name);
+    expect(response.data.getProducts[0]?.code).toEqual(product2.code);
+    expect(response.data.getProducts[1]?.name).toEqual(product1.name);
     expect(response.data.getProducts[0]?.deprecated).toEqual(
-      product1.deprecated
+      product2.deprecated
     );
     expect(response.data.getProducts[0]?.createdBy.id).toEqual(user.id);
 
-    expect(response.data.getProducts[1]?.code).toEqual(product2.code);
-    expect(response.data.getProducts[1]?.name).toEqual(product2.name);
+    expect(response.data.getProducts[1]?.code).toEqual(product1.code);
+    expect(response.data.getProducts[1]?.name).toEqual(product1.name);
     expect(response.data.getProducts[1]?.deprecated).toEqual(
-      product2.deprecated
+      product1.deprecated
     );
     expect(response.data.getProducts[1]?.createdBy.id).toEqual(user.id);
 

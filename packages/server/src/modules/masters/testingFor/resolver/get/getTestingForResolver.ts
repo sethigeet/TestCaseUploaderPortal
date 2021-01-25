@@ -26,7 +26,7 @@ export class GetTestingForResolver {
     return TestingForMaster.find({
       where: { menu: { id: menuId } },
       relations: ["createdBy", "updatedBy", "menu"],
-      order: { code: "ASC" },
+      order: { createdAt: "DESC" },
     });
   }
 }

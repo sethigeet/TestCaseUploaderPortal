@@ -1,17 +1,17 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
-import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
+import { User } from "../../../src/modules/user";
 import { ProductMaster } from "../../../src/modules/masters/product";
 import { ModuleMaster } from "../../../src/modules/masters/module";
 
-import { TestClient } from "../../utils";
+import { fakeData, TestClient } from "../../utils";
 
-seed(Date.now());
-const correctUsername = internet.userName();
-const correctPassword = internet.password(7);
+const {
+  username: correctUsername,
+  password: correctPassword,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user: User;
@@ -31,21 +31,18 @@ beforeAll(async (done) => {
 
   // create products to test on
   product = await ProductMaster.create({
-    code: "PROD-TEST4",
-    name: "Product for testing 4",
+    ...fakeData.getProductVals(),
     createdBy: user,
   }).save();
 
   // create modules to test on
   module1 = await ModuleMaster.create({
-    code: "MOD-TEST2",
-    name: "Module for testing 2",
+    ...fakeData.getModuleVals(),
     createdBy: user,
     product,
   }).save();
   module2 = await ModuleMaster.create({
-    code: "MOD-TEST3",
-    name: "Module for testing 3",
+    ...fakeData.getModuleVals(),
     createdBy: user,
     product,
   }).save();
@@ -67,15 +64,15 @@ describe("Get many modules", () => {
 
     const response = await client.getModules(product.id);
 
-    expect(response.data.getModules[0]?.code).toEqual(module1.code);
-    expect(response.data.getModules[0]?.name).toEqual(module1.name);
-    expect(response.data.getModules[0]?.deprecated).toEqual(module1.deprecated);
+    expect(response.data.getModules[0]?.code).toEqual(module2.code);
+    expect(response.data.getModules[0]?.name).toEqual(module2.name);
+    expect(response.data.getModules[0]?.deprecated).toEqual(module2.deprecated);
     expect(response.data.getModules[0]?.createdBy.id).toEqual(user.id);
     expect(response.data.getModules[0]?.product.id).toEqual(product.id);
 
-    expect(response.data.getModules[1]?.code).toEqual(module2.code);
-    expect(response.data.getModules[1]?.name).toEqual(module2.name);
-    expect(response.data.getModules[1]?.deprecated).toEqual(module2.deprecated);
+    expect(response.data.getModules[1]?.code).toEqual(module1.code);
+    expect(response.data.getModules[1]?.name).toEqual(module1.name);
+    expect(response.data.getModules[1]?.deprecated).toEqual(module1.deprecated);
     expect(response.data.getModules[1]?.createdBy.id).toEqual(user.id);
     expect(response.data.getModules[1]?.product.id).toEqual(product.id);
 

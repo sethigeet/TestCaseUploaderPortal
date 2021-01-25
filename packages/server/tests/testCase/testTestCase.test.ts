@@ -1,46 +1,32 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
 import { UserRoles } from "@portal/common";
 
-import { User } from "../../src/modules/user";
 import { createTypeormConnection } from "../../src/modules/shared/utils";
 
-import { TestClient } from "../utils";
-import { TestCase } from "../../src/modules/testCase";
-import { TestCaseHistory } from "../../src/modules/testCase";
+import { User } from "../../src/modules/user";
+import { TestCase, TestCaseHistory } from "../../src/modules/testCase";
 
-const creationInput = {
-  productCode: "PROD-1",
-  moduleCode: "MOD-1",
-  menuCode: "MEN-1",
-  testingFor: "TFOR-1",
-  testingScope: "TSCO-1",
-  description: "This is a valid description for a test case!",
-  expectedResult: "This should not expect any errors",
-};
-const getCorrectInput = (id: string, passed: boolean) => ({
-  id,
-  passed,
-  userRemarks: "these are the remarks of the user!",
-  actualResult: "this is the actual result of the test",
-});
+import { fakeData, TestClient } from "../utils";
 
-seed(Date.now());
-const correctUsername1 = internet.userName();
-const correctPassword1 = internet.password(7);
+const creationInput = fakeData.getTestCaseVals();
 
-seed(Date.now() + 1);
-const correctUsername2 = internet.userName();
-const correctPassword2 = internet.password(7);
-
-seed(Date.now() + 2);
-const correctUsername3 = internet.userName();
-const correctPassword3 = internet.password(7);
-
-seed(Date.now() + 3);
-const correctUsername4 = internet.userName();
-const correctPassword4 = internet.password(7);
+const {
+  username: correctUsername1,
+  password: correctPassword1,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername2,
+  password: correctPassword2,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername3,
+  password: correctPassword3,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername4,
+  password: correctPassword4,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user1: User;
@@ -103,7 +89,7 @@ describe("Test a test case", () => {
     const client = new TestClient(process.env.TEST_HOST as string);
 
     const response = await client.testTestCase(
-      getCorrectInput(testCase1.id, true)
+      fakeData.getTestTestCaseVals(testCase1.id, true)
     );
 
     expect(response.errors).toBeTruthy();
@@ -124,7 +110,7 @@ describe("Test a test case", () => {
     const client = new TestClient(process.env.TEST_HOST as string);
 
     const response = await client.testTestCase(
-      getCorrectInput(testCase1.id, true)
+      fakeData.getTestTestCaseVals(testCase1.id, true)
     );
 
     expect(response.errors).toBeTruthy();
@@ -154,7 +140,7 @@ describe("Test a test case", () => {
     const client = new TestClient(process.env.TEST_HOST as string);
     await client.login(correctUsername1, correctPassword1);
 
-    const input = getCorrectInput(testCase1.id, true);
+    const input = fakeData.getTestTestCaseVals(testCase1.id, true);
 
     const response = await client.testTestCase(input);
 
@@ -192,7 +178,7 @@ describe("Test a test case", () => {
     await client.login(correctUsername1, correctPassword1);
 
     const response = await client.testTestCase(
-      getCorrectInput(testCase2.id, true)
+      fakeData.getTestTestCaseVals(testCase2.id, true)
     );
 
     expect(response.errors).toBeTruthy();
@@ -213,7 +199,7 @@ describe("Test a test case", () => {
     const client = new TestClient(process.env.TEST_HOST as string);
     await client.login(correctUsername3, correctPassword3);
 
-    const input = getCorrectInput(testCase2.id, true);
+    const input = fakeData.getTestTestCaseVals(testCase2.id, true);
 
     const response = await client.testTestCase(input);
 
@@ -250,7 +236,7 @@ describe("Test a test case", () => {
     const client = new TestClient(process.env.TEST_HOST as string);
     await client.login(correctUsername4, correctPassword4);
 
-    const input = getCorrectInput(testCase3.id, true);
+    const input = fakeData.getTestTestCaseVals(testCase3.id, true);
 
     const response = await client.testTestCase(input);
 

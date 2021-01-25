@@ -18,7 +18,7 @@ export abstract class BaseMaster extends BaseEntity {
   id!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 10, unique: true })
+  @Column({ type: "varchar", length: 15, unique: true })
   code!: string;
 
   @Field()

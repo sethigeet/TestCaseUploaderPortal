@@ -1,5 +1,4 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
@@ -7,11 +6,12 @@ import { User } from "../../../src/modules/user";
 import { ModuleMaster } from "../../../src/modules/masters/module";
 import { MenuMaster } from "../../../src/modules/masters/menu";
 
-import { TestClient } from "../../utils";
+import { fakeData, TestClient } from "../../utils";
 
-seed(Date.now());
-const correctUsername = internet.userName();
-const correctPassword = internet.password(7);
+const {
+  username: correctUsername,
+  password: correctPassword,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user: User;
@@ -31,21 +31,18 @@ beforeAll(async (done) => {
 
   // create products to test on
   myModule = await ModuleMaster.create({
-    code: "MOD-TEST4",
-    name: "Module for testing 4",
+    ...fakeData.getModuleVals(),
     createdBy: user,
   }).save();
 
   // create modules to test on
   menu1 = await MenuMaster.create({
-    code: "MEN-TEST2",
-    name: "Menu for testing 2",
+    ...fakeData.getMenuVals(),
     createdBy: user,
     module: myModule,
   }).save();
   menu2 = await MenuMaster.create({
-    code: "MEN-TEST3",
-    name: "Menu for testing 3",
+    ...fakeData.getMenuVals(),
     createdBy: user,
     module: myModule,
   }).save();
@@ -67,15 +64,15 @@ describe("Get many menu", () => {
 
     const response = await client.getMenus(myModule.id);
 
-    expect(response.data.getMenus[0]?.code).toEqual(menu1.code);
-    expect(response.data.getMenus[0]?.name).toEqual(menu1.name);
-    expect(response.data.getMenus[0]?.deprecated).toEqual(menu1.deprecated);
+    expect(response.data.getMenus[0]?.code).toEqual(menu2.code);
+    expect(response.data.getMenus[0]?.name).toEqual(menu2.name);
+    expect(response.data.getMenus[0]?.deprecated).toEqual(menu2.deprecated);
     expect(response.data.getMenus[0]?.createdBy.id).toEqual(user.id);
     expect(response.data.getMenus[0]?.module.id).toEqual(myModule.id);
 
-    expect(response.data.getMenus[1]?.code).toEqual(menu2.code);
-    expect(response.data.getMenus[1]?.name).toEqual(menu2.name);
-    expect(response.data.getMenus[1]?.deprecated).toEqual(menu2.deprecated);
+    expect(response.data.getMenus[1]?.code).toEqual(menu1.code);
+    expect(response.data.getMenus[1]?.name).toEqual(menu1.name);
+    expect(response.data.getMenus[1]?.deprecated).toEqual(menu1.deprecated);
     expect(response.data.getMenus[1]?.createdBy.id).toEqual(user.id);
     expect(response.data.getMenus[1]?.module.id).toEqual(myModule.id);
 

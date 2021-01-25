@@ -1,0 +1,1 @@
+export { getFakeUserCreds } from "./getFakeUserCreds";

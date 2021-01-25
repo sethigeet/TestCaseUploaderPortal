@@ -1,5 +1,4 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
 import {
   getMinLenMessage,
@@ -13,36 +12,28 @@ import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { ProductMaster } from "../../../src/modules/masters/product";
 
-import { TestClient } from "../../utils";
+import { fakeData, TestClient } from "../../utils";
 import {
   ModuleMaster,
   ModuleMasterHistory,
 } from "../../../src/modules/masters/module";
 
-const correctInput1 = {
-  code: "P1-MOD-1",
-  name: "Module 1 of Product 1",
-};
-const correctInput2 = {
-  code: "P1-MOD-2",
-  name: "Module 2 of Product 1",
-};
-const correctInput3 = {
-  code: "P1-MOD-3",
-  name: "Module 3 of Product 1",
-};
+const correctInput1 = fakeData.getModuleVals();
+const correctInput2 = fakeData.getModuleVals();
+const correctInput3 = fakeData.getModuleVals();
 
-seed(Date.now());
-const correctUsername1 = internet.userName();
-const correctPassword1 = internet.password(7);
-
-seed(Date.now() + 1);
-const correctUsername2 = internet.userName();
-const correctPassword2 = internet.password(7);
-
-seed(Date.now() + 2);
-const correctUsername3 = internet.userName();
-const correctPassword3 = internet.password(7);
+const {
+  username: correctUsername1,
+  password: correctPassword1,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername2,
+  password: correctPassword2,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername3,
+  password: correctPassword3,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user: User;
@@ -69,10 +60,7 @@ beforeAll(async (done) => {
   }).save();
 
   // create a product to test on
-  product = await ProductMaster.create({
-    code: "PROD-1",
-    name: "Product 1",
-  }).save();
+  product = await ProductMaster.create(fakeData.getProductVals()).save();
 
   done();
 });

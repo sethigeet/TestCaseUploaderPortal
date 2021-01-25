@@ -1,30 +1,30 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
 import { UserRoles } from "@portal/common";
 
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { User } from "../../../src/modules/user";
-import { ProductMaster } from "../../../src/modules/masters/product";
 import { ModuleMaster } from "../../../src/modules/masters/module";
-
 import {
   MenuMaster,
   MenuMasterHistory,
 } from "../../../src/modules/masters/menu";
 
-import { TestClient } from "../../utils";
+import { fakeData, TestClient } from "../../utils";
 
-seed(Date.now());
-const correctUsername1 = internet.userName();
-const correctPassword1 = internet.password(7);
-seed(Date.now() + 1);
-const correctUsername2 = internet.userName();
-const correctPassword2 = internet.password(7);
-seed(Date.now() + 2);
-const correctUsername3 = internet.userName();
-const correctPassword3 = internet.password(7);
+const {
+  username: correctUsername1,
+  password: correctPassword1,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername2,
+  password: correctPassword2,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername3,
+  password: correctPassword3,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user: User;
@@ -50,25 +50,15 @@ beforeAll(async (done) => {
     role: UserRoles.ADMIN,
   }).save();
 
-  // create products to test on
-  const product = await ProductMaster.create({
-    code: "PROD-TEST",
-    name: "Product for testing",
-    createdBy: user,
-  }).save();
-
   // create modules to test on
   const myModule = await ModuleMaster.create({
-    code: "MOD-TEST",
-    name: "Module for testing",
+    ...fakeData.getModuleVals(),
     createdBy: user,
-    product,
   }).save();
 
   // create menus to test on
   menu = await MenuMaster.create({
-    code: "MOD-TEST",
-    name: "Module for testing",
+    ...fakeData.getMenuVals(),
     createdBy: user,
     module: myModule,
   }).save();

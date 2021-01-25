@@ -1,31 +1,24 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
 import { UserRoles } from "@portal/common";
 
-import { User } from "../../src/modules/user";
 import { createTypeormConnection } from "../../src/modules/shared/utils";
 
-import { TestClient } from "../utils";
+import { User } from "../../src/modules/user";
 import { TestCase } from "../../src/modules/testCase";
 
-const correctInput = {
-  productCode: "PROD-1",
-  moduleCode: "MOD-1",
-  menuCode: "MEN-1",
-  testingFor: "TFOR-1",
-  testingScope: "TSCO-1",
-  description: "This is a valid description for a test case!",
-  expectedResult: "This should not expect any errors",
-};
+import { fakeData, TestClient } from "../utils";
 
-seed(Date.now());
-const correctUsername1 = internet.userName();
-const correctPassword1 = internet.password(7);
+const correctInput = fakeData.getTestCaseVals();
 
-seed(Date.now() + 1);
-const correctUsername2 = internet.userName();
-const correctPassword2 = internet.password(7);
+const {
+  username: correctUsername1,
+  password: correctPassword1,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername2,
+  password: correctPassword2,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user1: User;

@@ -1,5 +1,4 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
 import {
   getMinLenMessage,
@@ -8,44 +7,33 @@ import {
   UserRoles,
 } from "@portal/common";
 
-import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
-import { ProductMaster } from "../../../src/modules/masters/product";
-
+import { User } from "../../../src/modules/user";
 import { ModuleMaster } from "../../../src/modules/masters/module";
-
 import {
   MenuMaster,
   MenuMasterHistory,
 } from "../../../src/modules/masters/menu";
 
-import { TestClient } from "../../utils";
+import { fakeData, TestClient } from "../../utils";
 
-const correctInput1 = {
-  code: "M1-MEN-1",
-  name: "Menu 1 of Module 1",
-};
-const correctInput2 = {
-  code: "M1-MEN-2",
-  name: "Menu 2 of Module 1",
-};
-const correctInput3 = {
-  code: "P1-MOD-3",
-  name: "Module 3 of Product 1",
-};
+const correctInput1 = fakeData.getMenuVals();
+const correctInput2 = fakeData.getMenuVals();
+const correctInput3 = fakeData.getMenuVals();
 
-seed(Date.now());
-const correctUsername1 = internet.userName();
-const correctPassword1 = internet.password(7);
-
-seed(Date.now() + 1);
-const correctUsername2 = internet.userName();
-const correctPassword2 = internet.password(7);
-
-seed(Date.now() + 2);
-const correctUsername3 = internet.userName();
-const correctPassword3 = internet.password(7);
+const {
+  username: correctUsername1,
+  password: correctPassword1,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername2,
+  password: correctPassword2,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername3,
+  password: correctPassword3,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user: User;
@@ -71,17 +59,9 @@ beforeAll(async (done) => {
     role: UserRoles.SUPERVISOR,
   }).save();
 
-  // create a product to test on
-  const product = await ProductMaster.create({
-    code: "PROD-1",
-    name: "Product 1",
-  }).save();
-
   // create a module to test on
   myModule = await ModuleMaster.create({
-    code: "MOD-1",
-    name: "Module 1",
-    product,
+    ...fakeData.getModuleVals(),
   }).save();
 
   done();

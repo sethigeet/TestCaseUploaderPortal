@@ -1,5 +1,4 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
@@ -7,11 +6,12 @@ import { User } from "../../../src/modules/user";
 import { ModuleMaster } from "../../../src/modules/masters/module";
 import { MenuMaster } from "../../../src/modules/masters/menu";
 
-import { TestClient } from "../../utils";
+import { fakeData, TestClient } from "../../utils";
 
-seed(Date.now());
-const correctUsername = internet.userName();
-const correctPassword = internet.password(7);
+const {
+  username: correctUsername,
+  password: correctPassword,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user: User;
@@ -30,15 +30,13 @@ beforeAll(async (done) => {
 
   // create module to test on
   myModule = await ModuleMaster.create({
-    code: "MOD-TEST",
-    name: "Module for testing",
+    ...fakeData.getModuleVals(),
     createdBy: user,
   }).save();
 
   // create menu to test on
   menu = await MenuMaster.create({
-    code: "MEN-TEST",
-    name: "Menu for testing",
+    ...fakeData.getMenuVals(),
     createdBy: user,
     module: myModule,
   }).save();

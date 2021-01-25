@@ -1,41 +1,25 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
 import { UserRoles } from "@portal/common";
 
-import { User } from "../../src/modules/user";
 import { createTypeormConnection } from "../../src/modules/shared/utils";
 
-import { TestClient } from "../utils";
+import { User } from "../../src/modules/user";
 import { TestCase } from "../../src/modules/testCase";
 
-const correctInput1 = {
-  productCode: "PROD-1",
-  moduleCode: "MOD-1",
-  menuCode: "MEN-1",
-  testingFor: "TFOR-1",
-  testingScope: "TSCO-1",
-  description: "This is a valid description for a test case!",
-  expectedResult: "This should not expect any errors",
-};
+import { fakeData, TestClient } from "../utils";
 
-const correctInput2 = {
-  productCode: "PROD-2",
-  moduleCode: "MOD-2",
-  menuCode: "MEN-2",
-  testingFor: "TFOR-2",
-  testingScope: "TSCO-2",
-  description: "This is a valid description for a test case2!",
-  expectedResult: "This should not expect any errors2",
-};
+const correctInput1 = fakeData.getTestCaseVals();
+const correctInput2 = fakeData.getTestCaseVals();
 
-seed(Date.now());
-const correctUsername1 = internet.userName();
-const correctPassword1 = internet.password(7);
-
-seed(Date.now() + 1);
-const correctUsername2 = internet.userName();
-const correctPassword2 = internet.password(7);
+const {
+  username: correctUsername1,
+  password: correctPassword1,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername2,
+  password: correctPassword2,
+} = fakeData.getFakeUserCreds();
 
 const limit = 2;
 let cursor: Date;

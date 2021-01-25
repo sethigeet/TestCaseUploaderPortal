@@ -14,7 +14,7 @@ export abstract class BaseMasterHistory extends BaseEntity {
   pid!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 10 })
+  @Column({ type: "varchar", length: 15 })
   code!: string;
 
   @Field()

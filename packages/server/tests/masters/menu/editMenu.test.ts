@@ -1,5 +1,4 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
 import {
   getRequiredMessage,
@@ -16,28 +15,23 @@ import {
   MenuMasterHistory,
 } from "../../../src/modules/masters/menu";
 
-import { TestClient } from "../../utils";
+import { fakeData, TestClient } from "../../utils";
 
-const correctInput1 = {
-  code: "MEN-1-N",
-  name: "Menu 1 - NEW",
-};
-const correctInput2 = {
-  code: "MEN-2-N",
-  name: "Menu 2 - NEW",
-};
+const correctInput1 = fakeData.getMenuVals();
+const correctInput2 = fakeData.getMenuVals();
 
-seed(Date.now());
-const correctUsername1 = internet.userName();
-const correctPassword1 = internet.password(7);
-
-seed(Date.now() + 1);
-const correctUsername2 = internet.userName();
-const correctPassword2 = internet.password(7);
-
-seed(Date.now() + 2);
-const correctUsername3 = internet.userName();
-const correctPassword3 = internet.password(7);
+const {
+  username: correctUsername1,
+  password: correctPassword1,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername2,
+  password: correctPassword2,
+} = fakeData.getFakeUserCreds();
+const {
+  username: correctUsername3,
+  password: correctPassword3,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user: User;
@@ -67,21 +61,18 @@ beforeAll(async (done) => {
 
   // create modules to test on
   myModule = await ModuleMaster.create({
-    code: "MOD-1",
-    name: "MOdule 1",
+    ...fakeData.getModuleVals(),
     createdBy: user,
   }).save();
 
   // create modules to test on
   menu1 = await MenuMaster.create({
-    code: "MEN-1",
-    name: "Menu 1",
+    ...fakeData.getMenuVals(),
     createdBy: user,
     module: myModule,
   }).save();
   menu2 = await MenuMaster.create({
-    code: "MEN-2",
-    name: "Menu 2",
+    ...fakeData.getMenuVals(),
     createdBy: user,
     module: myModule,
   }).save();

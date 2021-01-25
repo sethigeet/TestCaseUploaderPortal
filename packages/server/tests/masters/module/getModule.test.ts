@@ -1,17 +1,17 @@
 import { Connection } from "typeorm";
-import { internet, seed } from "faker";
 
-import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
+import { User } from "../../../src/modules/user";
+import { ProductMaster } from "../../../src/modules/masters/product";
 import { ModuleMaster } from "../../../src/modules/masters/module";
 
-import { TestClient } from "../../utils";
-import { ProductMaster } from "../../../src/modules/masters/product";
+import { fakeData, TestClient } from "../../utils";
 
-seed(Date.now());
-const correctUsername = internet.userName();
-const correctPassword = internet.password(7);
+const {
+  username: correctUsername,
+  password: correctPassword,
+} = fakeData.getFakeUserCreds();
 
 let conn: Connection;
 let user: User;
@@ -30,15 +30,13 @@ beforeAll(async (done) => {
 
   // create products to test on
   product = await ProductMaster.create({
-    code: "PROD-TEST",
-    name: "Product for testing",
+    ...fakeData.getProductVals(),
     createdBy: user,
   }).save();
 
   // create modules to test on
   myModule = await ModuleMaster.create({
-    code: "MOD-TEST",
-    name: "Module for testing",
+    ...fakeData.getModuleVals(),
     createdBy: user,
     product,
   }).save();

@@ -30,7 +30,7 @@ export class GetTestingScopeResolver {
     return TestingScopeMaster.find({
       where: { testingFor: { id: testingForId } },
       relations: ["createdBy", "updatedBy", "testingScope"],
-      order: { code: "ASC" },
+      order: { createdAt: "DESC" },
     });
   }
 }
