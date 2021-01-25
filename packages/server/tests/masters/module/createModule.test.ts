@@ -175,7 +175,7 @@ describe("Create a module", () => {
     });
 
     if (!createdModuleInHistory) {
-      throw new Error("Product was not created in the history!");
+      throw new Error("Module was not created in the history!");
     }
 
     expect(createdModuleInHistory.code).toEqual(input.code);

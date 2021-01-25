@@ -1,6 +1,5 @@
 import rp from "request-promise";
 import { CoreOptions } from "request";
-import { inspect } from "util";
 
 import { FieldError } from "../../src/modules/shared/responseTypes";
 
@@ -19,8 +18,13 @@ import { CreateProductInput } from "../../src/modules/masters/product/resolver/c
 import { ProductMasterResponse } from "../../src/modules/masters/product/resolver/ProductMasterResponse";
 
 import { ModuleMaster } from "../../src/modules/masters/module";
-import { CreateModuleInput } from "../../src/modules/masters/module/resolver/create/inputTypes";
+import {
+  CreateModuleInput,
+  EditModuleInput,
+} from "../../src/modules/masters/module/resolver/create/inputTypes";
 import { ModuleMasterResponse } from "../../src/modules/masters/module/resolver/ModuleMasterResponse";
+
+import * as queries from "./graphql";
 
 export class TestClient {
   url: string;
@@ -48,20 +52,7 @@ export class TestClient {
   ): Promise<{ data: { register: UserResponse } }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-  register(credentials: {username: "${username}", password: "${password}"}) {
-    errors {
-      field
-      message
-    }
-    user {
-      id
-      username
-    }
-  }
-}
-`)
+      this.getOptions(queries.getRegisterMutation(username, password))
     );
   }
 
@@ -71,67 +62,28 @@ mutation {
   ): Promise<{ data: { login: UserResponse } }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-  login(credentials: {username: "${username}", password: "${password}"}) {
-    errors {
-      field
-      message
-    }
-    user {
-      id
-      username
-    }
-  }
-}
-`)
+      this.getOptions(queries.getLoginMutation(username, password))
     );
   }
 
   async me(): Promise<{ data: { me: User | undefined } }> {
-    return rp.post(
-      this.url,
-      this.getOptions(`
-query {
-  me {
-    id
-    username
-  }
-}
-`)
-    );
+    return rp.post(this.url, this.getOptions(queries.getMeQuery()));
   }
 
   async logout(): Promise<{ data: { logout: boolean } }> {
-    return rp.post(
-      this.url,
-      this.getOptions(`
-mutation {
-  logout 
-}
-`)
-    );
+    return rp.post(this.url, this.getOptions(queries.getLogoutMutation()));
   }
 
   async logoutAllSessions(): Promise<{ data: { logoutAllSessions: boolean } }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-  logoutAllSessions
-}
-`)
+      this.getOptions(queries.getLogoutAllSessionsMutation())
     );
   }
 
-  async createTestCase({
-    productCode,
-    moduleCode,
-    menuCode,
-    testingFor,
-    testingScope,
-    case: { description, expectedResult },
-  }: CreateTestCaseInput): Promise<{
+  async createTestCase(
+    input: CreateTestCaseInput
+  ): Promise<{
     data: {
       createTestCase: {
         errors?: FieldError[];
@@ -142,52 +94,13 @@ mutation {
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-createTestCase(
-    input: {
-      productCode: "${productCode}"
-      moduleCode: "${moduleCode}"
-      menuCode: "${menuCode}"
-      testingFor: "${testingFor}"
-      testingScope: "${testingScope}"
-      case: {
-        description: "${description}"
-        expectedResult: "${expectedResult}"
-      }
-    }
-  ) {
-    errors {
-      field
-      message
-    }
-    testCase {
-      id
-      productCode
-      moduleCode
-      menuCode
-      testingFor
-      testingScope
-      description
-      expectedResult
-      createdBy {
-        id
-      }
-    }
-  }
-}
-`)
+      this.getOptions(queries.getCreateTestCaseMutation(input))
     );
   }
 
-  async createTestCases({
-    productCode,
-    moduleCode,
-    menuCode,
-    testingFor,
-    testingScope,
-    cases,
-  }: CreateTestCasesInput): Promise<{
+  async createTestCases(
+    input: CreateTestCasesInput
+  ): Promise<{
     data: {
       createTestCases: {
         errors?: FieldError[];
@@ -201,38 +114,7 @@ createTestCase(
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-createTestCases(
-    input: {
-      productCode: "${productCode}"
-      moduleCode: "${moduleCode}"
-      menuCode: "${menuCode}"
-      testingFor: "${testingFor}"
-      testingScope: "${testingScope}"
-      cases: ${inspect(cases).replace(/'/g, '"')}
-    }
-  ) {
-    errors {
-      field
-      message
-    }
-    testCases {
-      id
-      productCode
-      moduleCode
-      menuCode
-      testingFor
-      testingScope
-      description
-      expectedResult
-      createdBy {
-        id
-      }
-    }
-  }
-}
-`)
+      this.getOptions(queries.getCreateTestCasesMutation(input))
     );
   }
 
@@ -246,26 +128,7 @@ createTestCases(
     };
     errors: any[];
   }> {
-    return rp.post(
-      this.url,
-      this.getOptions(`
-query {
-  getTestCase(id: "${id}") {
-    id
-    productCode
-    moduleCode
-    menuCode
-    testingFor
-    testingScope
-    description
-    expectedResult
-    createdBy {
-      id
-    }
-  }
-}
-`)
-    );
+    return rp.post(this.url, this.getOptions(queries.getGetTestCaseQuery(id)));
   }
 
   async getTestCases(
@@ -285,27 +148,7 @@ query {
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-query {
-  getTestCases(limit: ${limit}${cursor ? `, cursor: "${cursor}"` : ""}) {
-    testCases {
-      id
-      productCode
-      moduleCode
-      menuCode
-      testingFor
-      testingScope
-      description
-      expectedResult
-      createdBy {
-        id
-      }
-      createdAt
-    }
-    hasMore
-  }
-}
-`)
+      this.getOptions(queries.getGetTestCasesQuery(limit, cursor))
     );
   }
 
@@ -317,20 +160,13 @@ query {
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-  verifyTestCase(id: "${id}") 
-}
-`)
+      this.getOptions(queries.getVerifyTestCaseMutation(id))
     );
   }
 
-  async testTestCase({
-    id,
-    passed,
-    actualResult,
-    userRemarks,
-  }: TestTestCaseInput): Promise<{
+  async testTestCase(
+    input: TestTestCaseInput
+  ): Promise<{
     data: {
       testTestCase: TestCase & {
         createdBy: User;
@@ -341,64 +177,19 @@ mutation {
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-  testTestCase(
-    input: {
-      id: "${id}"
-      passed: ${passed}
-      actualResult: "${actualResult}"
-      userRemarks: "${userRemarks}"
-    }
-  ) {
-    id
-    passed
-    actualResult
-    userRemarks
-  }
-}
-`)
+      this.getOptions(queries.getTestTestCaseMutation(input))
     );
   }
 
-  async createProduct({
-    code,
-    name,
-    deprecated,
-  }: CreateProductInput): Promise<{
+  async createProduct(
+    input: CreateProductInput
+  ): Promise<{
     data: { createProduct: ProductMasterResponse };
     errors: any[];
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-  createProduct(
-    input: {
-      code: "${code}"
-      name: "${name}"
-      ${deprecated ? `deprecated: ${deprecated}` : ""}
-    }
-  ) {
-    errors {
-      field
-      message
-    }
-    product {
-      id
-      code
-      name
-      deprecated
-      createdBy {
-        id
-      }
-      modules {
-        id
-      }
-    }
-  }
-}
-`)
+      this.getOptions(queries.getCreateProductMutation(input))
     );
   }
 
@@ -408,84 +199,26 @@ mutation {
     data: { getProduct: ProductMaster | null };
     errors: any[];
   }> {
-    return rp.post(
-      this.url,
-      this.getOptions(`
-query {
-  getProduct(id: "${id}") {
-    id
-    code
-    name
-    deprecated
-    createdBy {
-      id
-    }
-  }
-}
-`)
-    );
+    return rp.post(this.url, this.getOptions(queries.getGetProductQuery(id)));
   }
 
   async getProducts(): Promise<{
     data: { getProducts: ProductMaster[] };
     errors: any[];
   }> {
-    return rp.post(
-      this.url,
-      this.getOptions(`
-query {
-  getProducts {
-    id
-    code
-    name
-    deprecated
-    createdBy {
-      id
-    }
-  }
-}
-`)
-    );
+    return rp.post(this.url, this.getOptions(queries.getGetProductsQuery()));
   }
 
   async editProduct(
     id: string,
-    { code, name, deprecated }: CreateProductInput
+    input: CreateProductInput
   ): Promise<{
     data: { editProduct: ProductMasterResponse };
     errors: any[];
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-  editProduct(
-    id: "${id}"
-    input: {
-      code: "${code}"
-      name: "${name}"
-      ${deprecated ? `deprecated: ${deprecated}` : ""}
-    }
-  ) {
-    errors {
-      field
-      message
-    }
-    product {
-      id
-      code
-      name
-      deprecated
-      updatedBy {
-        id
-      }
-      modules {
-        id
-      }
-    }
-  }
-}
-`)
+      this.getOptions(queries.getEditProductMutation(id, input))
     );
   }
 
@@ -497,54 +230,19 @@ mutation {
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-  deleteProduct(id: "${id}")
-}
-`)
+      this.getOptions(queries.getDeleteProductMutation(id))
     );
   }
 
-  async createModule({
-    productId,
-    code,
-    name,
-    deprecated,
-  }: CreateModuleInput): Promise<{
+  async createModule(
+    input: CreateModuleInput
+  ): Promise<{
     data: { createModule: ModuleMasterResponse };
     errors: any[];
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-  createModule(
-    input: {
-      productId: "${productId}"
-      code: "${code}"
-      name: "${name}"
-      ${deprecated ? `deprecated: ${deprecated}` : ""}
-    }
-  ) {
-    errors {
-      field
-      message
-    }
-    module {
-      id
-      code
-      name
-      deprecated
-      createdBy {
-        id
-      }
-      product {
-        id
-      }
-    }
-  }
-}
-`)
+      this.getOptions(queries.getCreateModuleMutation(input))
     );
   }
 
@@ -554,25 +252,7 @@ mutation {
     data: { getModule: ModuleMaster | null };
     errors: any[];
   }> {
-    return rp.post(
-      this.url,
-      this.getOptions(`
-query {
-  getModule(id: "${id}") {
-    id
-    code
-    name
-    deprecated
-    createdBy {
-      id
-    }
-    product {
-      id
-    }
-  }
-}
-`)
-    );
+    return rp.post(this.url, this.getOptions(queries.getGetModuleQuery(id)));
   }
 
   async getModules(
@@ -583,66 +263,20 @@ query {
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-query {
-  getModules(productId: "${productId}") {
-    id
-    code
-    name
-    deprecated
-    createdBy {
-      id
-    }
-    product {
-      id
-    }
-  }
-}
-`)
+      this.getOptions(queries.getGetModulesQuery(productId))
     );
   }
 
   async editModule(
     id: string,
-    { code, name, deprecated }: CreateProductInput
+    input: EditModuleInput
   ): Promise<{
     data: { editModule: ModuleMasterResponse };
     errors: any[];
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-  editModule(
-    id: "${id}"
-    input: {
-      code: "${code}"
-      name: "${name}"
-      ${deprecated ? `deprecated: ${deprecated}` : ""}
-    }
-  ) {
-    errors {
-      field
-      message
-    }
-    module {
-      id
-      code
-      name
-      deprecated
-      createdBy {
-        id
-      }
-      updatedBy {
-        id
-      }
-      product {
-        id
-      }
-    }
-  }
-}
-`)
+      this.getOptions(queries.getEditModuleMutation(id, input))
     );
   }
 
@@ -654,11 +288,7 @@ mutation {
   }> {
     return rp.post(
       this.url,
-      this.getOptions(`
-mutation {
-  deleteModule(id: "${id}")
-}
-`)
+      this.getOptions(queries.getDeleteModuleMutation(id))
     );
   }
 }

@@ -130,8 +130,8 @@ export class CreateModuleResolver {
       return {
         errors: [
           {
-            field: "editProduct",
-            message: "There was an error while updating your product!",
+            field: "editModule",
+            message: "There was an error while updating your module!",
           },
         ],
       };

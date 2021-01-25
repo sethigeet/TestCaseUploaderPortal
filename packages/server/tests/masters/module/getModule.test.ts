@@ -73,10 +73,10 @@ describe("Get a module", () => {
     const client = new TestClient(process.env.TEST_HOST as string);
     await client.login(correctUsername, correctPassword);
 
-    const response = await client.getProduct("");
+    const response = await client.getModule("");
 
     expect(response.errors).toBeTruthy();
-    expect(response.data.getProduct).toBeNull();
+    expect(response.data.getModule).toBeNull();
 
     done();
   });
@@ -84,10 +84,10 @@ describe("Get a module", () => {
   test("Check without logging in", async (done) => {
     const client = new TestClient(process.env.TEST_HOST as string);
 
-    const response = await client.getProduct(myModule.id);
+    const response = await client.getModule(myModule.id);
 
     expect(response.errors).toBeTruthy();
-    expect(response.data.getProduct).toBeNull();
+    expect(response.data.getModule).toBeNull();
 
     done();
   });
