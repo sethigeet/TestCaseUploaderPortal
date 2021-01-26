@@ -30,6 +30,7 @@ export class VerifyTestCaseResolver {
 
     try {
       testCase.verified = true;
+      testCase.verifiedBy = user;
       testCase.updatedBy = user;
       await testCase.save();
     } catch (e) {

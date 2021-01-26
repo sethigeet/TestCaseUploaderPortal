@@ -52,6 +52,10 @@ export class TestCaseHistory extends BaseEntity {
   @Column({ type: "boolean", default: false })
   verified!: boolean;
 
+  @Field(() => User)
+  @ManyToOne(() => User)
+  verifiedBy!: User;
+
   @Field()
   @Column({ type: "boolean", nullable: true })
   passed!: boolean;

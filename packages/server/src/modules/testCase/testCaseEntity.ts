@@ -1,6 +1,5 @@
 import {
   AfterInsert,
-  AfterRemove,
   AfterUpdate,
   BaseEntity,
   Column,
@@ -55,6 +54,10 @@ export class TestCase extends BaseEntity {
   @Column({ type: "boolean", default: false })
   verified!: boolean;
 
+  @Field(() => User)
+  @ManyToOne(() => User)
+  verifiedBy!: User;
+
   @Field()
   @Column({ type: "boolean", nullable: true })
   passed!: boolean;
@@ -105,6 +108,7 @@ export class TestCase extends BaseEntity {
       description: this.description,
       expectedResult: this.expectedResult,
       verified: this.verified,
+      verifiedBy: this.verifiedBy,
       passed: this.passed,
       actualResult: this.actualResult,
       userRemarks: this.userRemarks,
@@ -125,31 +129,12 @@ export class TestCase extends BaseEntity {
       description: this.description,
       expectedResult: this.expectedResult,
       verified: this.verified,
+      verifiedBy: this.verifiedBy,
       passed: this.passed,
       actualResult: this.actualResult,
       userRemarks: this.userRemarks,
       updatedAt: this.updatedAt,
       updatedBy: this.updatedBy,
-    }).save();
-  }
-
-  @AfterRemove()
-  async deleteIntoHistory(): Promise<void> {
-    await TestCaseHistory.create({
-      tsid: this.id,
-      productCode: this.productCode,
-      moduleCode: this.moduleCode,
-      menuCode: this.menuCode,
-      testingFor: this.testingFor,
-      testingScope: this.testingScope,
-      description: this.description,
-      expectedResult: this.expectedResult,
-      verified: this.verified,
-      passed: this.passed,
-      actualResult: this.actualResult,
-      userRemarks: this.userRemarks,
-      deletedAt: this.deletedAt,
-      deletedBy: this.deletedBy,
     }).save();
   }
 }

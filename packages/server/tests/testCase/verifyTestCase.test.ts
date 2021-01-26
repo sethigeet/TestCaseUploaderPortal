@@ -26,6 +26,7 @@ const {
 let conn: Connection;
 let user1: User;
 let user2: User;
+let user3: User;
 let testCase1: TestCase;
 let testCase2: TestCase;
 
@@ -43,7 +44,7 @@ beforeAll(async (done) => {
     password: correctPassword2,
     role: UserRoles.SUPERVISOR,
   }).save();
-  await User.create({
+  user3 = await User.create({
     username: correctUsername3,
     password: correctPassword3,
     role: UserRoles.ADMIN,
@@ -114,19 +115,25 @@ describe("Verify a test case", () => {
     expect(response.errors).toBeUndefined();
     expect(response.data.verifyTestCase).toEqual(true);
 
-    const changedTestCase = await TestCase.findOne(testCase1.id);
+    const changedTestCase = await TestCase.findOne(testCase1.id, {
+      relations: ["verifiedBy"],
+    });
     if (!changedTestCase) {
       throw new Error("Test case was not even created");
     }
     expect(changedTestCase.verified).toEqual(true);
+    expect(changedTestCase.verifiedBy.id).toEqual(user2.id);
 
     const changedTestCaseInHistory = await TestCaseHistory.find({
       where: { tsid: testCase1.id },
       order: { createdAt: "DESC" },
+      relations: ["verifiedBy"],
     });
     if (!changedTestCaseInHistory) {
       throw new Error("Test case was not even created in the history");
     }
+    expect(changedTestCaseInHistory[0].verified).toEqual(true);
+    expect(changedTestCaseInHistory[0].verifiedBy.id).toEqual(user2.id);
 
     done();
   });
@@ -140,20 +147,25 @@ describe("Verify a test case", () => {
     expect(response.errors).toBeUndefined();
     expect(response.data.verifyTestCase).toEqual(true);
 
-    const changedTestCase = await TestCase.findOne(testCase2.id);
+    const changedTestCase = await TestCase.findOne(testCase2.id, {
+      relations: ["verifiedBy"],
+    });
     if (!changedTestCase) {
       throw new Error("Test case was not even created");
     }
     expect(changedTestCase.verified).toEqual(true);
+    expect(changedTestCase.verifiedBy.id).toEqual(user3.id);
 
     const changedTestCaseInHistory = await TestCaseHistory.find({
       where: { tsid: testCase2.id },
       order: { createdAt: "DESC" },
+      relations: ["verifiedBy"],
     });
     if (!changedTestCaseInHistory) {
       throw new Error("Test case was not even created in the history");
     }
     expect(changedTestCaseInHistory[0].verified).toEqual(true);
+    expect(changedTestCaseInHistory[0].verifiedBy.id).toEqual(user3.id);
 
     done();
   });
