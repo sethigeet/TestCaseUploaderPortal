@@ -28,6 +28,9 @@ import * as queries from "./graphql";
 import { MenuMaster } from "../../src/modules/masters/menu";
 import { MenuMasterResponse } from "../../src/modules/masters/menu/resolver/MenuMasterResponse";
 import { CreateMenuInput } from "../../src/modules/masters/menu/resolver/create/inputTypes";
+import { CreateTestingForInput } from "../../src/modules/masters/testingFor/resolver/create/inputTypes";
+import { TestingForMasterResponse } from "../../src/modules/masters/testingFor/resolver/TestingForMasterResponse";
+import { TestingForMaster } from "../../src/modules/masters/testingFor";
 
 export class TestClient {
   url: string;
@@ -350,6 +353,67 @@ export class TestClient {
     return rp.post(
       this.url,
       this.getOptions(queries.getDeleteMenuMutation(id))
+    );
+  }
+
+  async createTestingFor(
+    input: CreateTestingForInput
+  ): Promise<{
+    data: { createTestingFor: TestingForMasterResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getCreateTestingForMutation(input))
+    );
+  }
+
+  async getTestingFor(
+    id: string
+  ): Promise<{
+    data: { getTestingFor: TestingForMaster | null };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getGetTestingForQuery(id))
+    );
+  }
+
+  async getTestingFors(
+    menuId: string
+  ): Promise<{
+    data: { getTestingFors: TestingForMaster[] };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getGetTestingForsQuery(menuId))
+    );
+  }
+
+  async editTestingFor(
+    id: string,
+    input: EditModuleInput
+  ): Promise<{
+    data: { editTestingFor: TestingForMasterResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getEditTestingForMutation(id, input))
+    );
+  }
+
+  async deleteTestingFor(
+    id: string
+  ): Promise<{
+    data: { deleteTestingFor: boolean };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getDeleteTestingForMutation(id))
     );
   }
 }

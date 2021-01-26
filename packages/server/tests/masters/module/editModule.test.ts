@@ -106,34 +106,34 @@ describe("Edit a module", () => {
     expect(response.data.editModule.module?.createdBy.id).toEqual(user.id);
     expect(response.data.editModule.module?.updatedBy.id).toEqual(user.id);
 
-    const createdModule = await ModuleMaster.findOne(
+    const editedModule = await ModuleMaster.findOne(
       response.data.editModule.module?.id,
       { relations: ["updatedBy"] }
     );
 
-    if (!createdModule) {
+    if (!editedModule) {
       throw new Error("Module was not created in the databse!");
     }
 
-    expect(createdModule.code).toEqual(input.code);
-    expect(createdModule.name).toEqual(input.name);
-    expect(createdModule.deprecated).toEqual(input.deprecated);
-    expect(createdModule.updatedBy.id).toEqual(user.id);
+    expect(editedModule.code).toEqual(input.code);
+    expect(editedModule.name).toEqual(input.name);
+    expect(editedModule.deprecated).toEqual(input.deprecated);
+    expect(editedModule.updatedBy.id).toEqual(user.id);
 
-    const createdModuleInHistory = await ModuleMasterHistory.find({
+    const editedModuleInHistory = await ModuleMasterHistory.find({
       where: { pid: response.data.editModule.module?.id },
       relations: ["updatedBy"],
     });
 
-    if (!createdModuleInHistory) {
+    if (!editedModuleInHistory) {
       throw new Error("Module was not created in the history!");
     }
 
-    expect(createdModuleInHistory[1].code).toEqual(input.code);
-    expect(createdModuleInHistory[1].name).toEqual(input.name);
-    expect(createdModuleInHistory[1].deprecated).toEqual(input.deprecated);
-    expect(createdModuleInHistory[1].updatedAt).toBeTruthy();
-    expect(createdModuleInHistory[1].updatedBy.id).toEqual(user.id);
+    expect(editedModuleInHistory[1].code).toEqual(input.code);
+    expect(editedModuleInHistory[1].name).toEqual(input.name);
+    expect(editedModuleInHistory[1].deprecated).toEqual(input.deprecated);
+    expect(editedModuleInHistory[1].updatedAt).toBeTruthy();
+    expect(editedModuleInHistory[1].updatedBy.id).toEqual(user.id);
 
     done();
   });
@@ -154,34 +154,34 @@ describe("Edit a module", () => {
     expect(response.data.editModule.module?.createdBy.id).toEqual(user.id);
     expect(response.data.editModule.module?.updatedBy.id).toEqual(user.id);
 
-    const createdModule = await ModuleMaster.findOne(
+    const editedModule = await ModuleMaster.findOne(
       response.data.editModule.module?.id,
       { relations: ["updatedBy"] }
     );
 
-    if (!createdModule) {
+    if (!editedModule) {
       throw new Error("Module was not created in the databse!");
     }
 
-    expect(createdModule.code).toEqual(input.code);
-    expect(createdModule.name).toEqual(input.name);
-    expect(createdModule.deprecated).toEqual(true);
-    expect(createdModule.updatedBy.id).toEqual(user.id);
+    expect(editedModule.code).toEqual(input.code);
+    expect(editedModule.name).toEqual(input.name);
+    expect(editedModule.deprecated).toEqual(true);
+    expect(editedModule.updatedBy.id).toEqual(user.id);
 
-    const createdModuleInHistory = await ModuleMasterHistory.find({
+    const editedModuleInHistory = await ModuleMasterHistory.find({
       where: { pid: response.data.editModule.module?.id },
       relations: ["updatedBy"],
     });
 
-    if (!createdModuleInHistory) {
+    if (!editedModuleInHistory) {
       throw new Error("Module was not created in the history!");
     }
 
-    expect(createdModuleInHistory[2].code).toEqual(input.code);
-    expect(createdModuleInHistory[2].name).toEqual(input.name);
-    expect(createdModuleInHistory[2].deprecated).toEqual(true);
-    expect(createdModuleInHistory[2].updatedAt).toBeTruthy();
-    expect(createdModuleInHistory[2].updatedBy.id).toEqual(user.id);
+    expect(editedModuleInHistory[2].code).toEqual(input.code);
+    expect(editedModuleInHistory[2].name).toEqual(input.name);
+    expect(editedModuleInHistory[2].deprecated).toEqual(true);
+    expect(editedModuleInHistory[2].updatedAt).toBeTruthy();
+    expect(editedModuleInHistory[2].updatedBy.id).toEqual(user.id);
 
     done();
   });

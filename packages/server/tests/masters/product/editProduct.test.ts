@@ -95,34 +95,34 @@ describe("Edit a product", () => {
     );
     expect(response.data.editProduct.product?.updatedBy.id).toEqual(user.id);
 
-    const createdProduct = await ProductMaster.findOne(
+    const editedProduct = await ProductMaster.findOne(
       response.data.editProduct.product?.id,
       { relations: ["updatedBy"] }
     );
 
-    if (!createdProduct) {
+    if (!editedProduct) {
       throw new Error("Product was not created in the databse!");
     }
 
-    expect(createdProduct.code).toEqual(input.code);
-    expect(createdProduct.name).toEqual(input.name);
-    expect(createdProduct.deprecated).toEqual(input.deprecated);
-    expect(createdProduct.updatedBy.id).toEqual(user.id);
+    expect(editedProduct.code).toEqual(input.code);
+    expect(editedProduct.name).toEqual(input.name);
+    expect(editedProduct.deprecated).toEqual(input.deprecated);
+    expect(editedProduct.updatedBy.id).toEqual(user.id);
 
-    const createdProductInHistory = await ProductMasterHistory.find({
+    const editedProductInHistory = await ProductMasterHistory.find({
       where: { pid: response.data.editProduct.product?.id },
       relations: ["updatedBy"],
     });
 
-    if (!createdProductInHistory) {
+    if (!editedProductInHistory) {
       throw new Error("Product was not created in the history!");
     }
 
-    expect(createdProductInHistory[1].code).toEqual(input.code);
-    expect(createdProductInHistory[1].name).toEqual(input.name);
-    expect(createdProductInHistory[1].deprecated).toEqual(input.deprecated);
-    expect(createdProductInHistory[1].updatedAt).toBeTruthy();
-    expect(createdProductInHistory[1].updatedBy.id).toEqual(user.id);
+    expect(editedProductInHistory[1].code).toEqual(input.code);
+    expect(editedProductInHistory[1].name).toEqual(input.name);
+    expect(editedProductInHistory[1].deprecated).toEqual(input.deprecated);
+    expect(editedProductInHistory[1].updatedAt).toBeTruthy();
+    expect(editedProductInHistory[1].updatedBy.id).toEqual(user.id);
 
     done();
   });
@@ -142,34 +142,34 @@ describe("Edit a product", () => {
     expect(response.data.editProduct.product?.modules).toEqual([]);
     expect(response.data.editProduct.product?.updatedBy.id).toEqual(user.id);
 
-    const createdProduct = await ProductMaster.findOne(
+    const editedProduct = await ProductMaster.findOne(
       response.data.editProduct.product?.id,
       { relations: ["updatedBy"] }
     );
 
-    if (!createdProduct) {
+    if (!editedProduct) {
       throw new Error("Product was not created in the databse!");
     }
 
-    expect(createdProduct.code).toEqual(input.code);
-    expect(createdProduct.name).toEqual(input.name);
-    expect(createdProduct.deprecated).toEqual(true);
-    expect(createdProduct.updatedBy.id).toEqual(user.id);
+    expect(editedProduct.code).toEqual(input.code);
+    expect(editedProduct.name).toEqual(input.name);
+    expect(editedProduct.deprecated).toEqual(true);
+    expect(editedProduct.updatedBy.id).toEqual(user.id);
 
-    const createdProductInHistory = await ProductMasterHistory.find({
+    const editedProductInHistory = await ProductMasterHistory.find({
       where: { pid: response.data.editProduct.product?.id },
       relations: ["updatedBy"],
     });
 
-    if (!createdProductInHistory) {
+    if (!editedProductInHistory) {
       throw new Error("Product was not created in the history!");
     }
 
-    expect(createdProductInHistory[2].code).toEqual(input.code);
-    expect(createdProductInHistory[2].name).toEqual(input.name);
-    expect(createdProductInHistory[2].deprecated).toEqual(true);
-    expect(createdProductInHistory[2].updatedAt).toBeTruthy();
-    expect(createdProductInHistory[2].updatedBy.id).toEqual(user.id);
+    expect(editedProductInHistory[2].code).toEqual(input.code);
+    expect(editedProductInHistory[2].name).toEqual(input.name);
+    expect(editedProductInHistory[2].deprecated).toEqual(true);
+    expect(editedProductInHistory[2].updatedAt).toBeTruthy();
+    expect(editedProductInHistory[2].updatedBy.id).toEqual(user.id);
 
     done();
   });

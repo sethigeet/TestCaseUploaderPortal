@@ -144,7 +144,7 @@ describe("Create a menu", () => {
     );
 
     if (!createdMenu) {
-      throw new Error("Module was not created in the databse!");
+      throw new Error("Menu was not created in the databse!");
     }
 
     expect(createdMenu.code).toEqual(input.code);

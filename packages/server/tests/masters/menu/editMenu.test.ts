@@ -87,7 +87,7 @@ afterAll(async (done) => {
   done();
 });
 
-describe("Edit a module", () => {
+describe("Edit a menu", () => {
   test("Check with correct and all inputs", async (done) => {
     const input = { ...correctInput1, deprecated: true };
 
@@ -104,34 +104,34 @@ describe("Edit a module", () => {
     expect(response.data.editMenu.menu?.createdBy.id).toEqual(user.id);
     expect(response.data.editMenu.menu?.updatedBy.id).toEqual(user.id);
 
-    const createdMenu = await MenuMaster.findOne(
+    const editedMenu = await MenuMaster.findOne(
       response.data.editMenu.menu?.id,
       { relations: ["updatedBy"] }
     );
 
-    if (!createdMenu) {
-      throw new Error("Module was not created in the databse!");
+    if (!editedMenu) {
+      throw new Error("Menu was not created in the databse!");
     }
 
-    expect(createdMenu.code).toEqual(input.code);
-    expect(createdMenu.name).toEqual(input.name);
-    expect(createdMenu.deprecated).toEqual(input.deprecated);
-    expect(createdMenu.updatedBy.id).toEqual(user.id);
+    expect(editedMenu.code).toEqual(input.code);
+    expect(editedMenu.name).toEqual(input.name);
+    expect(editedMenu.deprecated).toEqual(input.deprecated);
+    expect(editedMenu.updatedBy.id).toEqual(user.id);
 
-    const createdMenuInHistory = await MenuMasterHistory.find({
+    const editedMenuInHistory = await MenuMasterHistory.find({
       where: { pid: response.data.editMenu.menu?.id },
       relations: ["updatedBy"],
     });
 
-    if (!createdMenuInHistory) {
+    if (!editedMenuInHistory) {
       throw new Error("Menu was not created in the history!");
     }
 
-    expect(createdMenuInHistory[1].code).toEqual(input.code);
-    expect(createdMenuInHistory[1].name).toEqual(input.name);
-    expect(createdMenuInHistory[1].deprecated).toEqual(input.deprecated);
-    expect(createdMenuInHistory[1].updatedAt).toBeTruthy();
-    expect(createdMenuInHistory[1].updatedBy.id).toEqual(user.id);
+    expect(editedMenuInHistory[1].code).toEqual(input.code);
+    expect(editedMenuInHistory[1].name).toEqual(input.name);
+    expect(editedMenuInHistory[1].deprecated).toEqual(input.deprecated);
+    expect(editedMenuInHistory[1].updatedAt).toBeTruthy();
+    expect(editedMenuInHistory[1].updatedBy.id).toEqual(user.id);
 
     done();
   });
@@ -152,34 +152,34 @@ describe("Edit a module", () => {
     expect(response.data.editMenu.menu?.createdBy.id).toEqual(user.id);
     expect(response.data.editMenu.menu?.updatedBy.id).toEqual(user.id);
 
-    const createdMenu = await MenuMaster.findOne(
+    const editedMenu = await MenuMaster.findOne(
       response.data.editMenu.menu?.id,
       { relations: ["updatedBy"] }
     );
 
-    if (!createdMenu) {
-      throw new Error("Module was not created in the databse!");
+    if (!editedMenu) {
+      throw new Error("Menu was not created in the databse!");
     }
 
-    expect(createdMenu.code).toEqual(input.code);
-    expect(createdMenu.name).toEqual(input.name);
-    expect(createdMenu.deprecated).toEqual(true);
-    expect(createdMenu.updatedBy.id).toEqual(user.id);
+    expect(editedMenu.code).toEqual(input.code);
+    expect(editedMenu.name).toEqual(input.name);
+    expect(editedMenu.deprecated).toEqual(true);
+    expect(editedMenu.updatedBy.id).toEqual(user.id);
 
-    const createdMenuInHistory = await MenuMasterHistory.find({
+    const editedMenuInHistory = await MenuMasterHistory.find({
       where: { pid: response.data.editMenu.menu?.id },
       relations: ["updatedBy"],
     });
 
-    if (!createdMenuInHistory) {
+    if (!editedMenuInHistory) {
       throw new Error("Menu was not created in the history!");
     }
 
-    expect(createdMenuInHistory[2].code).toEqual(input.code);
-    expect(createdMenuInHistory[2].name).toEqual(input.name);
-    expect(createdMenuInHistory[2].deprecated).toEqual(true);
-    expect(createdMenuInHistory[2].updatedAt).toBeTruthy();
-    expect(createdMenuInHistory[2].updatedBy.id).toEqual(user.id);
+    expect(editedMenuInHistory[2].code).toEqual(input.code);
+    expect(editedMenuInHistory[2].name).toEqual(input.name);
+    expect(editedMenuInHistory[2].deprecated).toEqual(true);
+    expect(editedMenuInHistory[2].updatedAt).toBeTruthy();
+    expect(editedMenuInHistory[2].updatedBy.id).toEqual(user.id);
 
     done();
   });
