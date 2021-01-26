@@ -1,2 +1,2 @@
-export { getBaseCreateSchema } from "./baseCreateSchema";
-export { getBaseEditSchema } from "./baseEditSchema";
+export * from "./baseCreateSchema";
+export * from "./baseEditSchema";
