@@ -1,16 +1,9 @@
 import { InputType, Field } from "type-graphql";
 
+import { BaseCreateMasterInput } from "../../../../baseClasses";
+
 @InputType()
-export class CreateMenuInput {
+export class CreateMenuInput extends BaseCreateMasterInput {
   @Field()
   moduleId!: string;
-
-  @Field()
-  code!: string;
-
-  @Field()
-  name!: string;
-
-  @Field({ nullable: true })
-  deprecated?: boolean;
 }

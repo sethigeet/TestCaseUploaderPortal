@@ -1,13 +1,6 @@
-import { InputType, Field } from "type-graphql";
+import { InputType } from "type-graphql";
+
+import { BaseCreateMasterInput } from "../../../../baseClasses";
 
 @InputType()
-export class EditModuleInput {
-  @Field()
-  code!: string;
-
-  @Field()
-  name!: string;
-
-  @Field({ nullable: true })
-  deprecated?: boolean;
-}
+export class EditModuleInput extends BaseCreateMasterInput {}

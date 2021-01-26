@@ -1,16 +1,9 @@
 import { InputType, Field } from "type-graphql";
 
+import { BaseCreateMasterInput } from "../../../../baseClasses";
+
 @InputType()
-export class CreateModuleInput {
+export class CreateModuleInput extends BaseCreateMasterInput {
   @Field()
   productId!: string;
-
-  @Field()
-  code!: string;
-
-  @Field()
-  name!: string;
-
-  @Field({ nullable: true })
-  deprecated?: boolean;
 }
