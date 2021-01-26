@@ -79,9 +79,9 @@ describe("Delete a product", () => {
 
   test("Check with tester permissions", async (done) => {
     const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(correctUsername1, correctPassword1);
 
     const response = await client.deleteProduct(product.id);
-    await client.login(correctUsername1, correctPassword1);
 
     expect(response.errors).toBeTruthy();
     expect(response.data).toBeNull();
@@ -91,9 +91,9 @@ describe("Delete a product", () => {
 
   test("Check with supervisor permissions", async (done) => {
     const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(correctUsername2, correctPassword2);
 
     const response = await client.deleteProduct(product.id);
-    await client.login(correctUsername2, correctPassword2);
 
     expect(response.errors).toBeTruthy();
     expect(response.data).toBeNull();
