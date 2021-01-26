@@ -11,7 +11,12 @@ import {
   CreateTestCasesInput,
 } from "../../src/modules/testCase/testCaseResolver/create/inputTypes";
 import { TestCase } from "../../src/modules/testCase";
+import { TestCaseResponse } from "../../src/modules/testCase/testCaseResolver/TestCaseResponse";
 import { TestTestCaseInput } from "../../src/modules/testCase/testCaseResolver/test/inputTypes";
+import {
+  EditTestedTestCaseInput,
+  EditUntestedTestCaseInput,
+} from "../../src/modules/testCase/testCaseResolver/edit/inputTypes";
 
 import { ProductMaster } from "../../src/modules/masters/product";
 import { CreateProductInput } from "../../src/modules/masters/product/resolver/create/inputTypes";
@@ -208,6 +213,30 @@ export class TestClient {
     return rp.post(
       this.url,
       this.getOptions(queries.getDeleteTestCaseMutation(id))
+    );
+  }
+
+  async editUntestedTestCase(
+    input: EditUntestedTestCaseInput
+  ): Promise<{
+    data: { editUntestedTestCase: TestCaseResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getEditUntestedTestCaseMutation(input))
+    );
+  }
+
+  async editTestedTestCase(
+    input: EditTestedTestCaseInput
+  ): Promise<{
+    data: { editTestedTestCase: TestCaseResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getEditTestedTestCaseMutation(input))
     );
   }
 

@@ -5,3 +5,5 @@ export { getGetTestCaseQuery } from "./getTestCase";
 export { getGetTestCasesQuery } from "./getTestCases";
 export { getTestTestCaseMutation } from "./testTestCase";
 export { getDeleteTestCaseMutation } from "./deleteTestCase";
+export { getEditUntestedTestCaseMutation } from "./editUntestedTestCase";
+export { getEditTestedTestCaseMutation } from "./editTestedTestCase";
