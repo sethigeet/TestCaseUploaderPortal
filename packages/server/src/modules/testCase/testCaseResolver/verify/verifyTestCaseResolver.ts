@@ -20,9 +20,7 @@ export class VerifyTestCaseResolver {
       return false;
     }
 
-    const testCase = await TestCase.findOne(id, {
-      relations: ["createdBy", "updatedBy"],
-    });
+    const testCase = await TestCase.findOne(id);
 
     if (!testCase) {
       return false;

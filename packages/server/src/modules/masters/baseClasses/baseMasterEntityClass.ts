@@ -2,7 +2,6 @@ import {
   BaseEntity,
   Column,
   CreateDateColumn,
-  DeleteDateColumn,
   ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
@@ -46,12 +45,4 @@ export abstract class BaseMaster extends BaseEntity {
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, { nullable: true })
   updatedBy!: User;
-
-  @Field(() => String, { nullable: true })
-  @DeleteDateColumn()
-  deletedAt!: Date;
-
-  @Field(() => User, { nullable: true })
-  @ManyToOne(() => User, { nullable: true })
-  deletedBy!: User;
 }

@@ -88,14 +88,6 @@ export class TestCase extends BaseEntity {
   @ManyToOne(() => User, (user) => user.testCases, { nullable: true })
   updatedBy!: User;
 
-  @Field(() => String, { nullable: true })
-  @DeleteDateColumn()
-  deletedAt!: Date;
-
-  @Field(() => User, { nullable: true })
-  @ManyToOne(() => User, (user) => user.testCases, { nullable: true })
-  deletedBy!: User;
-
   @AfterInsert()
   async insertIntoHistory(): Promise<void> {
     await TestCaseHistory.create({
