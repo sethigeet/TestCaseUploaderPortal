@@ -2,6 +2,7 @@ import { Arg, Mutation, Resolver } from "type-graphql";
 
 import {
   createTestingScopeSchema,
+  editTestingScopeSchema,
   getDoesNotExistMessage,
   getRequiredMessage,
   getUnavailableMessage,
@@ -81,7 +82,7 @@ export class CreateTestingScopeResolver {
   }
 
   @isAuthenticated(UserRoles.ADMIN)
-  @ValidateArgs<TestingScopeMasterResponse>(createTestingScopeSchema, "input")
+  @ValidateArgs<TestingScopeMasterResponse>(editTestingScopeSchema, "input")
   @Mutation(() => TestingScopeMasterResponse)
   async editTestingScope(
     @Arg("id") id: string,
