@@ -24,13 +24,25 @@ import {
 } from "../../src/modules/masters/module/resolver/create/inputTypes";
 import { ModuleMasterResponse } from "../../src/modules/masters/module/resolver/ModuleMasterResponse";
 
-import * as queries from "./graphql";
 import { MenuMaster } from "../../src/modules/masters/menu";
 import { MenuMasterResponse } from "../../src/modules/masters/menu/resolver/MenuMasterResponse";
 import { CreateMenuInput } from "../../src/modules/masters/menu/resolver/create/inputTypes";
-import { CreateTestingForInput } from "../../src/modules/masters/testingFor/resolver/create/inputTypes";
+import {
+  CreateTestingForInput,
+  EditTestingForInput,
+} from "../../src/modules/masters/testingFor/resolver/create/inputTypes";
+
 import { TestingForMasterResponse } from "../../src/modules/masters/testingFor/resolver/TestingForMasterResponse";
 import { TestingForMaster } from "../../src/modules/masters/testingFor";
+import { TestingScopeMaster } from "../../src/modules/masters/testingScope";
+
+import { TestingScopeMasterResponse } from "../../src/modules/masters/testingScope/resolver/TestingScopeMasterResponse";
+import {
+  CreateTestingScopeInput,
+  EditTestingScopeInput,
+} from "../../src/modules/masters/testingScope/resolver/create/inputTypes";
+
+import * as queries from "./graphql";
 
 export class TestClient {
   url: string;
@@ -414,6 +426,67 @@ export class TestClient {
     return rp.post(
       this.url,
       this.getOptions(queries.getDeleteTestingForMutation(id))
+    );
+  }
+
+  async createTestingScope(
+    input: CreateTestingScopeInput
+  ): Promise<{
+    data: { createTestingScope: TestingScopeMasterResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getCreateTestingScopeMutation(input))
+    );
+  }
+
+  async getTestingScope(
+    id: string
+  ): Promise<{
+    data: { getTestingScope: TestingScopeMaster | null };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getGetTestingScopeQuery(id))
+    );
+  }
+
+  async getTestingScopes(
+    testingForId: string
+  ): Promise<{
+    data: { getTestingScopes: TestingScopeMaster[] };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getGetTestingScopesQuery(testingForId))
+    );
+  }
+
+  async editTestingScope(
+    id: string,
+    input: EditTestingScopeInput
+  ): Promise<{
+    data: { editTestingScope: TestingScopeMasterResponse };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getEditTestingScopeMutation(id, input))
+    );
+  }
+
+  async deleteTestingScope(
+    id: string
+  ): Promise<{
+    data: { deleteTestingScope: boolean };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getDeleteTestingScopeMutation(id))
     );
   }
 }
