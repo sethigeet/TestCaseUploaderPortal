@@ -21,7 +21,7 @@ import { TestingScopeMaster } from "../../testingScopeMasterEntity";
 
 import { TestingScopeMasterResponse } from "../TestingScopeMasterResponse";
 
-import { CreateTestingScopeInput, EditTestingScoperInput } from "./inputTypes";
+import { CreateTestingScopeInput, EditTestingScopeInput } from "./inputTypes";
 
 @Resolver(() => TestingScopeMaster)
 export class CreateTestingScopeResolver {
@@ -85,8 +85,8 @@ export class CreateTestingScopeResolver {
   @Mutation(() => TestingScopeMasterResponse)
   async editTestingScope(
     @Arg("id") id: string,
-    @Arg("input", () => EditTestingScoperInput)
-    { code, name, deprecated }: EditTestingScoperInput,
+    @Arg("input", () => EditTestingScopeInput)
+    { code, name, deprecated }: EditTestingScopeInput,
     @CurrentUser() user: User
   ): Promise<TestingScopeMasterResponse> {
     if (!id) {

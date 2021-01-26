@@ -1,7 +1,7 @@
 import { InputType, Field } from "type-graphql";
 
 @InputType()
-export class EditTestingScoperInput {
+export class EditTestingScopeInput {
   @Field()
   code!: string;
 

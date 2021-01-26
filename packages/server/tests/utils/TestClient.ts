@@ -394,7 +394,7 @@ export class TestClient {
 
   async editTestingFor(
     id: string,
-    input: EditModuleInput
+    input: EditTestingForInput
   ): Promise<{
     data: { editTestingFor: TestingForMasterResponse };
     errors: any[];
