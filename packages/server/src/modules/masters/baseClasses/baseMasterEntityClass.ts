@@ -36,7 +36,7 @@ export abstract class BaseMaster extends BaseEntity {
   createdAt!: Date;
 
   @Field(() => User)
-  @ManyToOne(() => User, (user) => user.id)
+  @ManyToOne(() => User)
   createdBy!: User;
 
   @Field(() => String, { nullable: true })
@@ -44,7 +44,7 @@ export abstract class BaseMaster extends BaseEntity {
   updatedAt!: Date;
 
   @Field(() => User, { nullable: true })
-  @ManyToOne(() => User, (user) => user.id, { nullable: true })
+  @ManyToOne(() => User, { nullable: true })
   updatedBy!: User;
 
   @Field(() => String, { nullable: true })
@@ -52,6 +52,6 @@ export abstract class BaseMaster extends BaseEntity {
   deletedAt!: Date;
 
   @Field(() => User, { nullable: true })
-  @ManyToOne(() => User, (user) => user.id, { nullable: true })
+  @ManyToOne(() => User, { nullable: true })
   deletedBy!: User;
 }

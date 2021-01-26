@@ -32,7 +32,7 @@ export abstract class BaseMasterHistory extends BaseEntity {
   createdAt!: Date;
 
   @Field(() => User, { nullable: true })
-  @ManyToOne(() => User, (user) => user.id, { nullable: true })
+  @ManyToOne(() => User, { nullable: true })
   createdBy!: User;
 
   @Field(() => String, { nullable: true })
@@ -40,7 +40,7 @@ export abstract class BaseMasterHistory extends BaseEntity {
   updatedAt!: Date;
 
   @Field(() => User, { nullable: true })
-  @ManyToOne(() => User, (user) => user.id, { nullable: true })
+  @ManyToOne(() => User, { nullable: true })
   updatedBy!: User;
 
   @Field(() => String, { nullable: true })
@@ -48,6 +48,6 @@ export abstract class BaseMasterHistory extends BaseEntity {
   deletedAt!: Date;
 
   @Field(() => User, { nullable: true })
-  @ManyToOne(() => User, (user) => user.id, { nullable: true })
+  @ManyToOne(() => User, { nullable: true })
   deletedBy!: User;
 }
