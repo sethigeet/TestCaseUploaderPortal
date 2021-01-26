@@ -1,14 +1,11 @@
 import { ObjectType, Field } from "type-graphql";
 
-import { FieldError } from "../../../shared/responseTypes";
+import { BaseMasterResponse } from "../../baseClasses";
 
 import { MenuMaster } from "../menuMasterEntity";
 
 @ObjectType()
-export class MenuMasterResponse {
-  @Field(() => [FieldError], { nullable: true })
-  errors?: FieldError[];
-
+export class MenuMasterResponse extends BaseMasterResponse {
   @Field(() => MenuMaster, { nullable: true })
   menu?: MenuMaster;
 }

@@ -1,14 +1,11 @@
 import { ObjectType, Field } from "type-graphql";
 
-import { FieldError } from "../../../shared/responseTypes";
+import { BaseMasterResponse } from "../../baseClasses";
 
 import { TestingForMaster } from "../testingForMasterEntity";
 
 @ObjectType()
-export class TestingForMasterResponse {
-  @Field(() => [FieldError], { nullable: true })
-  errors?: FieldError[];
-
+export class TestingForMasterResponse extends BaseMasterResponse {
   @Field(() => TestingForMaster, { nullable: true })
   testingFor?: TestingForMaster;
 }
