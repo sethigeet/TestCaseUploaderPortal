@@ -199,6 +199,18 @@ export class TestClient {
     );
   }
 
+  async deleteTestCase(
+    id: string
+  ): Promise<{
+    data: { deleteTestCase: boolean };
+    errors: any[];
+  }> {
+    return rp.post(
+      this.url,
+      this.getOptions(queries.getDeleteTestCaseMutation(id))
+    );
+  }
+
   async createProduct(
     input: CreateProductInput
   ): Promise<{

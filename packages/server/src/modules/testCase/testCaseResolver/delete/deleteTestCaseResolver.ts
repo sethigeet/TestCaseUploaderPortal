@@ -16,7 +16,7 @@ export class DeleteTestCaseResolver {
     @CurrentUser() user: User
   ): Promise<boolean> {
     if (!id) {
-      return false;
+      throw new Error("ID is required!");
     }
 
     const testCase = await TestCase.findOne(id, {
@@ -24,7 +24,7 @@ export class DeleteTestCaseResolver {
     });
 
     if (!testCase) {
-      return false;
+      throw new Error("A test case with that ID does not exist!");
     }
 
     if (testCase.createdBy.id !== user.id) {
