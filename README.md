@@ -1,6 +1,6 @@
 # Test Case Uploading Portal
 
-This is a `fullstack application` that allows people to `test their code`.
+This is a `fullstack application` that helps people to `test their code`.
 
 ## Prerequisites
 
@@ -47,4 +47,4 @@ To build this project, follow these steps:
 - Change into the `packages/server` (`cd packages/server`) and then run `yarn build`
 - Change into the `packages/web` (`cd packages/web`) and then run `yarn build`
 
-You now have two Node.js app which you can deploy as you want!
+You now have two Node.js apps which you can deploy as you want!
