@@ -10,12 +10,12 @@ import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { User } from "../../../src/modules/user";
 import { ProductMaster } from "../../../src/modules/masters/product";
-
-import { fakeData, TestClient } from "../../utils";
 import {
   ModuleMaster,
   ModuleMasterHistory,
 } from "../../../src/modules/masters/module";
+
+import { fakeData, TestClient } from "../../utils";
 
 const correctInput1 = fakeData.getModuleVals();
 const correctInput2 = fakeData.getModuleVals();

@@ -8,8 +8,9 @@ import {
   UserRoles,
 } from "@portal/common";
 
-import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
+
+import { User } from "../../../src/modules/user";
 
 import { fakeData, TestClient } from "../../utils";
 

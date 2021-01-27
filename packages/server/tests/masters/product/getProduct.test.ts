@@ -1,8 +1,8 @@
 import { Connection } from "typeorm";
 
-import { User } from "../../../src/modules/user";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
+import { User } from "../../../src/modules/user";
 import { ProductMaster } from "../../../src/modules/masters/product";
 
 import { fakeData, TestClient } from "../../utils";

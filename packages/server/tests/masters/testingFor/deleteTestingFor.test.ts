@@ -5,7 +5,6 @@ import { UserRoles } from "@portal/common";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { User } from "../../../src/modules/user";
-import { ModuleMaster } from "../../../src/modules/masters/module";
 import { MenuMaster } from "../../../src/modules/masters/menu";
 import {
   TestingForMaster,
@@ -140,8 +139,8 @@ describe("Delete a testingFor", () => {
 
     expect(response.data.deleteTestingFor).toEqual(true);
 
-    const deletedModule = await ModuleMaster.findOne(testingFor.id);
-    expect(deletedModule).toBeUndefined();
+    const deletedTestingFor = await TestingForMaster.findOne(testingFor.id);
+    expect(deletedTestingFor).toBeUndefined();
 
     const deletedTestingForInHistory = await TestingForMasterHistory.find({
       where: { pid: testingFor.id },

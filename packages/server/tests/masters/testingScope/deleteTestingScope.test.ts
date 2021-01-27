@@ -5,7 +5,6 @@ import { UserRoles } from "@portal/common";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { User } from "../../../src/modules/user";
-import { ModuleMaster } from "../../../src/modules/masters/module";
 import { TestingForMaster } from "../../../src/modules/masters/testingFor";
 import {
   TestingScopeMaster,
@@ -140,8 +139,10 @@ describe("Delete a testingScope", () => {
 
     expect(response.data.deleteTestingScope).toEqual(true);
 
-    const deletedModule = await ModuleMaster.findOne(testingScope.id);
-    expect(deletedModule).toBeUndefined();
+    const deletedTestingScope = await TestingScopeMaster.findOne(
+      testingScope.id
+    );
+    expect(deletedTestingScope).toBeUndefined();
 
     const deletedTestingScopeInHistory = await TestingScopeMasterHistory.find({
       where: { pid: testingScope.id },

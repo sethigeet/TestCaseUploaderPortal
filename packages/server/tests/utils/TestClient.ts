@@ -1,17 +1,19 @@
 import rp from "request-promise";
 import { CoreOptions } from "request";
 
-import { FieldError } from "../../src/modules/shared/responseTypes";
-
-import { UserResponse } from "../../src/modules/user/auth/UserResponse";
 import { User } from "../../src/modules/user";
+import { UserResponse } from "../../src/modules/user/auth/UserResponse";
 
+import { TestCase } from "../../src/modules/testCase";
+import {
+  TestCaseResponse,
+  TestCasesResponse,
+} from "../../src/modules/testCase/testCaseResolver/TestCaseResponse";
+import { PaginatedTestCases } from "../../src/modules/testCase/testCaseResolver/get/responseTypes";
 import {
   CreateTestCaseInput,
   CreateTestCasesInput,
 } from "../../src/modules/testCase/testCaseResolver/create/inputTypes";
-import { TestCase } from "../../src/modules/testCase";
-import { TestCaseResponse } from "../../src/modules/testCase/testCaseResolver/TestCaseResponse";
 import { TestTestCaseInput } from "../../src/modules/testCase/testCaseResolver/test/inputTypes";
 import {
   EditTestedTestCaseInput,
@@ -19,15 +21,15 @@ import {
 } from "../../src/modules/testCase/testCaseResolver/edit/inputTypes";
 
 import { ProductMaster } from "../../src/modules/masters/product";
-import { CreateProductInput } from "../../src/modules/masters/product/resolver/create/inputTypes";
 import { ProductMasterResponse } from "../../src/modules/masters/product/resolver/ProductMasterResponse";
+import { CreateProductInput } from "../../src/modules/masters/product/resolver/create/inputTypes";
 
 import { ModuleMaster } from "../../src/modules/masters/module";
+import { ModuleMasterResponse } from "../../src/modules/masters/module/resolver/ModuleMasterResponse";
 import {
   CreateModuleInput,
   EditModuleInput,
 } from "../../src/modules/masters/module/resolver/create/inputTypes";
-import { ModuleMasterResponse } from "../../src/modules/masters/module/resolver/ModuleMasterResponse";
 
 import { MenuMaster } from "../../src/modules/masters/menu";
 import { MenuMasterResponse } from "../../src/modules/masters/menu/resolver/MenuMasterResponse";
@@ -37,10 +39,10 @@ import {
   EditTestingForInput,
 } from "../../src/modules/masters/testingFor/resolver/create/inputTypes";
 
-import { TestingForMasterResponse } from "../../src/modules/masters/testingFor/resolver/TestingForMasterResponse";
 import { TestingForMaster } from "../../src/modules/masters/testingFor";
-import { TestingScopeMaster } from "../../src/modules/masters/testingScope";
+import { TestingForMasterResponse } from "../../src/modules/masters/testingFor/resolver/TestingForMasterResponse";
 
+import { TestingScopeMaster } from "../../src/modules/masters/testingScope";
 import { TestingScopeMasterResponse } from "../../src/modules/masters/testingScope/resolver/TestingScopeMasterResponse";
 import {
   CreateTestingScopeInput,
@@ -107,12 +109,7 @@ export class TestClient {
   async createTestCase(
     input: CreateTestCaseInput
   ): Promise<{
-    data: {
-      createTestCase: {
-        errors?: FieldError[];
-        testCase?: TestCase & { createdBy: User; updatedBy: User | undefined };
-      };
-    };
+    data: { createTestCase: TestCaseResponse };
     errors: any[];
   }> {
     return rp.post(
@@ -124,15 +121,7 @@ export class TestClient {
   async createTestCases(
     input: CreateTestCasesInput
   ): Promise<{
-    data: {
-      createTestCases: {
-        errors?: FieldError[];
-        testCases?: (TestCase & {
-          createdBy: User;
-          updatedBy: User | undefined;
-        })[];
-      };
-    };
+    data: { createTestCases: TestCasesResponse };
     errors: any[];
   }> {
     return rp.post(
@@ -144,11 +133,7 @@ export class TestClient {
   async getTestCase(
     id: string
   ): Promise<{
-    data: {
-      getTestCase:
-        | (TestCase & { createdBy: User; updatedBy: User | undefined })
-        | undefined;
-    };
+    data: { getTestCase: TestCase | undefined };
     errors: any[];
   }> {
     return rp.post(this.url, this.getOptions(queries.getGetTestCaseQuery(id)));
@@ -158,15 +143,7 @@ export class TestClient {
     limit: number,
     cursor?: string
   ): Promise<{
-    data: {
-      getTestCases: {
-        testCases: (TestCase & {
-          createdBy: User;
-          updatedBy: User | undefined;
-        })[];
-        hasMore: boolean;
-      };
-    };
+    data: { getTestCases: PaginatedTestCases };
     errors: any[];
   }> {
     return rp.post(

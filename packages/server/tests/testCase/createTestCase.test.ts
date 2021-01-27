@@ -2,12 +2,12 @@ import { Connection } from "typeorm";
 
 import { getRequiredMessage, getDoesNotExistMessage } from "@portal/common";
 
-import { User } from "../../src/modules/user";
 import { createTypeormConnection } from "../../src/modules/shared/utils";
 
+import { User } from "../../src/modules/user";
+import { TestCase, TestCaseHistory } from "../../src/modules/testCase";
+
 import { fakeData, TestClient } from "../utils";
-import { TestCase } from "../../src/modules/testCase";
-import { TestCaseHistory } from "../../src/modules/testCase";
 
 const correctInput = fakeData.getCreateTestCaseVals();
 
