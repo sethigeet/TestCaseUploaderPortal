@@ -10,5 +10,7 @@ export type Context = {
   req: Request & { session: SessionData & { userId?: string } };
   res: Response;
   redisClient: Redis;
-  userLoader: DataLoader<FindConditions<User>, User>;
+  loaders: {
+    userLoader: DataLoader<FindConditions<User>, User>;
+  };
 };

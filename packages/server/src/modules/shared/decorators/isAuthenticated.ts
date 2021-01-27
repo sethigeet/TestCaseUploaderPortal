@@ -3,42 +3,51 @@ import { createMethodDecorator } from "type-graphql";
 import { UserRoles } from "@portal/common";
 
 import { Context } from "../types";
-import { User } from "../../user";
 
 export const isAuthenticated = (
   requiredRole?: UserRoles | UserRoles[]
 ): MethodDecorator => {
-  return createMethodDecorator<Context>(async ({ context: { req } }, next) => {
-    const { userId } = req.session;
-    if (!userId) {
-      throw new Error("Not Authenticated!");
-    }
+  return createMethodDecorator<Context>(
+    async (
+      {
+        context: {
+          req,
+          loaders: { userLoader },
+        },
+      },
+      next
+    ) => {
+      const { userId } = req.session;
+      if (!userId) {
+        throw new Error("Not Authenticated!");
+      }
 
-    const user = await User.findOne(userId);
-    if (!user) {
-      throw new Error("Not authenticated!");
-    }
+      const user = await userLoader.load({ id: userId });
+      if (!user) {
+        throw new Error("Not authenticated!");
+      }
 
-    if (requiredRole) {
-      if (Array.isArray(requiredRole)) {
-        let hasRequiredRole = false;
-        for (const role of requiredRole) {
-          if (role === user.role) {
-            hasRequiredRole = true;
-            break;
+      if (requiredRole) {
+        if (Array.isArray(requiredRole)) {
+          let hasRequiredRole = false;
+          for (const role of requiredRole) {
+            if (role === user.role) {
+              hasRequiredRole = true;
+              break;
+            }
+          }
+
+          if (!hasRequiredRole) {
+            throw new Error("Insufficient Permissions!");
+          }
+        } else {
+          if (user.role !== requiredRole) {
+            throw new Error("Insufficient Permissions!");
           }
         }
-
-        if (!hasRequiredRole) {
-          throw new Error("Insufficient Permissions!");
-        }
-      } else {
-        if (user.role !== requiredRole) {
-          throw new Error("Insufficient Permissions!");
-        }
       }
-    }
 
-    return next();
-  });
+      return next();
+    }
+  );
 };

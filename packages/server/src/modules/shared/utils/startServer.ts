@@ -100,7 +100,9 @@ export const startServer = async (): Promise<
       req,
       res,
       redisClient,
-      userLoader: createUserLoader(),
+      loaders: {
+        userLoader: createUserLoader(),
+      },
     }),
   });
   // add the middleware

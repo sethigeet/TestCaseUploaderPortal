@@ -9,8 +9,10 @@ export const createUserLoader = (): DataLoader<FindConditions<User>, User> =>
     const users = await User.find({
       where: whereConds as FindConditions<User>[],
     });
-    const userIdsToUser: Record<string, User> = {};
-    users.forEach((user) => (userIdsToUser[user.id] = user));
 
-    return whereConds.map(({ id }) => userIdsToUser[id as string]);
+    if (users.length !== whereConds.length) {
+      throw new Error("User not found!");
+    }
+
+    return users;
   });
