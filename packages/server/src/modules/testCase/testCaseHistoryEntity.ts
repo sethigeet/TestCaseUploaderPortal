@@ -58,37 +58,37 @@ export class TestCaseHistory extends BaseEntity {
 
   @Field()
   @Column({ type: "boolean", nullable: true })
-  passed!: boolean;
+  passed?: boolean;
 
   @Field()
   @Column({ type: "text", nullable: true })
-  actualResult!: string;
+  actualResult?: string;
 
   @Field()
   @Column({ type: "text", nullable: true })
-  userRemarks!: string;
+  userRemarks?: string;
 
   @Field(() => String)
   @Column({ type: "timestamp without time zone", nullable: true })
-  createdAt!: Date;
+  createdAt?: Date;
 
   @Field(() => User)
   @ManyToOne(() => User, (user) => user.testCases)
-  createdBy!: User;
+  createdBy?: User;
 
   @Field(() => String, { nullable: true })
   @Column({ type: "timestamp without time zone", nullable: true })
-  updatedAt!: Date;
+  updatedAt?: Date;
 
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, (user) => user.testCases, { nullable: true })
-  updatedBy!: User;
+  updatedBy?: User;
 
   @Field(() => String, { nullable: true })
   @Column({ type: "timestamp without time zone", nullable: true })
-  deletedAt!: Date;
+  deletedAt?: Date;
 
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, (user) => user.testCases, { nullable: true })
-  deletedBy!: User;
+  deletedBy?: User;
 }

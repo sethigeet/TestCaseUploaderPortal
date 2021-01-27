@@ -29,25 +29,25 @@ export abstract class BaseMasterHistory extends BaseEntity {
 
   @Field(() => String)
   @Column({ type: "timestamp without time zone", nullable: true })
-  createdAt!: Date;
+  createdAt?: Date;
 
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, { nullable: true })
-  createdBy!: User;
+  createdBy?: User;
 
   @Field(() => String, { nullable: true })
   @Column({ type: "timestamp without time zone", nullable: true })
-  updatedAt!: Date;
+  updatedAt?: Date;
 
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, { nullable: true })
-  updatedBy!: User;
+  updatedBy?: User;
 
   @Field(() => String, { nullable: true })
   @Column({ type: "timestamp without time zone", nullable: true })
-  deletedAt!: Date;
+  deletedAt?: Date;
 
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, { nullable: true })
-  deletedBy!: User;
+  deletedBy?: User;
 }

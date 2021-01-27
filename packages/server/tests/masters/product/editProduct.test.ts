@@ -93,7 +93,7 @@ describe("Edit a product", () => {
     expect(response.data.editProduct.product?.deprecated).toEqual(
       input.deprecated
     );
-    expect(response.data.editProduct.product?.updatedBy.id).toEqual(user.id);
+    expect(response.data.editProduct.product?.updatedBy?.id).toEqual(user.id);
 
     const editedProduct = await ProductMaster.findOne(
       response.data.editProduct.product?.id,
@@ -107,7 +107,7 @@ describe("Edit a product", () => {
     expect(editedProduct.code).toEqual(input.code);
     expect(editedProduct.name).toEqual(input.name);
     expect(editedProduct.deprecated).toEqual(input.deprecated);
-    expect(editedProduct.updatedBy.id).toEqual(user.id);
+    expect(editedProduct.updatedBy?.id).toEqual(user.id);
 
     const editedProductInHistory = await ProductMasterHistory.find({
       where: { pid: response.data.editProduct.product?.id },
@@ -122,7 +122,7 @@ describe("Edit a product", () => {
     expect(editedProductInHistory[1].name).toEqual(input.name);
     expect(editedProductInHistory[1].deprecated).toEqual(input.deprecated);
     expect(editedProductInHistory[1].updatedAt).toBeTruthy();
-    expect(editedProductInHistory[1].updatedBy.id).toEqual(user.id);
+    expect(editedProductInHistory[1].updatedBy?.id).toEqual(user.id);
 
     done();
   });
@@ -140,7 +140,7 @@ describe("Edit a product", () => {
     expect(response.data.editProduct.product?.name).toEqual(input.name);
     expect(response.data.editProduct.product?.deprecated).toEqual(true);
     expect(response.data.editProduct.product?.modules).toEqual([]);
-    expect(response.data.editProduct.product?.updatedBy.id).toEqual(user.id);
+    expect(response.data.editProduct.product?.updatedBy?.id).toEqual(user.id);
 
     const editedProduct = await ProductMaster.findOne(
       response.data.editProduct.product?.id,
@@ -154,7 +154,7 @@ describe("Edit a product", () => {
     expect(editedProduct.code).toEqual(input.code);
     expect(editedProduct.name).toEqual(input.name);
     expect(editedProduct.deprecated).toEqual(true);
-    expect(editedProduct.updatedBy.id).toEqual(user.id);
+    expect(editedProduct.updatedBy?.id).toEqual(user.id);
 
     const editedProductInHistory = await ProductMasterHistory.find({
       where: { pid: response.data.editProduct.product?.id },
@@ -169,7 +169,7 @@ describe("Edit a product", () => {
     expect(editedProductInHistory[2].name).toEqual(input.name);
     expect(editedProductInHistory[2].deprecated).toEqual(true);
     expect(editedProductInHistory[2].updatedAt).toBeTruthy();
-    expect(editedProductInHistory[2].updatedBy.id).toEqual(user.id);
+    expect(editedProductInHistory[2].updatedBy?.id).toEqual(user.id);
 
     done();
   });

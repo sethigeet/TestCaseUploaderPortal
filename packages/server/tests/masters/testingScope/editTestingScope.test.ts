@@ -112,7 +112,7 @@ describe("Edit a testingScope", () => {
     expect(response.data.editTestingScope.testingScope?.createdBy.id).toEqual(
       user.id
     );
-    expect(response.data.editTestingScope.testingScope?.updatedBy.id).toEqual(
+    expect(response.data.editTestingScope.testingScope?.updatedBy?.id).toEqual(
       user.id
     );
 
@@ -128,7 +128,7 @@ describe("Edit a testingScope", () => {
     expect(editedTestingScope.code).toEqual(input.code);
     expect(editedTestingScope.name).toEqual(input.name);
     expect(editedTestingScope.deprecated).toEqual(input.deprecated);
-    expect(editedTestingScope.updatedBy.id).toEqual(user.id);
+    expect(editedTestingScope.updatedBy?.id).toEqual(user.id);
 
     const editedTestingScopeInHistory = await TestingScopeMasterHistory.find({
       where: { pid: response.data.editTestingScope.testingScope?.id },
@@ -143,7 +143,7 @@ describe("Edit a testingScope", () => {
     expect(editedTestingScopeInHistory[1].name).toEqual(input.name);
     expect(editedTestingScopeInHistory[1].deprecated).toEqual(input.deprecated);
     expect(editedTestingScopeInHistory[1].updatedAt).toBeTruthy();
-    expect(editedTestingScopeInHistory[1].updatedBy.id).toEqual(user.id);
+    expect(editedTestingScopeInHistory[1].updatedBy?.id).toEqual(user.id);
 
     done();
   });
@@ -172,7 +172,7 @@ describe("Edit a testingScope", () => {
     expect(response.data.editTestingScope.testingScope?.createdBy.id).toEqual(
       user.id
     );
-    expect(response.data.editTestingScope.testingScope?.updatedBy.id).toEqual(
+    expect(response.data.editTestingScope.testingScope?.updatedBy?.id).toEqual(
       user.id
     );
 
@@ -188,7 +188,7 @@ describe("Edit a testingScope", () => {
     expect(editedTestingScope.code).toEqual(input.code);
     expect(editedTestingScope.name).toEqual(input.name);
     expect(editedTestingScope.deprecated).toEqual(true);
-    expect(editedTestingScope.updatedBy.id).toEqual(user.id);
+    expect(editedTestingScope.updatedBy?.id).toEqual(user.id);
 
     const editedTestingScopeInHistory = await TestingScopeMasterHistory.find({
       where: { pid: response.data.editTestingScope.testingScope?.id },
@@ -203,7 +203,7 @@ describe("Edit a testingScope", () => {
     expect(editedTestingScopeInHistory[2].name).toEqual(input.name);
     expect(editedTestingScopeInHistory[2].deprecated).toEqual(true);
     expect(editedTestingScopeInHistory[2].updatedAt).toBeTruthy();
-    expect(editedTestingScopeInHistory[2].updatedBy.id).toEqual(user.id);
+    expect(editedTestingScopeInHistory[2].updatedBy?.id).toEqual(user.id);
 
     done();
   });

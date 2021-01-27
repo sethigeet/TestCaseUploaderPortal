@@ -152,7 +152,7 @@ describe("Delete a testingFor", () => {
     }
 
     expect(deletedTestingForInHistory[1].deletedAt).toBeTruthy();
-    expect(deletedTestingForInHistory[1].deletedBy.id).toEqual(user.id);
+    expect(deletedTestingForInHistory[1].deletedBy?.id).toEqual(user.id);
 
     done();
   });

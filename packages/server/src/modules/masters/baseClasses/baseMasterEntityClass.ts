@@ -40,9 +40,9 @@ export abstract class BaseMaster extends BaseEntity {
 
   @Field(() => String, { nullable: true })
   @UpdateDateColumn()
-  updatedAt!: Date;
+  updatedAt?: Date;
 
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, { nullable: true })
-  updatedBy!: User;
+  updatedBy?: User;
 }

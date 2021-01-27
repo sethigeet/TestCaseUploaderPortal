@@ -143,7 +143,7 @@ describe("Edit a tested test case", () => {
     expect(response.data.editUntestedTestCase.testCase?.expectedResult).toEqual(
       input.expectedResult
     );
-    expect(response.data.editUntestedTestCase.testCase?.updatedBy.id).toEqual(
+    expect(response.data.editUntestedTestCase.testCase?.updatedBy?.id).toEqual(
       user2.id
     );
 
@@ -163,7 +163,7 @@ describe("Edit a tested test case", () => {
     expect(editedTestCase.testingScope).toEqual(testCase2.testingScope);
     expect(editedTestCase.description).toEqual(input.description);
     expect(editedTestCase.expectedResult).toEqual(input.expectedResult);
-    expect(editedTestCase.updatedBy.id).toEqual(user2.id);
+    expect(editedTestCase.updatedBy?.id).toEqual(user2.id);
 
     const editedTestCaseInHistory = await TestCaseHistory.find({
       where: { tsid: response.data.editUntestedTestCase.testCase?.id },
@@ -187,7 +187,7 @@ describe("Edit a tested test case", () => {
     expect(editedTestCaseInHistory[1].expectedResult).toEqual(
       input.expectedResult
     );
-    expect(editedTestCaseInHistory[1].updatedBy.id).toEqual(user2.id);
+    expect(editedTestCaseInHistory[1].updatedBy?.id).toEqual(user2.id);
 
     done();
   });

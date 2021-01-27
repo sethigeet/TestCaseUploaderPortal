@@ -152,7 +152,7 @@ describe("Delete a module", () => {
     }
 
     expect(deletedModuleInHistory[1].deletedAt).toBeTruthy();
-    expect(deletedModuleInHistory[1].deletedBy.id).toEqual(user.id);
+    expect(deletedModuleInHistory[1].deletedBy?.id).toEqual(user.id);
 
     done();
   });

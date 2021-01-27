@@ -106,7 +106,7 @@ describe("Edit a testingFor", () => {
     expect(response.data.editTestingFor.testingFor?.createdBy.id).toEqual(
       user.id
     );
-    expect(response.data.editTestingFor.testingFor?.updatedBy.id).toEqual(
+    expect(response.data.editTestingFor.testingFor?.updatedBy?.id).toEqual(
       user.id
     );
 
@@ -122,7 +122,7 @@ describe("Edit a testingFor", () => {
     expect(editedTestingFor.code).toEqual(input.code);
     expect(editedTestingFor.name).toEqual(input.name);
     expect(editedTestingFor.deprecated).toEqual(input.deprecated);
-    expect(editedTestingFor.updatedBy.id).toEqual(user.id);
+    expect(editedTestingFor.updatedBy?.id).toEqual(user.id);
 
     const editedTestingForInHistory = await TestingForMasterHistory.find({
       where: { pid: response.data.editTestingFor.testingFor?.id },
@@ -137,7 +137,7 @@ describe("Edit a testingFor", () => {
     expect(editedTestingForInHistory[1].name).toEqual(input.name);
     expect(editedTestingForInHistory[1].deprecated).toEqual(input.deprecated);
     expect(editedTestingForInHistory[1].updatedAt).toBeTruthy();
-    expect(editedTestingForInHistory[1].updatedBy.id).toEqual(user.id);
+    expect(editedTestingForInHistory[1].updatedBy?.id).toEqual(user.id);
 
     done();
   });
@@ -158,7 +158,7 @@ describe("Edit a testingFor", () => {
     expect(response.data.editTestingFor.testingFor?.createdBy.id).toEqual(
       user.id
     );
-    expect(response.data.editTestingFor.testingFor?.updatedBy.id).toEqual(
+    expect(response.data.editTestingFor.testingFor?.updatedBy?.id).toEqual(
       user.id
     );
 
@@ -174,7 +174,7 @@ describe("Edit a testingFor", () => {
     expect(editedTestingFor.code).toEqual(input.code);
     expect(editedTestingFor.name).toEqual(input.name);
     expect(editedTestingFor.deprecated).toEqual(true);
-    expect(editedTestingFor.updatedBy.id).toEqual(user.id);
+    expect(editedTestingFor.updatedBy?.id).toEqual(user.id);
 
     const editedTestingForInHistory = await TestingForMasterHistory.find({
       where: { pid: response.data.editTestingFor.testingFor?.id },
@@ -189,7 +189,7 @@ describe("Edit a testingFor", () => {
     expect(editedTestingForInHistory[2].name).toEqual(input.name);
     expect(editedTestingForInHistory[2].deprecated).toEqual(true);
     expect(editedTestingForInHistory[2].updatedAt).toBeTruthy();
-    expect(editedTestingForInHistory[2].updatedBy.id).toEqual(user.id);
+    expect(editedTestingForInHistory[2].updatedBy?.id).toEqual(user.id);
 
     done();
   });

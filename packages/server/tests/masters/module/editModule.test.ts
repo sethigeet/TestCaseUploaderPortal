@@ -104,7 +104,7 @@ describe("Edit a module", () => {
       input.deprecated
     );
     expect(response.data.editModule.module?.createdBy.id).toEqual(user.id);
-    expect(response.data.editModule.module?.updatedBy.id).toEqual(user.id);
+    expect(response.data.editModule.module?.updatedBy?.id).toEqual(user.id);
 
     const editedModule = await ModuleMaster.findOne(
       response.data.editModule.module?.id,
@@ -118,7 +118,7 @@ describe("Edit a module", () => {
     expect(editedModule.code).toEqual(input.code);
     expect(editedModule.name).toEqual(input.name);
     expect(editedModule.deprecated).toEqual(input.deprecated);
-    expect(editedModule.updatedBy.id).toEqual(user.id);
+    expect(editedModule.updatedBy?.id).toEqual(user.id);
 
     const editedModuleInHistory = await ModuleMasterHistory.find({
       where: { pid: response.data.editModule.module?.id },
@@ -133,7 +133,7 @@ describe("Edit a module", () => {
     expect(editedModuleInHistory[1].name).toEqual(input.name);
     expect(editedModuleInHistory[1].deprecated).toEqual(input.deprecated);
     expect(editedModuleInHistory[1].updatedAt).toBeTruthy();
-    expect(editedModuleInHistory[1].updatedBy.id).toEqual(user.id);
+    expect(editedModuleInHistory[1].updatedBy?.id).toEqual(user.id);
 
     done();
   });
@@ -152,7 +152,7 @@ describe("Edit a module", () => {
     expect(response.data.editModule.module?.deprecated).toEqual(true);
     expect(response.data.editModule.module?.product.id).toEqual(product.id);
     expect(response.data.editModule.module?.createdBy.id).toEqual(user.id);
-    expect(response.data.editModule.module?.updatedBy.id).toEqual(user.id);
+    expect(response.data.editModule.module?.updatedBy?.id).toEqual(user.id);
 
     const editedModule = await ModuleMaster.findOne(
       response.data.editModule.module?.id,
@@ -166,7 +166,7 @@ describe("Edit a module", () => {
     expect(editedModule.code).toEqual(input.code);
     expect(editedModule.name).toEqual(input.name);
     expect(editedModule.deprecated).toEqual(true);
-    expect(editedModule.updatedBy.id).toEqual(user.id);
+    expect(editedModule.updatedBy?.id).toEqual(user.id);
 
     const editedModuleInHistory = await ModuleMasterHistory.find({
       where: { pid: response.data.editModule.module?.id },
@@ -181,7 +181,7 @@ describe("Edit a module", () => {
     expect(editedModuleInHistory[2].name).toEqual(input.name);
     expect(editedModuleInHistory[2].deprecated).toEqual(true);
     expect(editedModuleInHistory[2].updatedAt).toBeTruthy();
-    expect(editedModuleInHistory[2].updatedBy.id).toEqual(user.id);
+    expect(editedModuleInHistory[2].updatedBy?.id).toEqual(user.id);
 
     done();
   });

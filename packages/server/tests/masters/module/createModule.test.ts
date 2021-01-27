@@ -120,7 +120,7 @@ describe("Create a module", () => {
     expect(createdModuleInHistory.name).toEqual(input.name);
     expect(createdModuleInHistory.deprecated).toEqual(input.deprecated);
     expect(createdModuleInHistory.createdAt).toBeTruthy();
-    expect(createdModuleInHistory.createdBy.id).toEqual(user.id);
+    expect(createdModuleInHistory.createdBy?.id).toEqual(user.id);
 
     done();
   });
@@ -170,7 +170,7 @@ describe("Create a module", () => {
     expect(createdModuleInHistory.name).toEqual(input.name);
     expect(createdModuleInHistory.deprecated).toEqual(false);
     expect(createdModuleInHistory.createdAt).toBeTruthy();
-    expect(createdModuleInHistory.createdBy.id).toEqual(user.id);
+    expect(createdModuleInHistory.createdBy?.id).toEqual(user.id);
 
     done();
   });

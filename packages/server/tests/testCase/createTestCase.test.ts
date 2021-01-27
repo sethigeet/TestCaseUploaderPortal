@@ -109,7 +109,7 @@ describe("Create a test case", () => {
     expect(createdTestCaseInHistory.expectedResult).toEqual(
       input.case.expectedResult
     );
-    expect(createdTestCaseInHistory.createdBy.id).toEqual(user.id);
+    expect(createdTestCaseInHistory.createdBy?.id).toEqual(user.id);
 
     done();
   });

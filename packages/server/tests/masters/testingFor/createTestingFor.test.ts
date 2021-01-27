@@ -124,7 +124,7 @@ describe("Create a testingFor", () => {
     expect(createdTestingForInHistory.name).toEqual(input.name);
     expect(createdTestingForInHistory.deprecated).toEqual(input.deprecated);
     expect(createdTestingForInHistory.createdAt).toBeTruthy();
-    expect(createdTestingForInHistory.createdBy.id).toEqual(user.id);
+    expect(createdTestingForInHistory.createdBy?.id).toEqual(user.id);
 
     done();
   });
@@ -178,7 +178,7 @@ describe("Create a testingFor", () => {
     expect(createdTestingForInHistory.name).toEqual(input.name);
     expect(createdTestingForInHistory.deprecated).toEqual(false);
     expect(createdTestingForInHistory.createdAt).toBeTruthy();
-    expect(createdTestingForInHistory.createdBy.id).toEqual(user.id);
+    expect(createdTestingForInHistory.createdBy?.id).toEqual(user.id);
 
     done();
   });

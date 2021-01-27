@@ -154,7 +154,7 @@ describe("Delete a testingScope", () => {
     }
 
     expect(deletedTestingScopeInHistory[1].deletedAt).toBeTruthy();
-    expect(deletedTestingScopeInHistory[1].deletedBy.id).toEqual(user.id);
+    expect(deletedTestingScopeInHistory[1].deletedBy?.id).toEqual(user.id);
 
     done();
   });

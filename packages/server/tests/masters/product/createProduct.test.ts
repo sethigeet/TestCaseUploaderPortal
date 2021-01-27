@@ -110,7 +110,7 @@ describe("Create a product", () => {
     expect(createdProductInHistory.name).toEqual(input.name);
     expect(createdProductInHistory.deprecated).toEqual(input.deprecated);
     expect(createdProductInHistory.createdAt).toBeTruthy();
-    expect(createdProductInHistory.createdBy.id).toEqual(user.id);
+    expect(createdProductInHistory.createdBy?.id).toEqual(user.id);
 
     done();
   });
@@ -157,7 +157,7 @@ describe("Create a product", () => {
     expect(createdProductInHistory.name).toEqual(input.name);
     expect(createdProductInHistory.deprecated).toEqual(false);
     expect(createdProductInHistory.createdAt).toBeTruthy();
-    expect(createdProductInHistory.createdBy.id).toEqual(user.id);
+    expect(createdProductInHistory.createdBy?.id).toEqual(user.id);
 
     done();
   });

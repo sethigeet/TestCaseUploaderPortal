@@ -118,7 +118,7 @@ describe("Create a menu", () => {
     expect(createdMenuInHistory.name).toEqual(input.name);
     expect(createdMenuInHistory.deprecated).toEqual(input.deprecated);
     expect(createdMenuInHistory.createdAt).toBeTruthy();
-    expect(createdMenuInHistory.createdBy.id).toEqual(user.id);
+    expect(createdMenuInHistory.createdBy?.id).toEqual(user.id);
 
     done();
   });
@@ -166,7 +166,7 @@ describe("Create a menu", () => {
     expect(createdMenuInHistory.name).toEqual(input.name);
     expect(createdMenuInHistory.deprecated).toEqual(false);
     expect(createdMenuInHistory.createdAt).toBeTruthy();
-    expect(createdMenuInHistory.createdBy.id).toEqual(user.id);
+    expect(createdMenuInHistory.createdBy?.id).toEqual(user.id);
 
     done();
   });

@@ -59,15 +59,15 @@ export class TestCase extends BaseEntity {
 
   @Field()
   @Column({ type: "boolean", nullable: true })
-  passed!: boolean;
+  passed?: boolean;
 
   @Field()
   @Column({ type: "text", nullable: true })
-  actualResult!: string;
+  actualResult?: string;
 
   @Field()
   @Column({ type: "text", nullable: true })
-  userRemarks!: string;
+  userRemarks?: string;
 
   // DEFAULT COLUMNS
 
@@ -81,11 +81,11 @@ export class TestCase extends BaseEntity {
 
   @Field(() => String, { nullable: true })
   @UpdateDateColumn()
-  updatedAt!: Date;
+  updatedAt?: Date;
 
   @Field(() => User, { nullable: true })
   @ManyToOne(() => User, (user) => user.testCases, { nullable: true })
-  updatedBy!: User;
+  updatedBy?: User;
 
   @AfterInsert()
   async insertIntoHistory(): Promise<void> {

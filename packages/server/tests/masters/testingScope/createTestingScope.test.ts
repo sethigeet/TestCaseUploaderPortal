@@ -134,7 +134,7 @@ describe("Create a testingScope", () => {
     expect(createdTestingScopeInHistory.name).toEqual(input.name);
     expect(createdTestingScopeInHistory.deprecated).toEqual(input.deprecated);
     expect(createdTestingScopeInHistory.createdAt).toBeTruthy();
-    expect(createdTestingScopeInHistory.createdBy.id).toEqual(user.id);
+    expect(createdTestingScopeInHistory.createdBy?.id).toEqual(user.id);
 
     done();
   });
@@ -194,7 +194,7 @@ describe("Create a testingScope", () => {
     expect(createdTestingScopeInHistory.name).toEqual(input.name);
     expect(createdTestingScopeInHistory.deprecated).toEqual(false);
     expect(createdTestingScopeInHistory.createdAt).toBeTruthy();
-    expect(createdTestingScopeInHistory.createdBy.id).toEqual(user.id);
+    expect(createdTestingScopeInHistory.createdBy?.id).toEqual(user.id);
 
     done();
   });

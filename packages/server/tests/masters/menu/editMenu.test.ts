@@ -102,7 +102,7 @@ describe("Edit a menu", () => {
     expect(response.data.editMenu.menu?.module.id).toEqual(myModule.id);
     expect(response.data.editMenu.menu?.deprecated).toEqual(input.deprecated);
     expect(response.data.editMenu.menu?.createdBy.id).toEqual(user.id);
-    expect(response.data.editMenu.menu?.updatedBy.id).toEqual(user.id);
+    expect(response.data.editMenu.menu?.updatedBy?.id).toEqual(user.id);
 
     const editedMenu = await MenuMaster.findOne(
       response.data.editMenu.menu?.id,
@@ -116,7 +116,7 @@ describe("Edit a menu", () => {
     expect(editedMenu.code).toEqual(input.code);
     expect(editedMenu.name).toEqual(input.name);
     expect(editedMenu.deprecated).toEqual(input.deprecated);
-    expect(editedMenu.updatedBy.id).toEqual(user.id);
+    expect(editedMenu.updatedBy?.id).toEqual(user.id);
 
     const editedMenuInHistory = await MenuMasterHistory.find({
       where: { pid: response.data.editMenu.menu?.id },
@@ -131,7 +131,7 @@ describe("Edit a menu", () => {
     expect(editedMenuInHistory[1].name).toEqual(input.name);
     expect(editedMenuInHistory[1].deprecated).toEqual(input.deprecated);
     expect(editedMenuInHistory[1].updatedAt).toBeTruthy();
-    expect(editedMenuInHistory[1].updatedBy.id).toEqual(user.id);
+    expect(editedMenuInHistory[1].updatedBy?.id).toEqual(user.id);
 
     done();
   });
@@ -150,7 +150,7 @@ describe("Edit a menu", () => {
     expect(response.data.editMenu.menu?.deprecated).toEqual(true);
     expect(response.data.editMenu.menu?.module.id).toEqual(myModule.id);
     expect(response.data.editMenu.menu?.createdBy.id).toEqual(user.id);
-    expect(response.data.editMenu.menu?.updatedBy.id).toEqual(user.id);
+    expect(response.data.editMenu.menu?.updatedBy?.id).toEqual(user.id);
 
     const editedMenu = await MenuMaster.findOne(
       response.data.editMenu.menu?.id,
@@ -164,7 +164,7 @@ describe("Edit a menu", () => {
     expect(editedMenu.code).toEqual(input.code);
     expect(editedMenu.name).toEqual(input.name);
     expect(editedMenu.deprecated).toEqual(true);
-    expect(editedMenu.updatedBy.id).toEqual(user.id);
+    expect(editedMenu.updatedBy?.id).toEqual(user.id);
 
     const editedMenuInHistory = await MenuMasterHistory.find({
       where: { pid: response.data.editMenu.menu?.id },
@@ -179,7 +179,7 @@ describe("Edit a menu", () => {
     expect(editedMenuInHistory[2].name).toEqual(input.name);
     expect(editedMenuInHistory[2].deprecated).toEqual(true);
     expect(editedMenuInHistory[2].updatedAt).toBeTruthy();
-    expect(editedMenuInHistory[2].updatedBy.id).toEqual(user.id);
+    expect(editedMenuInHistory[2].updatedBy?.id).toEqual(user.id);
 
     done();
   });

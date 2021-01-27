@@ -120,7 +120,7 @@ describe("Delete a product", () => {
     }
 
     expect(deletedProductInHistory[1].deletedAt).toBeTruthy();
-    expect(deletedProductInHistory[1].deletedBy.id).toEqual(user.id);
+    expect(deletedProductInHistory[1].deletedBy?.id).toEqual(user.id);
 
     done();
   });

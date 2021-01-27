@@ -92,7 +92,7 @@ describe("Create test cases", () => {
       expect(createdTestCaseInHistory.expectedResult).toEqual(
         input.cases[i].expectedResult
       );
-      expect(createdTestCaseInHistory.createdBy.id).toEqual(user.id);
+      expect(createdTestCaseInHistory.createdBy?.id).toEqual(user.id);
       expect(createdTestCaseInHistory.verified).toEqual(false);
       expect(createdTestCaseInHistory.passed).toBeNull();
     });

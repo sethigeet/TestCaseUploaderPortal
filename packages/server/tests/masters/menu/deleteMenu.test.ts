@@ -152,7 +152,7 @@ describe("Delete a menu", () => {
     }
 
     expect(deletedMenuInHistory[1].deletedAt).toBeTruthy();
-    expect(deletedMenuInHistory[1].deletedBy.id).toEqual(user.id);
+    expect(deletedMenuInHistory[1].deletedBy?.id).toEqual(user.id);
 
     done();
   });
