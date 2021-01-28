@@ -13,7 +13,7 @@ export class GetTestingForResolver {
       throw new Error("Id is required!");
     }
     return TestingForMaster.findOne(id, {
-      relations: ["createdBy", "updatedBy", "menu"],
+      relations: ["createdBy", "updatedBy", "menu", "testingScopes"],
     });
   }
 
@@ -25,7 +25,7 @@ export class GetTestingForResolver {
     }
     return TestingForMaster.find({
       where: { menu: { id: menuId } },
-      relations: ["createdBy", "updatedBy", "menu"],
+      relations: ["createdBy", "updatedBy", "menu", "testingScopes"],
       order: { createdAt: "DESC" },
     });
   }

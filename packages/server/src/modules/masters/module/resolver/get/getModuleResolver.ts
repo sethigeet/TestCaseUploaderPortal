@@ -13,7 +13,7 @@ export class GetModuleResolver {
       throw new Error("Id is required!");
     }
     return ModuleMaster.findOne(id, {
-      relations: ["createdBy", "updatedBy", "product"],
+      relations: ["createdBy", "updatedBy", "product", "menus"],
     });
   }
 
@@ -25,7 +25,7 @@ export class GetModuleResolver {
     }
     return ModuleMaster.find({
       where: { product: { id: productId } },
-      relations: ["createdBy", "updatedBy", "product"],
+      relations: ["createdBy", "updatedBy", "product", "menus"],
       order: { createdAt: "DESC" },
     });
   }

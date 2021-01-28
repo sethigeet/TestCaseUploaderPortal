@@ -13,7 +13,7 @@ export class GetMenuResolver {
       throw new Error("Id is required!");
     }
     return MenuMaster.findOne(id, {
-      relations: ["createdBy", "updatedBy", "module"],
+      relations: ["createdBy", "updatedBy", "module", "testingFors"],
     });
   }
 
@@ -25,7 +25,7 @@ export class GetMenuResolver {
     }
     return MenuMaster.find({
       where: { module: { id: moduleId } },
-      relations: ["createdBy", "updatedBy", "module"],
+      relations: ["createdBy", "updatedBy", "module", "testingFors"],
       order: { createdAt: "DESC" },
     });
   }
