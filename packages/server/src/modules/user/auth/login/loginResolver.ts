@@ -21,28 +21,16 @@ export class LoginResolver {
   @Mutation(() => UserResponse)
   async login(
     @Arg("credentials") { username, password }: LoginInput,
-    @Ctx() { req, redisClient, loaders: { userLoader } }: Context
+    @Ctx() { req, redisClient }: Context
   ): Promise<UserResponse> {
-    let user: User;
-    try {
-      user = await userLoader.load({ username });
-    } catch (e) {
-      if (e.message === "User not found!") {
-        return {
-          errors: [
-            {
-              field: "username",
-              message: getDoesNotExistMessage("username"),
-            },
-          ],
-        };
-      }
+    const user = await User.findOne({ username });
 
+    if (!user) {
       return {
         errors: [
           {
-            field: "login",
-            message: "There was an error while logging you in!",
+            field: "username",
+            message: getDoesNotExistMessage("username"),
           },
         ],
       };
