@@ -1,7 +1,7 @@
 import { AfterInsert, AfterUpdate, Entity, OneToMany } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
-import { ModuleMaster } from "../module";
+import { ModuleMaster, ModuleMasterHistory } from "../module";
 import { BaseMaster, BaseMasterHistory } from "../baseClasses";
 
 @ObjectType()
@@ -39,7 +39,7 @@ export class ProductMaster extends BaseMaster {
 @ObjectType()
 @Entity()
 export class ProductMasterHistory extends BaseMasterHistory {
-  @Field(() => [ModuleMaster], { nullable: true })
-  @OneToMany(() => ModuleMaster, (module) => module.product)
+  @Field(() => [ModuleMasterHistory], { nullable: true })
+  @OneToMany(() => ModuleMasterHistory, (module) => module.product)
   modules!: ModuleMaster[];
 }

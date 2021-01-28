@@ -7,8 +7,8 @@ import {
 } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
-import { ProductMaster } from "../product";
-import { MenuMaster } from "../menu";
+import { ProductMaster, ProductMasterHistory } from "../product";
+import { MenuMaster, MenuMasterHistory } from "../menu";
 import { BaseMaster, BaseMasterHistory } from "../baseClasses";
 
 @ObjectType()
@@ -52,13 +52,13 @@ export class ModuleMaster extends BaseMaster {
 @ObjectType()
 @Entity()
 export class ModuleMasterHistory extends BaseMasterHistory {
-  @Field(() => ProductMaster)
-  @ManyToOne(() => ProductMaster, (product) => product.modules, {
+  @Field(() => ProductMasterHistory)
+  @ManyToOne(() => ProductMasterHistory, (product) => product.modules, {
     onDelete: "CASCADE",
   })
   product!: ProductMaster;
 
-  @Field(() => [MenuMaster], { nullable: true })
-  @OneToMany(() => MenuMaster, (menu) => menu.module)
+  @Field(() => [MenuMasterHistory], { nullable: true })
+  @OneToMany(() => MenuMasterHistory, (menu) => menu.module)
   menus!: MenuMaster[];
 }

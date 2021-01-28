@@ -7,8 +7,8 @@ import {
 } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
-import { MenuMaster } from "../menu";
-import { TestingScopeMaster } from "../testingScope";
+import { MenuMaster, MenuMasterHistory } from "../menu";
+import { TestingScopeMaster, TestingScopeMasterHistory } from "../testingScope";
 import { BaseMaster, BaseMasterHistory } from "../baseClasses";
 
 @ObjectType()
@@ -25,7 +25,7 @@ export class TestingForMaster extends BaseMaster {
     () => TestingScopeMaster,
     (testingScope) => testingScope.testingFor
   )
-  tesingScopes!: TestingScopeMaster[];
+  testingScopes!: TestingScopeMaster[];
 
   @AfterInsert()
   async InsertIntoHistory(): Promise<void> {
@@ -55,16 +55,16 @@ export class TestingForMaster extends BaseMaster {
 @ObjectType()
 @Entity()
 export class TestingForMasterHistory extends BaseMasterHistory {
-  @Field(() => MenuMaster)
-  @ManyToOne(() => MenuMaster, (menu) => menu.testingFors, {
+  @Field(() => MenuMasterHistory)
+  @ManyToOne(() => MenuMasterHistory, (menu) => menu.testingFors, {
     onDelete: "CASCADE",
   })
   menu!: MenuMaster;
 
-  @Field(() => [TestingScopeMaster], { nullable: true })
+  @Field(() => [TestingScopeMasterHistory], { nullable: true })
   @OneToMany(
-    () => TestingScopeMaster,
+    () => TestingScopeMasterHistory,
     (testingScope) => testingScope.testingFor
   )
-  tesingScopes!: TestingScopeMaster[];
+  testingScopes!: TestingScopeMaster[];
 }

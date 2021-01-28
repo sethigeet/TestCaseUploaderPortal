@@ -1,14 +1,14 @@
 import { AfterInsert, AfterUpdate, Entity, ManyToOne } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 
-import { TestingForMaster } from "../testingFor";
+import { TestingForMaster, TestingForMasterHistory } from "../testingFor";
 import { BaseMaster, BaseMasterHistory } from "../baseClasses";
 
 @ObjectType()
 @Entity()
 export class TestingScopeMaster extends BaseMaster {
   @Field(() => TestingForMaster)
-  @ManyToOne(() => TestingForMaster, (testingFor) => testingFor.tesingScopes, {
+  @ManyToOne(() => TestingForMaster, (testingFor) => testingFor.testingScopes, {
     onDelete: "CASCADE",
   })
   testingFor!: TestingForMaster;
@@ -41,9 +41,13 @@ export class TestingScopeMaster extends BaseMaster {
 @ObjectType()
 @Entity()
 export class TestingScopeMasterHistory extends BaseMasterHistory {
-  @Field(() => TestingForMaster)
-  @ManyToOne(() => TestingForMaster, (testingFor) => testingFor.tesingScopes, {
-    onDelete: "CASCADE",
-  })
+  @Field(() => TestingForMasterHistory)
+  @ManyToOne(
+    () => TestingForMasterHistory,
+    (testingFor) => testingFor.testingScopes,
+    {
+      onDelete: "CASCADE",
+    }
+  )
   testingFor!: TestingForMaster;
 }
