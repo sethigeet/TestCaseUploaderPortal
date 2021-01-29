@@ -1,0 +1,5 @@
+query GetMenus($moduleId: String!) {
+  getMenus(moduleId: $moduleId) {
+    ...RegularMenuMaster
+  }
+}

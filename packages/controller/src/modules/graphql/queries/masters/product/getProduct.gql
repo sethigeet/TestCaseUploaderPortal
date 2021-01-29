@@ -1,0 +1,5 @@
+query GetProduct($id: String!) {
+  getProduct(id: $id) {
+    ...RegularProductMaster
+  }
+}

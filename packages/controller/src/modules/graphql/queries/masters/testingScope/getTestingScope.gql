@@ -1,0 +1,5 @@
+query GetTestingScope($id: String!) {
+  getTestingScope(id: $id) {
+    ...RegularTestingScopeMaster
+  }
+}

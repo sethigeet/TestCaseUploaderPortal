@@ -1,0 +1,28 @@
+fragment RegularMenuMaster on MenuMaster {
+  id
+  code
+  name
+  deprecated
+  createdAt
+  createdBy {
+    id
+    username
+  }
+  updatedAt
+  updatedBy {
+    id
+    username
+  }
+  module {
+    id
+    code
+    name
+    deprecated
+  }
+  testingFors {
+    id
+    code
+    name
+    deprecated
+  }
+}

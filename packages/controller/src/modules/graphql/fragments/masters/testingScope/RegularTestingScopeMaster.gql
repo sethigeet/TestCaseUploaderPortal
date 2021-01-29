@@ -1,0 +1,22 @@
+fragment RegularTestingScopeMaster on TestingScopeMaster {
+  id
+  code
+  name
+  deprecated
+  createdAt
+  createdBy {
+    id
+    username
+  }
+  updatedAt
+  updatedBy {
+    id
+    username
+  }
+  testingFor {
+    id
+    code
+    name
+    deprecated
+  }
+}

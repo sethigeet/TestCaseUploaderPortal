@@ -1,0 +1,5 @@
+query GetTestingFors($menuId: String!) {
+  getTestingFors(menuId: $menuId) {
+    ...RegularTestingForMaster
+  }
+}

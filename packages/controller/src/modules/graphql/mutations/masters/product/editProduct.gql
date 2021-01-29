@@ -1,0 +1,10 @@
+mutation EditProduct($id: String!, $input: CreateProductInput!) {
+  editProduct(id: $id, input: $input) {
+    errors {
+      ...RegularError
+    }
+    product {
+      ...RegularProductMaster
+    }
+  }
+}

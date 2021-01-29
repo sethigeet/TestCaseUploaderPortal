@@ -1,0 +1,3 @@
+mutation DeleteTestingFor($id: String!) {
+  deleteTestingFor(id: $id)
+}

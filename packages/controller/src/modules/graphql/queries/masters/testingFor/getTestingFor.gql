@@ -1,0 +1,5 @@
+query GetTestingFor($id: String!) {
+  getTestingFor(id: $id) {
+    ...RegularTestingForMaster
+  }
+}

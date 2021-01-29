@@ -1,0 +1,3 @@
+mutation DeleteTestingScope($id: String!) {
+  deleteTestingScope(id: $id)
+}

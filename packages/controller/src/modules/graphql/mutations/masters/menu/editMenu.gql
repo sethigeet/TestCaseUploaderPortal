@@ -1,0 +1,10 @@
+mutation EditMenu($id: String!, $input: EditMenuInput!) {
+  editMenu(id: $id, input: $input) {
+    errors {
+      ...RegularError
+    }
+    menu {
+      ...RegularMenuMaster
+    }
+  }
+}

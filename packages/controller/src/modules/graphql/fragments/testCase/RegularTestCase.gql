@@ -1,13 +1,16 @@
 fragment RegularTestCase on TestCase {
   id
-  productCode
-  moduleCode
-  menuCode
-  testingFor
-  testingScope
+  productId
+  moduleId
+  menuId
+  testingForId
+  testingScopeId
   description
   expectedResult
   verified
+  verifiedBy {
+    username
+  }
   passed
   actualResult
   userRemarks

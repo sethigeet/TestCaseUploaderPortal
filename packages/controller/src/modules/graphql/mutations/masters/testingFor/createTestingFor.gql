@@ -1,0 +1,10 @@
+mutation CreateTestingFor($input: CreateTestingForInput!) {
+  createTestingFor(input: $input) {
+    errors {
+      ...RegularError
+    }
+    testingFor {
+      ...RegularTestingForMaster
+    }
+  }
+}

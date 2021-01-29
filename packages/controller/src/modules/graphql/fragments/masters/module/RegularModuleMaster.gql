@@ -1,0 +1,28 @@
+fragment RegularModuleMaster on ModuleMaster {
+  id
+  code
+  name
+  deprecated
+  createdAt
+  createdBy {
+    id
+    username
+  }
+  updatedAt
+  updatedBy {
+    id
+    username
+  }
+  product {
+    id
+    code
+    name
+    deprecated
+  }
+  menus {
+    id
+    code
+    name
+    deprecated
+  }
+}

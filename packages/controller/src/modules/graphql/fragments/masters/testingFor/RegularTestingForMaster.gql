@@ -1,0 +1,28 @@
+fragment RegularTestingForMaster on TestingForMaster {
+  id
+  code
+  name
+  deprecated
+  createdAt
+  createdBy {
+    id
+    username
+  }
+  updatedAt
+  updatedBy {
+    id
+    username
+  }
+  menu {
+    id
+    code
+    name
+    deprecated
+  }
+  testingScopes {
+    id
+    code
+    name
+    deprecated
+  }
+}

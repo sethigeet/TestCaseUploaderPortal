@@ -1,0 +1,22 @@
+fragment RegularProductMaster on ProductMaster {
+  id
+  code
+  name
+  deprecated
+  createdAt
+  createdBy {
+    id
+    username
+  }
+  updatedAt
+  updatedBy {
+    id
+    username
+  }
+  modules {
+    id
+    code
+    name
+    deprecated
+  }
+}

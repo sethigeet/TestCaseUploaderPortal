@@ -1,0 +1,5 @@
+query GetModules($productId: String!) {
+  getModules(productId: $productId) {
+    ...RegularModuleMaster
+  }
+}

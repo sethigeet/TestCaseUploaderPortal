@@ -1,0 +1,5 @@
+query GetMenu($id: String!) {
+  getMenu(id: $id) {
+    ...RegularMenuMaster
+  }
+}

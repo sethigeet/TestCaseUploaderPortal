@@ -1,0 +1,3 @@
+mutation DeleteTestCase($id: String!) {
+  deleteTestCase(id: $id)
+}

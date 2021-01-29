@@ -1,0 +1,10 @@
+mutation CreateTestingScope($input: CreateTestingScopeInput!) {
+  createTestingScope(input: $input) {
+    errors {
+      ...RegularError
+    }
+    testingScope {
+      ...RegularTestingScopeMaster
+    }
+  }
+}

@@ -1,0 +1,10 @@
+mutation EditModule($id: String!, $input: EditModuleInput!) {
+  editModule(id: $id, input: $input) {
+    errors {
+      ...RegularError
+    }
+    module {
+      ...RegularModuleMaster
+    }
+  }
+}

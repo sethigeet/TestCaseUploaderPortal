@@ -1,0 +1,10 @@
+mutation EditTestingScope($id: String!, $input: EditTestingScopeInput!) {
+  editTestingScope(id: $id, input: $input) {
+    errors {
+      ...RegularError
+    }
+    testingScope {
+      ...RegularTestingScopeMaster
+    }
+  }
+}

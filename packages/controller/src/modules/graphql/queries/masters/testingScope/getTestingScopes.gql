@@ -1,0 +1,5 @@
+query GetTestingScopes($testingForId: String!) {
+  getTestingScopes(testingForId: $testingForId) {
+    ...RegularTestingScopeMaster
+  }
+}

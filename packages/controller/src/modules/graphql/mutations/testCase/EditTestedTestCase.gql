@@ -1,0 +1,10 @@
+mutation EditTestedTestCase($input: EditTestedTestCaseInput!) {
+  editTestedTestCase(input: $input) {
+    errors {
+      ...RegularError
+    }
+    testCase {
+      ...RegularTestCase
+    }
+  }
+}

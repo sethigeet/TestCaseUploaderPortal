@@ -1,0 +1,10 @@
+mutation CreateModule($input: CreateModuleInput!) {
+  createModule(input: $input) {
+    errors {
+      ...RegularError
+    }
+    module {
+      ...RegularModuleMaster
+    }
+  }
+}

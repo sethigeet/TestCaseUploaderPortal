@@ -1,0 +1,10 @@
+mutation EditTestingFor($id: String!, $input: EditTestingForInput!) {
+  editTestingFor(id: $id, input: $input) {
+    errors {
+      ...RegularError
+    }
+    testingFor {
+      ...RegularTestingForMaster
+    }
+  }
+}
