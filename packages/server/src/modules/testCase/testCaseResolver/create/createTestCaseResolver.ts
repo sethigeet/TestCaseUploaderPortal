@@ -14,7 +14,7 @@ import { TestCase } from "../../testCaseEntity";
 import { TestCaseResponse, TestCasesResponse } from "../TestCaseResponse";
 
 import { CreateTestCaseInput, CreateTestCasesInput } from "./inputTypes";
-import { checkIfCodesExist } from "./utils";
+import { checkIfIdsExist } from "./utils";
 
 @Resolver(() => TestCase)
 export class CreateTestCaseResolver {
@@ -23,10 +23,10 @@ export class CreateTestCaseResolver {
   @Mutation(() => TestCaseResponse)
   async createTestCase(
     @Arg("input", () => CreateTestCaseInput)
-    { case: { description, expectedResult }, ...codes }: CreateTestCaseInput,
+    { case: { description, expectedResult }, ...ids }: CreateTestCaseInput,
     @CurrentUser() user: User
   ): Promise<TestCaseResponse> {
-    const error = await checkIfCodesExist(codes);
+    const error = await checkIfIdsExist(ids);
 
     if (error) {
       return { errors: [error] };
@@ -37,7 +37,7 @@ export class CreateTestCaseResolver {
       testCase = await TestCase.create({
         description,
         expectedResult,
-        ...codes,
+        ...ids,
         createdBy: user,
       }).save();
     } catch (e) {
@@ -62,7 +62,7 @@ export class CreateTestCaseResolver {
     { cases, ...codes }: CreateTestCasesInput,
     @CurrentUser() user: User
   ): Promise<TestCasesResponse> {
-    const error = await checkIfCodesExist(codes);
+    const error = await checkIfIdsExist(codes);
 
     if (error) {
       return { errors: [error] };

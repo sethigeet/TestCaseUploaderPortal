@@ -1,21 +1,21 @@
 import { CreateTestCaseInput } from "../../../../src/modules/testCase/testCaseResolver/create/inputTypes";
 
 export const getCreateTestCaseMutation = ({
-  productCode,
-  moduleCode,
-  menuCode,
-  testingFor,
-  testingScope,
+  productId,
+  moduleId,
+  menuId,
+  testingForId,
+  testingScopeId,
   case: { description, expectedResult },
 }: CreateTestCaseInput): string => `
 mutation {
 createTestCase(
     input: {
-      productCode: "${productCode}"
-      moduleCode: "${moduleCode}"
-      menuCode: "${menuCode}"
-      testingFor: "${testingFor}"
-      testingScope: "${testingScope}"
+      productId: "${productId}"
+      moduleId: "${moduleId}"
+      menuId: "${menuId}"
+      testingForId: "${testingForId}"
+      testingScopeId: "${testingScopeId}"
       case: {
         description: "${description}"
         expectedResult: "${expectedResult}"
@@ -28,11 +28,11 @@ createTestCase(
     }
     testCase {
       id
-      productCode
-      moduleCode
-      menuCode
-      testingFor
-      testingScope
+      productId
+      moduleId
+      menuId
+      testingForId
+      testingScopeId
       description
       expectedResult
       createdBy {

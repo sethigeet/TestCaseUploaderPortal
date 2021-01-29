@@ -19,11 +19,11 @@ editUntestedTestCase(
     }
     testCase {
       id
-      productCode
-      moduleCode
-      menuCode
-      testingFor
-      testingScope
+      productId
+      moduleId
+      menuId
+      testingForId
+      testingScopeId
       description
       expectedResult
       updatedBy {

@@ -1,1 +1,1 @@
-export { checkIfCodesExist } from "./checkCodes";
+export { checkIfIdsExist } from "./checkCodes";

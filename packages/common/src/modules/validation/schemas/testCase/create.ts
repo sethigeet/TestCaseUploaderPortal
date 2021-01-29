@@ -3,14 +3,11 @@ import * as yup from "yup";
 import { getRequiredMessage } from "../../errorMessages";
 
 export const createTestCaseSchema = yup.object().shape({
-  productCode: yup.string().required(getRequiredMessage("productCode")).max(15),
-  moduleCode: yup.string().required(getRequiredMessage("moduleCode")).max(20),
-  menuCode: yup.string().required(getRequiredMessage("menuCode")).max(15),
-  testingFor: yup.string().required(getRequiredMessage("testingFor")).max(20),
-  testingScope: yup
-    .string()
-    .required(getRequiredMessage("testingScope"))
-    .max(255),
+  productId: yup.string().required(getRequiredMessage("productId")),
+  moduleId: yup.string().required(getRequiredMessage("moduleId")),
+  menuId: yup.string().required(getRequiredMessage("menuId")),
+  testingForId: yup.string().required(getRequiredMessage("testingForId")),
+  testingScopeId: yup.string().required(getRequiredMessage("testingScopeId")),
   case: yup
     .object({
       description: yup.string().required(getRequiredMessage("description")),
@@ -22,14 +19,11 @@ export const createTestCaseSchema = yup.object().shape({
 });
 
 export const createTestCasesSchema = yup.object().shape({
-  productCode: yup.string().required(getRequiredMessage("productCode")).max(15),
-  moduleCode: yup.string().required(getRequiredMessage("moduleCode")).max(20),
-  menuCode: yup.string().required(getRequiredMessage("menuCode")).max(15),
-  testingFor: yup.string().required(getRequiredMessage("testingFor")).max(20),
-  testingScope: yup
-    .string()
-    .required(getRequiredMessage("testingScope"))
-    .max(255),
+  productId: yup.string().required(getRequiredMessage("productId")),
+  moduleId: yup.string().required(getRequiredMessage("moduleId")),
+  menuId: yup.string().required(getRequiredMessage("menuId")),
+  testingForId: yup.string().required(getRequiredMessage("testingForId")),
+  testingScopeId: yup.string().required(getRequiredMessage("testingScopeId")),
   cases: yup
     .array()
     .of(

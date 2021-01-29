@@ -1,11 +1,11 @@
-import { lorem, seed } from "faker";
+import { lorem, seed, random } from "faker";
 
 export const getCreateTestCaseVals = (): {
-  productCode: string;
-  moduleCode: string;
-  menuCode: string;
-  testingFor: string;
-  testingScope: string;
+  productId: string;
+  moduleId: string;
+  menuId: string;
+  testingForId: string;
+  testingScopeId: string;
   case: {
     description: string;
     expectedResult: string;
@@ -14,11 +14,11 @@ export const getCreateTestCaseVals = (): {
   seed(Date.now() + Math.random() * 100000);
 
   return {
-    productCode: "PROD-1",
-    moduleCode: "MOD-1",
-    menuCode: "MEN-3",
-    testingFor: "TFOR-1",
-    testingScope: "TSCO-1",
+    productId: random.uuid(),
+    moduleId: random.uuid(),
+    menuId: random.uuid(),
+    testingForId: random.uuid(),
+    testingScopeId: random.uuid(),
     case: {
       description: lorem.words(5),
       expectedResult: lorem.words(2),

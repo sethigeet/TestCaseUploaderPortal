@@ -34,11 +34,11 @@ export class DeleteTestCaseResolver {
     try {
       await TestCaseHistory.create({
         tsid: testCase.id,
-        productCode: testCase.productCode,
-        moduleCode: testCase.moduleCode,
-        menuCode: testCase.menuCode,
-        testingFor: testCase.testingFor,
-        testingScope: testCase.testingScope,
+        productId: testCase.productId,
+        moduleId: testCase.moduleId,
+        menuId: testCase.menuId,
+        testingForId: testCase.testingForId,
+        testingScopeId: testCase.testingScopeId,
         description: testCase.description,
         expectedResult: testCase.expectedResult,
         verified: testCase.verified,

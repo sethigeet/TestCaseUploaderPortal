@@ -141,20 +141,20 @@ describe("Edit a tested test case", () => {
     const response = await client.editTestedTestCase(input);
 
     expect(response.data.editTestedTestCase.errors).toBeNull();
-    expect(response.data.editTestedTestCase.testCase?.productCode).toEqual(
-      testCase2.productCode
+    expect(response.data.editTestedTestCase.testCase?.productId).toEqual(
+      testCase2.productId
     );
-    expect(response.data.editTestedTestCase.testCase?.moduleCode).toEqual(
-      testCase2.moduleCode
+    expect(response.data.editTestedTestCase.testCase?.moduleId).toEqual(
+      testCase2.moduleId
     );
-    expect(response.data.editTestedTestCase.testCase?.menuCode).toEqual(
-      testCase2.menuCode
+    expect(response.data.editTestedTestCase.testCase?.menuId).toEqual(
+      testCase2.menuId
     );
-    expect(response.data.editTestedTestCase.testCase?.testingFor).toEqual(
-      testCase2.testingFor
+    expect(response.data.editTestedTestCase.testCase?.testingForId).toEqual(
+      testCase2.testingForId
     );
-    expect(response.data.editTestedTestCase.testCase?.testingScope).toEqual(
-      testCase2.testingScope
+    expect(response.data.editTestedTestCase.testCase?.testingScopeId).toEqual(
+      testCase2.testingScopeId
     );
     expect(response.data.editTestedTestCase.testCase?.description).toEqual(
       testCase2.description
@@ -175,11 +175,11 @@ describe("Edit a tested test case", () => {
       throw new Error("Test case was not created in the databse!");
     }
 
-    expect(editedTestCase.productCode).toEqual(testCase2.productCode);
-    expect(editedTestCase.moduleCode).toEqual(testCase2.moduleCode);
-    expect(editedTestCase.menuCode).toEqual(testCase2.menuCode);
-    expect(editedTestCase.testingFor).toEqual(testCase2.testingFor);
-    expect(editedTestCase.testingScope).toEqual(testCase2.testingScope);
+    expect(editedTestCase.productId).toEqual(testCase2.productId);
+    expect(editedTestCase.moduleId).toEqual(testCase2.moduleId);
+    expect(editedTestCase.menuId).toEqual(testCase2.menuId);
+    expect(editedTestCase.testingForId).toEqual(testCase2.testingForId);
+    expect(editedTestCase.testingScopeId).toEqual(testCase2.testingScopeId);
     expect(editedTestCase.description).toEqual(testCase2.description);
     expect(editedTestCase.expectedResult).toEqual(testCase2.expectedResult);
     expect(editedTestCase.updatedBy?.id).toEqual(user2.id);
@@ -193,14 +193,14 @@ describe("Edit a tested test case", () => {
       throw new Error("Test case was not created in the history!");
     }
 
-    expect(editedTestCaseInHistory[1].productCode).toEqual(
-      testCase2.productCode
+    expect(editedTestCaseInHistory[1].productId).toEqual(testCase2.productId);
+    expect(editedTestCaseInHistory[1].moduleId).toEqual(testCase2.moduleId);
+    expect(editedTestCaseInHistory[1].menuId).toEqual(testCase2.menuId);
+    expect(editedTestCaseInHistory[1].testingForId).toEqual(
+      testCase2.testingForId
     );
-    expect(editedTestCaseInHistory[1].moduleCode).toEqual(testCase2.moduleCode);
-    expect(editedTestCaseInHistory[1].menuCode).toEqual(testCase2.menuCode);
-    expect(editedTestCaseInHistory[1].testingFor).toEqual(testCase2.testingFor);
-    expect(editedTestCaseInHistory[1].testingScope).toEqual(
-      testCase2.testingScope
+    expect(editedTestCaseInHistory[1].testingScopeId).toEqual(
+      testCase2.testingScopeId
     );
     expect(editedTestCaseInHistory[1].description).toEqual(
       testCase2.description

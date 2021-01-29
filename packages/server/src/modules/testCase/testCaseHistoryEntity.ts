@@ -21,24 +21,24 @@ export class TestCaseHistory extends BaseEntity {
   tsid!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 15 })
-  productCode!: string;
+  @Column("uuid")
+  productId!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 20 })
-  moduleCode!: string;
+  @Column("uuid")
+  moduleId!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 15 })
-  menuCode!: string;
+  @Column("uuid")
+  menuId!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 20 })
-  testingFor!: string;
+  @Column("uuid")
+  testingForId!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 255 })
-  testingScope!: string;
+  @Column("uuid")
+  testingScopeId!: string;
 
   @Field()
   @Column({ type: "text" })

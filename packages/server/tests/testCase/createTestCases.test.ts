@@ -6,10 +6,27 @@ import { createTypeormConnection } from "../../src/modules/shared/utils";
 
 import { User } from "../../src/modules/user";
 import { TestCase, TestCaseHistory } from "../../src/modules/testCase";
+import {
+  ProductMaster,
+  ModuleMaster,
+  MenuMaster,
+  TestingForMaster,
+  TestingScopeMaster,
+} from "../../src/modules/masters";
 
 import { fakeData, TestClient } from "../utils";
 
-const correctInput = fakeData.getTestCasesVals();
+let correctInput: {
+  productId: string;
+  moduleId: string;
+  menuId: string;
+  testingForId: string;
+  testingScopeId: string;
+  cases: {
+    description: string;
+    expectedResult: string;
+  }[];
+};
 
 const {
   username: correctUsername,
@@ -28,6 +45,34 @@ beforeAll(async (done) => {
     username: correctUsername,
     password: correctPassword,
   }).save();
+
+  // create the masters to test on
+  const product = await ProductMaster.create(fakeData.getProductVals()).save();
+  const module = await ModuleMaster.create({
+    ...fakeData.getModuleVals(),
+    product,
+  }).save();
+  const menu = await MenuMaster.create({
+    ...fakeData.getMenuVals(),
+    module,
+  }).save();
+  const testingFor = await TestingForMaster.create({
+    ...fakeData.getTestingForVals(),
+    menu,
+  }).save();
+  const testingScope = await TestingScopeMaster.create({
+    ...fakeData.getTestingScopeVals(),
+    testingFor,
+  }).save();
+
+  correctInput = {
+    ...fakeData.getTestCasesVals(),
+    productId: product.id,
+    moduleId: module.id,
+    menuId: menu.id,
+    testingForId: testingFor.id,
+    testingScopeId: testingScope.id,
+  };
 
   done();
 });
@@ -50,11 +95,11 @@ describe("Create test cases", () => {
 
     expect(response.data.createTestCases.errors).toBeNull();
     response.data.createTestCases.testCases?.forEach((testCase, i) => {
-      expect(testCase.productCode).toEqual(input.productCode);
-      expect(testCase.moduleCode).toEqual(input.moduleCode);
-      expect(testCase.menuCode).toEqual(input.menuCode);
-      expect(testCase.testingFor).toEqual(input.testingFor);
-      expect(testCase.testingScope).toEqual(input.testingScope);
+      expect(testCase.productId).toEqual(input.productId);
+      expect(testCase.moduleId).toEqual(input.moduleId);
+      expect(testCase.menuId).toEqual(input.menuId);
+      expect(testCase.testingForId).toEqual(input.testingForId);
+      expect(testCase.testingScopeId).toEqual(input.testingScopeId);
       expect(testCase.description).toEqual(input.cases[i].description);
       expect(testCase.expectedResult).toEqual(input.cases[i].expectedResult);
       expect(testCase.createdBy.id).toEqual(user.id);
@@ -81,11 +126,13 @@ describe("Create test cases", () => {
         throw new Error("Test case was not created in the history!");
       }
 
-      expect(createdTestCaseInHistory.productCode).toEqual(input.productCode);
-      expect(createdTestCaseInHistory.moduleCode).toEqual(input.moduleCode);
-      expect(createdTestCaseInHistory.menuCode).toEqual(input.menuCode);
-      expect(createdTestCaseInHistory.testingFor).toEqual(input.testingFor);
-      expect(createdTestCaseInHistory.testingScope).toEqual(input.testingScope);
+      expect(createdTestCaseInHistory.productId).toEqual(input.productId);
+      expect(createdTestCaseInHistory.moduleId).toEqual(input.moduleId);
+      expect(createdTestCaseInHistory.menuId).toEqual(input.menuId);
+      expect(createdTestCaseInHistory.testingForId).toEqual(input.testingForId);
+      expect(createdTestCaseInHistory.testingScopeId).toEqual(
+        input.testingScopeId
+      );
       expect(createdTestCaseInHistory.description).toEqual(
         input.cases[i].description
       );
@@ -113,14 +160,10 @@ describe("Create test cases", () => {
     done();
   });
 
-  test("Check with invalid codes", async (done) => {
+  test("Check with invalid product id", async (done) => {
     const input = {
       ...correctInput,
-      productCode: "PROD",
-      moduleCode: "MOD",
-      menuCode: "MEN",
-      testingFor: "TFOR",
-      testingScope: "TSCO",
+      productId: "PROD",
     };
 
     const client = new TestClient(process.env.TEST_HOST as string);
@@ -129,13 +172,88 @@ describe("Create test cases", () => {
     const response = await client.createTestCases(input);
 
     expect(response.data.createTestCases.errors).toEqual([
-      { field: "productCode", message: getDoesNotExistMessage("productCode") },
-      { field: "moduleCode", message: getDoesNotExistMessage("moduleCode") },
-      { field: "menuCode", message: getDoesNotExistMessage("menuCode") },
-      { field: "testingFor", message: getDoesNotExistMessage("testingFor") },
+      { field: "productId", message: getDoesNotExistMessage("productId") },
+    ]);
+    expect(response.data.createTestCases.testCases).toBeNull();
+
+    done();
+  });
+
+  test("Check with invalid module id", async (done) => {
+    const input = {
+      ...correctInput,
+      moduleId: "MOD",
+    };
+
+    const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(correctUsername, correctPassword);
+
+    const response = await client.createTestCases(input);
+
+    expect(response.data.createTestCases.errors).toEqual([
+      { field: "moduleId", message: getDoesNotExistMessage("moduleId") },
+    ]);
+    expect(response.data.createTestCases.testCases).toBeNull();
+
+    done();
+  });
+
+  test("Check with invalid menu id", async (done) => {
+    const input = {
+      ...correctInput,
+      menuId: "MEN",
+    };
+
+    const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(correctUsername, correctPassword);
+
+    const response = await client.createTestCases(input);
+
+    expect(response.data.createTestCases.errors).toEqual([
+      { field: "menuId", message: getDoesNotExistMessage("menuId") },
+    ]);
+    expect(response.data.createTestCases.testCases).toBeNull();
+
+    done();
+  });
+
+  test("Check with invalid testingFor id", async (done) => {
+    const input = {
+      ...correctInput,
+      testingForId: "TFOR",
+    };
+
+    const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(correctUsername, correctPassword);
+
+    const response = await client.createTestCases(input);
+
+    expect(response.data.createTestCases.errors).toEqual([
       {
-        field: "testingScope",
-        message: getDoesNotExistMessage("testingScope"),
+        field: "testingForId",
+        message: getDoesNotExistMessage("testingForId"),
+      },
+    ]);
+    expect(response.data.createTestCases.testCases).toBeNull();
+
+    done();
+  });
+
+  test("Check with invalid testingScope id", async (done) => {
+    const input = {
+      ...correctInput,
+      testingScopeId: "TSCO",
+    };
+
+    const client = new TestClient(process.env.TEST_HOST as string);
+    await client.login(correctUsername, correctPassword);
+
+    const response = await client.createTestCases(input);
+
+    expect(response.data.createTestCases.errors).toEqual([
+      {
+        field: "testingScopeId",
+        message: getDoesNotExistMessage("testingScopeId"),
       },
     ]);
     expect(response.data.createTestCases.testCases).toBeNull();

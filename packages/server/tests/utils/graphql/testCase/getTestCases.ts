@@ -6,11 +6,11 @@ query {
   getTestCases(limit: ${limit}${cursor ? `, cursor: "${cursor}"` : ""}) {
     testCases {
       id
-      productCode
-      moduleCode
-      menuCode
-      testingFor
-      testingScope
+      productId
+      moduleId
+      menuId
+      testingForId
+      testingScopeId
       description
       expectedResult
       createdBy {

@@ -3,21 +3,21 @@ import { inspect } from "util";
 import { CreateTestCasesInput } from "../../../../src/modules/testCase/testCaseResolver/create/inputTypes";
 
 export const getCreateTestCasesMutation = ({
-  productCode,
-  moduleCode,
-  menuCode,
-  testingFor,
-  testingScope,
+  productId,
+  moduleId,
+  menuId,
+  testingForId,
+  testingScopeId,
   cases,
 }: CreateTestCasesInput): string => `
 mutation {
 createTestCases(
     input: {
-      productCode: "${productCode}"
-      moduleCode: "${moduleCode}"
-      menuCode: "${menuCode}"
-      testingFor: "${testingFor}"
-      testingScope: "${testingScope}"
+      productId: "${productId}"
+      moduleId: "${moduleId}"
+      menuId: "${menuId}"
+      testingForId: "${testingForId}"
+      testingScopeId: "${testingScopeId}"
       cases: ${inspect(cases).replace(/'/g, '"')}
     }
   ) {
@@ -27,11 +27,11 @@ createTestCases(
     }
     testCases {
       id
-      productCode
-      moduleCode
-      menuCode
-      testingFor
-      testingScope
+      productId
+      moduleId
+      menuId
+      testingForId
+      testingScopeId
       description
       expectedResult
       createdBy {

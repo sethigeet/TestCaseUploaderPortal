@@ -2,11 +2,11 @@ export const getGetTestCaseQuery = (id: string): string => `
 query {
   getTestCase(id: "${id}") {
     id
-    productCode
-    moduleCode
-    menuCode
-    testingFor
-    testingScope
+    productId
+    moduleId
+    menuId
+    testingForId
+    testingScopeId
     description
     expectedResult
     createdBy {

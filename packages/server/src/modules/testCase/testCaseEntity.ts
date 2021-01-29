@@ -22,24 +22,24 @@ export class TestCase extends BaseEntity {
   id!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 15 })
-  productCode!: string;
+  @Column("uuid")
+  productId!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 20 })
-  moduleCode!: string;
+  @Column("uuid")
+  moduleId!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 15 })
-  menuCode!: string;
+  @Column("uuid")
+  menuId!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 20 })
-  testingFor!: string;
+  @Column("uuid")
+  testingForId!: string;
 
   @Field()
-  @Column({ type: "varchar", length: 255 })
-  testingScope!: string;
+  @Column("uuid")
+  testingScopeId!: string;
 
   @Field()
   @Column({ type: "text" })
@@ -91,11 +91,11 @@ export class TestCase extends BaseEntity {
   async insertIntoHistory(): Promise<void> {
     await TestCaseHistory.create({
       tsid: this.id,
-      productCode: this.productCode,
-      moduleCode: this.moduleCode,
-      menuCode: this.menuCode,
-      testingFor: this.testingFor,
-      testingScope: this.testingScope,
+      productId: this.productId,
+      moduleId: this.moduleId,
+      menuId: this.menuId,
+      testingForId: this.testingForId,
+      testingScopeId: this.testingScopeId,
       description: this.description,
       expectedResult: this.expectedResult,
       verified: this.verified,
@@ -112,11 +112,11 @@ export class TestCase extends BaseEntity {
   async updateIntoHistory(): Promise<void> {
     await TestCaseHistory.create({
       tsid: this.id,
-      productCode: this.productCode,
-      moduleCode: this.moduleCode,
-      menuCode: this.menuCode,
-      testingFor: this.testingFor,
-      testingScope: this.testingScope,
+      productId: this.productId,
+      moduleId: this.moduleId,
+      menuId: this.menuId,
+      testingForId: this.testingForId,
+      testingScopeId: this.testingScopeId,
       description: this.description,
       expectedResult: this.expectedResult,
       verified: this.verified,

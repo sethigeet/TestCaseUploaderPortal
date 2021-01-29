@@ -10,71 +10,71 @@ import {
   TestingScopeMaster,
 } from "../../../../masters";
 
-interface Codes {
-  productCode: string;
-  moduleCode: string;
-  menuCode: string;
-  testingFor: string;
-  testingScope: string;
+interface Ids {
+  productId: string;
+  moduleId: string;
+  menuId: string;
+  testingForId: string;
+  testingScopeId: string;
 }
 
-export const checkIfCodesExist = async ({
-  productCode,
-  moduleCode,
-  menuCode,
-  testingFor,
-  testingScope,
-}: Codes): Promise<FieldError | null> => {
+export const checkIfIdsExist = async ({
+  productId,
+  moduleId,
+  menuId,
+  testingForId,
+  testingScopeId,
+}: Ids): Promise<FieldError | null> => {
   const products = await ProductMaster.find();
-  const productCodes = products.map((p) => p.code);
-  if (!productCodes.includes(productCode)) {
+  const productIds = products.map((p) => p.id);
+  if (!productIds.includes(productId)) {
     return {
-      field: "productCode",
-      message: getDoesNotExistMessage("productCode"),
+      field: "productId",
+      message: getDoesNotExistMessage("productId"),
     };
   }
 
   const modules = await ModuleMaster.find({
-    where: { product: { code: productCode } },
+    where: { product: { id: productId } },
   });
-  const moduleCodes = modules.map((m) => m.code);
-  if (!moduleCodes.includes(moduleCode)) {
+  const moduleIds = modules.map((m) => m.id);
+  if (!moduleIds.includes(moduleId)) {
     return {
-      field: "moduleCode",
-      message: getDoesNotExistMessage("moduleCode"),
+      field: "moduleId",
+      message: getDoesNotExistMessage("moduleId"),
     };
   }
 
   const menus = await MenuMaster.find({
-    where: { module: { code: moduleCode } },
+    where: { module: { id: moduleId } },
   });
-  const menuCodes = menus.map((m) => m.code);
-  if (!menuCodes.includes(menuCode)) {
+  const menuIds = menus.map((m) => m.id);
+  if (!menuIds.includes(menuId)) {
     return {
-      field: "menuCode",
-      message: getDoesNotExistMessage("menuCode"),
+      field: "menuId",
+      message: getDoesNotExistMessage("menuId"),
     };
   }
 
   const testingFors = await TestingForMaster.find({
-    where: { menu: { code: menuCode } },
+    where: { menu: { id: menuId } },
   });
-  const testingForCodes = testingFors.map((t) => t.code);
-  if (!testingForCodes.includes(testingFor)) {
+  const testingForIds = testingFors.map((t) => t.id);
+  if (!testingForIds.includes(testingForId)) {
     return {
-      field: "testingFor",
-      message: getDoesNotExistMessage("testingFor"),
+      field: "testingForId",
+      message: getDoesNotExistMessage("testingForId"),
     };
   }
 
   const testingScopes = await TestingScopeMaster.find({
-    where: { testingFor: { code: testingFor } },
+    where: { testingFor: { id: testingForId } },
   });
-  const testingScopeCodes = testingScopes.map((t) => t.code);
-  if (!testingScopeCodes.includes(testingScope)) {
+  const testingScopeIds = testingScopes.map((t) => t.id);
+  if (!testingScopeIds.includes(testingScopeId)) {
     return {
-      field: "testingScope",
-      message: getDoesNotExistMessage("testingScope"),
+      field: "testingScopeId",
+      message: getDoesNotExistMessage("testingScopeId"),
     };
   }
 

@@ -68,18 +68,16 @@ describe("Get a test case", () => {
 
     const response = await client.getTestCase(testCase1.id);
 
-    expect(response.data.getTestCase?.productCode).toEqual(
-      correctInput.productCode
+    expect(response.data.getTestCase?.productId).toEqual(
+      correctInput.productId
     );
-    expect(response.data.getTestCase?.moduleCode).toEqual(
-      correctInput.moduleCode
+    expect(response.data.getTestCase?.moduleId).toEqual(correctInput.moduleId);
+    expect(response.data.getTestCase?.menuId).toEqual(correctInput.menuId);
+    expect(response.data.getTestCase?.testingForId).toEqual(
+      correctInput.testingForId
     );
-    expect(response.data.getTestCase?.menuCode).toEqual(correctInput.menuCode);
-    expect(response.data.getTestCase?.testingFor).toEqual(
-      correctInput.testingFor
-    );
-    expect(response.data.getTestCase?.testingScope).toEqual(
-      correctInput.testingScope
+    expect(response.data.getTestCase?.testingScopeId).toEqual(
+      correctInput.testingScopeId
     );
     expect(response.data.getTestCase?.description).toEqual(
       correctInput.description
@@ -132,18 +130,16 @@ describe("Get a test case", () => {
 
     const response = await client.getTestCase(testCase1.id);
 
-    expect(response.data.getTestCase?.productCode).toEqual(
-      correctInput.productCode
+    expect(response.data.getTestCase?.productId).toEqual(
+      correctInput.productId
     );
-    expect(response.data.getTestCase?.moduleCode).toEqual(
-      correctInput.moduleCode
+    expect(response.data.getTestCase?.moduleId).toEqual(correctInput.moduleId);
+    expect(response.data.getTestCase?.menuId).toEqual(correctInput.menuId);
+    expect(response.data.getTestCase?.testingForId).toEqual(
+      correctInput.testingForId
     );
-    expect(response.data.getTestCase?.menuCode).toEqual(correctInput.menuCode);
-    expect(response.data.getTestCase?.testingFor).toEqual(
-      correctInput.testingFor
-    );
-    expect(response.data.getTestCase?.testingScope).toEqual(
-      correctInput.testingScope
+    expect(response.data.getTestCase?.testingScopeId).toEqual(
+      correctInput.testingScopeId
     );
     expect(response.data.getTestCase?.description).toEqual(
       correctInput.description
@@ -163,18 +159,16 @@ describe("Get a test case", () => {
 
     const response = await client.getTestCase(testCase1.id);
 
-    expect(response.data.getTestCase?.productCode).toEqual(
-      correctInput.productCode
+    expect(response.data.getTestCase?.productId).toEqual(
+      correctInput.productId
     );
-    expect(response.data.getTestCase?.moduleCode).toEqual(
-      correctInput.moduleCode
+    expect(response.data.getTestCase?.moduleId).toEqual(correctInput.moduleId);
+    expect(response.data.getTestCase?.menuId).toEqual(correctInput.menuId);
+    expect(response.data.getTestCase?.testingForId).toEqual(
+      correctInput.testingForId
     );
-    expect(response.data.getTestCase?.menuCode).toEqual(correctInput.menuCode);
-    expect(response.data.getTestCase?.testingFor).toEqual(
-      correctInput.testingFor
-    );
-    expect(response.data.getTestCase?.testingScope).toEqual(
-      correctInput.testingScope
+    expect(response.data.getTestCase?.testingScopeId).toEqual(
+      correctInput.testingScopeId
     );
     expect(response.data.getTestCase?.description).toEqual(
       correctInput.description

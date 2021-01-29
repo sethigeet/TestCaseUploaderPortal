@@ -5,19 +5,19 @@ import { CaseType } from "./CaseType";
 @InputType()
 export class CreateTestCaseInput {
   @Field()
-  productCode!: string;
+  productId!: string;
 
   @Field()
-  moduleCode!: string;
+  moduleId!: string;
 
   @Field()
-  menuCode!: string;
+  menuId!: string;
 
   @Field()
-  testingFor!: string;
+  testingForId!: string;
 
   @Field()
-  testingScope!: string;
+  testingScopeId!: string;
 
   @Field(() => CaseType)
   case!: CaseType;
