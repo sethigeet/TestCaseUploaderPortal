@@ -9,6 +9,6 @@ export class RegisterInput {
   @Field()
   password!: string;
 
-  @Field({ defaultValue: UserRoles.TESTER, nullable: true })
+  @Field(() => UserRoles, { defaultValue: UserRoles.TESTER, nullable: true })
   role!: UserRoles;
 }
