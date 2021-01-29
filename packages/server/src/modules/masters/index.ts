@@ -11,3 +11,9 @@ export const mastersResolvers: any = [
   ...testingForResolvers,
   ...testingScopeResolvers,
 ];
+
+export { ProductMaster, ProductMasterHistory } from "./product";
+export { ModuleMaster, ModuleMasterHistory } from "./module";
+export { MenuMaster, MenuMasterHistory } from "./menu";
+export { TestingForMaster, TestingForMasterHistory } from "./testingFor";
+export { TestingScopeMaster, TestingScopeMasterHistory } from "./testingScope";
