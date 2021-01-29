@@ -5,11 +5,11 @@ import { UserRoles } from "@portal/common";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { User } from "../../../src/modules/user";
-import { MenuMaster } from "../../../src/modules/masters/menu";
 import {
+  MenuMaster,
   TestingForMaster,
   TestingForMasterHistory,
-} from "../../../src/modules/masters/testingFor";
+} from "../../../src/modules/masters";
 
 import { fakeData, TestClient } from "../../utils";
 

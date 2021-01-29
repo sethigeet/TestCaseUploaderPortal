@@ -3,8 +3,7 @@ import { Connection } from "typeorm";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { User } from "../../../src/modules/user";
-import { ProductMaster } from "../../../src/modules/masters/product";
-import { ModuleMaster } from "../../../src/modules/masters/module";
+import { ProductMaster, ModuleMaster } from "../../../src/modules/masters";
 
 import { fakeData, TestClient } from "../../utils";
 

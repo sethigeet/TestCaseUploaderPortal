@@ -9,11 +9,11 @@ import {
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { User } from "../../../src/modules/user";
-import { TestingForMaster } from "../../../src/modules/masters/testingFor";
 import {
+  TestingForMaster,
   TestingScopeMaster,
   TestingScopeMasterHistory,
-} from "../../../src/modules/masters/testingScope";
+} from "../../../src/modules/masters";
 
 import { fakeData, TestClient } from "../../utils";
 

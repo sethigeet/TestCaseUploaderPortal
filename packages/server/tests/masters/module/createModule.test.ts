@@ -10,11 +10,11 @@ import {
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { User } from "../../../src/modules/user";
-import { ProductMaster } from "../../../src/modules/masters/product";
 import {
+  ProductMaster,
   ModuleMaster,
   ModuleMasterHistory,
-} from "../../../src/modules/masters/module";
+} from "../../../src/modules/masters";
 
 import { fakeData, TestClient } from "../../utils";
 

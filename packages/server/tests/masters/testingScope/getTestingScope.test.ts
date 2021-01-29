@@ -3,8 +3,10 @@ import { Connection } from "typeorm";
 import { createTypeormConnection } from "../../../src/modules/shared/utils";
 
 import { User } from "../../../src/modules/user";
-import { TestingForMaster } from "../../../src/modules/masters/testingFor";
-import { TestingScopeMaster } from "../../../src/modules/masters/testingScope";
+import {
+  TestingScopeMaster,
+  TestingForMaster,
+} from "../../../src/modules/masters";
 
 import { fakeData, TestClient } from "../../utils";
 
