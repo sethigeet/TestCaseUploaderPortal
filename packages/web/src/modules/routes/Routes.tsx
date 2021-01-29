@@ -1,9 +1,10 @@
 import { FC } from "react";
 
-import { BrowserRouter, Route, RouteProps, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 
 import { useMeQuery } from "@portal/controller";
 
+import { RouteType } from "../types";
 import { AuthenticationRoutes } from "../authentication";
 import { TestCaseRoutes } from "../testCase";
 
@@ -11,7 +12,7 @@ import { Home } from "./Home";
 import { NotFound } from "./NotFound";
 import { PrivateRoute } from "./PrivateRoute";
 
-const routes: (RouteProps & { private?: boolean })[] = [
+const routes: RouteType[] = [
   { path: ["/", "/home"], component: Home },
   ...AuthenticationRoutes,
   ...TestCaseRoutes,

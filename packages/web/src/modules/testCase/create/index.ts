@@ -1,8 +1,8 @@
-import { RouteProps } from "react-router-dom";
+import { RouteType } from "../../types";
 
 import { CreateTestCaseConnector } from "./CreateTestCaseConnector";
 
-export const CreateTestCaseRoute: RouteProps & { private?: boolean } = {
+export const CreateTestCaseRoute: RouteType = {
   path: "/create",
   component: CreateTestCaseConnector,
   private: true,

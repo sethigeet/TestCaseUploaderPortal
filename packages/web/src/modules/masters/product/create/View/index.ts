@@ -1,0 +1,1 @@
+export { CreateProductView } from "./CreateProductView";
