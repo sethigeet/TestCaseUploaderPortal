@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { UserRoles } from "../../../userRoles";
 
 import {
   getMinLenMessage,
@@ -25,4 +26,8 @@ export const registerSchema = yup.object().shape({
     .string()
     .required(getRequiredMessage("password"))
     .min(3, getMinLenMessage("password")),
+  role: yup
+    .string()
+    .default(UserRoles.TESTER)
+    .oneOf([UserRoles.TESTER, UserRoles.SUPERVISOR, UserRoles.ADMIN]),
 });
