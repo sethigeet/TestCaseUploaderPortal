@@ -1,13 +1,28 @@
 import * as yup from "yup";
 
-import { getRequiredMessage } from "../../errorMessages";
+import { getInvalidUuidMessage, getRequiredMessage } from "../../errorMessages";
 
 export const createTestCaseSchema = yup.object().shape({
-  productId: yup.string().required(getRequiredMessage("productId")),
-  moduleId: yup.string().required(getRequiredMessage("moduleId")),
-  menuId: yup.string().required(getRequiredMessage("menuId")),
-  testingForId: yup.string().required(getRequiredMessage("testingForId")),
-  testingScopeId: yup.string().required(getRequiredMessage("testingScopeId")),
+  productId: yup
+    .string()
+    .required(getRequiredMessage("productId"))
+    .uuid(getInvalidUuidMessage("productId")),
+  moduleId: yup
+    .string()
+    .required(getRequiredMessage("moduleId"))
+    .uuid(getInvalidUuidMessage("moduleId")),
+  menuId: yup
+    .string()
+    .required(getRequiredMessage("menuId"))
+    .uuid(getInvalidUuidMessage("menuId")),
+  testingForId: yup
+    .string()
+    .required(getRequiredMessage("testingForId"))
+    .uuid(getInvalidUuidMessage("testingForId")),
+  testingScopeId: yup
+    .string()
+    .required(getRequiredMessage("testingScopeId"))
+    .uuid(getInvalidUuidMessage("testingScopeId")),
   case: yup
     .object({
       description: yup.string().required(getRequiredMessage("description")),
@@ -19,11 +34,26 @@ export const createTestCaseSchema = yup.object().shape({
 });
 
 export const createTestCasesSchema = yup.object().shape({
-  productId: yup.string().required(getRequiredMessage("productId")),
-  moduleId: yup.string().required(getRequiredMessage("moduleId")),
-  menuId: yup.string().required(getRequiredMessage("menuId")),
-  testingForId: yup.string().required(getRequiredMessage("testingForId")),
-  testingScopeId: yup.string().required(getRequiredMessage("testingScopeId")),
+  productId: yup
+    .string()
+    .required(getRequiredMessage("productId"))
+    .uuid(getInvalidUuidMessage("productId")),
+  moduleId: yup
+    .string()
+    .required(getRequiredMessage("moduleId"))
+    .uuid(getInvalidUuidMessage("moduleId")),
+  menuId: yup
+    .string()
+    .required(getRequiredMessage("menuId"))
+    .uuid(getInvalidUuidMessage("menuId")),
+  testingForId: yup
+    .string()
+    .required(getRequiredMessage("testingForId"))
+    .uuid(getInvalidUuidMessage("testingForId")),
+  testingScopeId: yup
+    .string()
+    .required(getRequiredMessage("testingScopeId"))
+    .uuid(getInvalidUuidMessage("testingScopeId")),
   cases: yup
     .array()
     .of(

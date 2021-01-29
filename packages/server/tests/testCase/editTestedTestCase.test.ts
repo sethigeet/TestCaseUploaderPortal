@@ -1,6 +1,6 @@
 import { Connection } from "typeorm";
 
-import { getRequiredMessage } from "@portal/common";
+import { getInvalidUuidMessage, getRequiredMessage } from "@portal/common";
 
 import { createTypeormConnection } from "../../src/modules/shared/utils";
 
@@ -124,6 +124,7 @@ describe("Edit a tested test case", () => {
 
     expect(response.data.editTestedTestCase.errors).toEqual([
       { field: "id", message: getRequiredMessage("id") },
+      { field: "id", message: getInvalidUuidMessage("id") },
       { field: "actualResult", message: getRequiredMessage("actualResult") },
       { field: "userRemarks", message: getRequiredMessage("userRemarks") },
     ]);

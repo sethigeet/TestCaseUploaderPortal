@@ -1,4 +1,5 @@
 import { Arg, Query, Resolver } from "type-graphql";
+import { validate } from "uuid";
 
 import { isAuthenticated } from "../../../../shared/decorators";
 
@@ -12,6 +13,11 @@ export class GetTestingForResolver {
     if (!id) {
       throw new Error("Id is required!");
     }
+
+    if (!validate(id)) {
+      throw new Error("Id must be a valid uuid!");
+    }
+
     return TestingForMaster.findOne(id, {
       relations: ["createdBy", "updatedBy", "menu", "testingScopes"],
     });
@@ -23,6 +29,11 @@ export class GetTestingForResolver {
     if (!menuId) {
       throw new Error("menuId is required!");
     }
+
+    if (!validate(menuId)) {
+      throw new Error("menuId must be a valid uuid!");
+    }
+
     return TestingForMaster.find({
       where: { menu: { id: menuId } },
       relations: ["createdBy", "updatedBy", "menu", "testingScopes"],

@@ -1,7 +1,7 @@
 import { Connection } from "typeorm";
 
 import {
-  getMinLenMessage,
+  getInvalidUuidMessage,
   getRequiredMessage,
   getUnavailableMessage,
   UserRoles,
@@ -215,7 +215,7 @@ describe("Create a testingScope", () => {
     done();
   });
 
-  test("Check with invalid menuId", async (done) => {
+  test("Check with invalid testingForId", async (done) => {
     const input = {
       ...correctInput3,
       testingForId: "dsgadfsagd sj dsadsj dgjhgd sgshagdh",
@@ -226,8 +226,9 @@ describe("Create a testingScope", () => {
 
     const response = await client.createTestingScope(input);
 
-    expect(response.errors).toBeTruthy();
-    expect(response.data).toBeNull();
+    expect(response.data.createTestingScope.errors).toEqual([
+      { field: "testingForId", message: getInvalidUuidMessage("testingForId") },
+    ]);
 
     done();
   });
@@ -283,7 +284,7 @@ describe("Create a testingScope", () => {
 
     expect(response.data.createTestingScope.errors).toEqual([
       { field: "testingForId", message: getRequiredMessage("testingForId") },
-      { field: "testingForId", message: getMinLenMessage("testingForId", 36) },
+      { field: "testingForId", message: getInvalidUuidMessage("testingForId") },
       { field: "code", message: getRequiredMessage("code") },
       { field: "name", message: getRequiredMessage("name") },
     ]);

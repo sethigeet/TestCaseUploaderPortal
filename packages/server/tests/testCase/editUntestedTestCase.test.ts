@@ -1,6 +1,6 @@
 import { Connection } from "typeorm";
 
-import { getRequiredMessage } from "@portal/common";
+import { getInvalidUuidMessage, getRequiredMessage } from "@portal/common";
 
 import { createTypeormConnection } from "../../src/modules/shared/utils";
 
@@ -60,7 +60,7 @@ afterAll(async (done) => {
   done();
 });
 
-describe("Edit a tested test case", () => {
+describe("Edit an untested test case", () => {
   test("Check without logging in", async (done) => {
     const input = { ...correctInput, id: testCase1.id };
 
@@ -102,6 +102,7 @@ describe("Edit a tested test case", () => {
 
     expect(response.data.editUntestedTestCase.errors).toEqual([
       { field: "id", message: getRequiredMessage("id") },
+      { field: "id", message: getInvalidUuidMessage("id") },
       { field: "description", message: getRequiredMessage("description") },
       {
         field: "expectedResult",

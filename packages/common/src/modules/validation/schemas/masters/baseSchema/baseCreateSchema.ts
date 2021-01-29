@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { RequiredStringSchema } from "yup/lib/string";
 
 import {
+  getInvalidUuidMessage,
   getMaxLenMessage,
   getMinLenMessage,
   getRequiredMessage,
@@ -24,8 +25,7 @@ export const getBaseCreateSchema = (parentName?: string): BaseCreateSchema => {
     baseSchema[`${parentName}Id`] = yup
       .string()
       .required(getRequiredMessage(`${parentName}Id`))
-      .min(36, getMinLenMessage(`${parentName}Id`, 36))
-      .max(36, getMaxLenMessage(`${parentName}Id`, 36));
+      .uuid(getInvalidUuidMessage(`${parentName}Id`));
   }
 
   baseSchema["code"] = yup

@@ -1,4 +1,5 @@
 import { Arg, Query, Resolver } from "type-graphql";
+import { validate } from "uuid";
 
 import { isAuthenticated } from "../../../../shared/decorators";
 
@@ -12,6 +13,11 @@ export class GetModuleResolver {
     if (!id) {
       throw new Error("Id is required!");
     }
+
+    if (!validate(id)) {
+      throw new Error("Id must be a valid uuid!");
+    }
+
     return ModuleMaster.findOne(id, {
       relations: ["createdBy", "updatedBy", "product", "menus"],
     });
@@ -23,6 +29,11 @@ export class GetModuleResolver {
     if (!productId) {
       throw new Error("productId is required!");
     }
+
+    if (!validate(productId)) {
+      throw new Error("productId must be a valid uuid!");
+    }
+
     return ModuleMaster.find({
       where: { product: { id: productId } },
       relations: ["createdBy", "updatedBy", "product", "menus"],

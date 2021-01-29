@@ -1,4 +1,5 @@
 import { Arg, Mutation, Resolver } from "type-graphql";
+import { validate } from "uuid";
 
 import { UserRoles } from "@portal/common";
 
@@ -17,6 +18,10 @@ export class DeleteProductResolver {
   ): Promise<boolean> {
     if (!id) {
       throw new Error("Id is required!");
+    }
+
+    if (!validate(id)) {
+      throw new Error("Id must be a valid uuid!");
     }
 
     const product = await ProductMaster.findOne(id);

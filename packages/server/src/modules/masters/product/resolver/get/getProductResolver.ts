@@ -1,4 +1,5 @@
 import { Arg, Query, Resolver } from "type-graphql";
+import { validate } from "uuid";
 
 import { isAuthenticated } from "../../../../shared/decorators";
 
@@ -12,6 +13,11 @@ export class GetProductResolver {
     if (!id) {
       throw new Error("Id is required!");
     }
+
+    if (!validate(id)) {
+      throw new Error("Id must be a valid uuid!");
+    }
+
     return ProductMaster.findOne(id, {
       relations: ["createdBy", "updatedBy", "modules"],
     });

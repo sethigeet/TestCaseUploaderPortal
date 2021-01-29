@@ -1,7 +1,7 @@
 import { Connection } from "typeorm";
 
 import {
-  getMinLenMessage,
+  getInvalidUuidMessage,
   getRequiredMessage,
   getUnavailableMessage,
   UserRoles,
@@ -198,8 +198,9 @@ describe("Create a menu", () => {
 
     const response = await client.createMenu(input);
 
-    expect(response.errors).toBeTruthy();
-    expect(response.data).toBeNull();
+    expect(response.data.createMenu.errors).toEqual([
+      { field: "moduleId", message: getInvalidUuidMessage("moduleId") },
+    ]);
 
     done();
   });
@@ -255,7 +256,7 @@ describe("Create a menu", () => {
 
     expect(response.data.createMenu.errors).toEqual([
       { field: "moduleId", message: getRequiredMessage("moduleId") },
-      { field: "moduleId", message: getMinLenMessage("moduleId", 36) },
+      { field: "moduleId", message: getInvalidUuidMessage("moduleId") },
       { field: "code", message: getRequiredMessage("code") },
       { field: "name", message: getRequiredMessage("name") },
     ]);

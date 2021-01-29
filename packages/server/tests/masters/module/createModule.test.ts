@@ -1,7 +1,7 @@
 import { Connection } from "typeorm";
 
 import {
-  getMinLenMessage,
+  getInvalidUuidMessage,
   getRequiredMessage,
   getUnavailableMessage,
   UserRoles,
@@ -202,8 +202,9 @@ describe("Create a module", () => {
 
     const response = await client.createModule(input);
 
-    expect(response.errors).toBeTruthy();
-    expect(response.data).toBeNull();
+    expect(response.data.createModule.errors).toEqual([
+      { field: "productId", message: getInvalidUuidMessage("productId") },
+    ]);
 
     done();
   });
@@ -259,7 +260,7 @@ describe("Create a module", () => {
 
     expect(response.data.createModule.errors).toEqual([
       { field: "productId", message: getRequiredMessage("productId") },
-      { field: "productId", message: getMinLenMessage("productId", 36) },
+      { field: "productId", message: getInvalidUuidMessage("productId") },
       { field: "code", message: getRequiredMessage("code") },
       { field: "name", message: getRequiredMessage("name") },
     ]);

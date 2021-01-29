@@ -1,7 +1,7 @@
 import { Connection } from "typeorm";
 
 import {
-  getMinLenMessage,
+  getInvalidUuidMessage,
   getRequiredMessage,
   getUnavailableMessage,
   UserRoles,
@@ -210,8 +210,9 @@ describe("Create a testingFor", () => {
 
     const response = await client.createTestingFor(input);
 
-    expect(response.errors).toBeTruthy();
-    expect(response.data).toBeNull();
+    expect(response.data.createTestingFor.errors).toEqual([
+      { field: "menuId", message: getInvalidUuidMessage("menuId") },
+    ]);
 
     done();
   });
@@ -267,7 +268,7 @@ describe("Create a testingFor", () => {
 
     expect(response.data.createTestingFor.errors).toEqual([
       { field: "menuId", message: getRequiredMessage("menuId") },
-      { field: "menuId", message: getMinLenMessage("menuId", 36) },
+      { field: "menuId", message: getInvalidUuidMessage("menuId") },
       { field: "code", message: getRequiredMessage("code") },
       { field: "name", message: getRequiredMessage("name") },
     ]);

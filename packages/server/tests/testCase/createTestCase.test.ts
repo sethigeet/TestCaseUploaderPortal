@@ -1,6 +1,11 @@
 import { Connection } from "typeorm";
+import { random } from "faker";
 
-import { getRequiredMessage, getDoesNotExistMessage } from "@portal/common";
+import {
+  getRequiredMessage,
+  getDoesNotExistMessage,
+  getInvalidUuidMessage,
+} from "@portal/common";
 
 import { createTypeormConnection } from "../../src/modules/shared/utils";
 
@@ -175,7 +180,7 @@ describe("Create a test case", () => {
   test("Check with invalid product Id", async (done) => {
     const input = {
       ...correctInput,
-      productId: "PROD",
+      productId: random.uuid(),
     };
 
     const client = new TestClient(process.env.TEST_HOST as string);
@@ -194,7 +199,7 @@ describe("Create a test case", () => {
   test("Check with invalid module Id", async (done) => {
     const input = {
       ...correctInput,
-      moduleId: "MOD",
+      moduleId: random.uuid(),
     };
 
     const client = new TestClient(process.env.TEST_HOST as string);
@@ -213,7 +218,7 @@ describe("Create a test case", () => {
   test("Check with invalid menu Id", async (done) => {
     const input = {
       ...correctInput,
-      menuId: "MEN",
+      menuId: random.uuid(),
     };
 
     const client = new TestClient(process.env.TEST_HOST as string);
@@ -232,7 +237,7 @@ describe("Create a test case", () => {
   test("Check with invalid testingFor Id", async (done) => {
     const input = {
       ...correctInput,
-      testingForId: "TFOR",
+      testingForId: random.uuid(),
     };
 
     const client = new TestClient(process.env.TEST_HOST as string);
@@ -254,7 +259,7 @@ describe("Create a test case", () => {
   test("Check with invalid testingScope Id", async (done) => {
     const input = {
       ...correctInput,
-      testingScopeId: "TSCO",
+      testingScopeId: random.uuid(),
     };
 
     const client = new TestClient(process.env.TEST_HOST as string);
@@ -275,7 +280,11 @@ describe("Create a test case", () => {
 
   test("Check with missing inputs", async (done) => {
     const input = {
-      ...correctInput,
+      productId: "",
+      moduleId: "",
+      menuId: "",
+      testingForId: "",
+      testingScopeId: "",
       case: {
         description: "",
         expectedResult: "",
@@ -288,6 +297,22 @@ describe("Create a test case", () => {
     const response = await client.createTestCase(input);
 
     expect(response.data.createTestCase.errors).toEqual([
+      { field: "productId", message: getRequiredMessage("productId") },
+      { field: "productId", message: getInvalidUuidMessage("productId") },
+      { field: "moduleId", message: getRequiredMessage("moduleId") },
+      { field: "moduleId", message: getInvalidUuidMessage("moduleId") },
+      { field: "menuId", message: getRequiredMessage("menuId") },
+      { field: "menuId", message: getInvalidUuidMessage("menuId") },
+      { field: "testingForId", message: getRequiredMessage("testingForId") },
+      { field: "testingForId", message: getInvalidUuidMessage("testingForId") },
+      {
+        field: "testingScopeId",
+        message: getRequiredMessage("testingScopeId"),
+      },
+      {
+        field: "testingScopeId",
+        message: getInvalidUuidMessage("testingScopeId"),
+      },
       { field: "case.description", message: getRequiredMessage("description") },
       {
         field: "case.expectedResult",
