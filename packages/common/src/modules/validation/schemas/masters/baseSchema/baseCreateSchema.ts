@@ -4,7 +4,6 @@ import { RequiredStringSchema } from "yup/lib/string";
 import {
   getInvalidUuidMessage,
   getMaxLenMessage,
-  getMinLenMessage,
   getRequiredMessage,
 } from "../../../errorMessages";
 
