@@ -21,6 +21,7 @@ import {
   useMeQuery,
   useApiClient,
 } from "@portal/controller";
+import { UserRoles } from "@portal/common";
 
 import Logo from "../assets/icon.svg";
 
@@ -38,7 +39,7 @@ export const Navbar: FC = () => {
 
   const location = useLocation();
 
-  const activeRoute = location.pathname.split("/")[1];
+  const activeRoute = location.pathname.split("/").slice(1).join("/");
 
   if (!meLoading && meError) {
     displayErrorToast({
@@ -74,14 +75,21 @@ export const Navbar: FC = () => {
         <Link to="/" fontWeight={activeRoute === "" ? "bold" : ""}>
           Home
         </Link>
-        <Link to="/create" fontWeight={activeRoute === "create" ? "bold" : ""}>
-          Create
-        </Link>
-        <Link to="/status" fontWeight={activeRoute === "status" ? "bold" : ""}>
-          Status
-        </Link>
-        <Link to="/test" fontWeight={activeRoute === "test" ? "bold" : ""}>
-          Test
+
+        {data?.me?.role === UserRoles.ADMIN && (
+          <Link
+            to="/masters"
+            fontWeight={activeRoute === "masters" ? "bold" : ""}
+          >
+            Masters
+          </Link>
+        )}
+
+        <Link
+          to="/testCase"
+          fontWeight={activeRoute === "testCase" ? "bold" : ""}
+        >
+          Test Cases
         </Link>
         <Link
           to="/dashboard"

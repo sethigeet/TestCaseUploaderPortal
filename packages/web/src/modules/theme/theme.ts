@@ -5,4 +5,4 @@ const fonts = {
   heading: "Montserrat, sans-serif",
 };
 
-export const theme = extendTheme({ fonts });
+export const theme = extendTheme({ fonts, colors: { black: "#333" } });

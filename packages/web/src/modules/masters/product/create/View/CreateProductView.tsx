@@ -4,7 +4,7 @@ interface CreateProductViewProps {
   data?: any;
 }
 
-export const CreateProductView: FC<CreateProductViewProps> = (props) => {
+export const CreateProductView: FC<CreateProductViewProps> = () => {
   return (
     <div>
       <h1>Create Product View</h1>

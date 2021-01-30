@@ -59,7 +59,11 @@ export const LoginConnector: FC = () => {
   }
 
   if (data?.me) {
-    return <Redirect to="/" />;
+    if (location.state.next) {
+      return <Redirect to={location.state.next} />;
+    } else {
+      return <Redirect to="/" />;
+    }
   }
 
   return (

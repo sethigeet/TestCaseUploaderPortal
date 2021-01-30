@@ -9,6 +9,6 @@ export const PrivateRoute: FC<RouteProps & { isAuthenticated: boolean }> = ({
   return isAuthenticated ? (
     <Route {...rest} />
   ) : (
-    <Redirect to={{ pathname: "/login", state: { next: "/create" } }} />
+    <Redirect to={{ pathname: "/login", state: { next: rest.path } }} />
   );
 };
