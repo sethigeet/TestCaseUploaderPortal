@@ -2,6 +2,8 @@ import { FC } from "react";
 
 import { Box, BoxProps } from "@chakra-ui/react";
 
+import { ErrorMessageType } from "../types";
+
 import { Navbar } from "./Navbar";
 import { Footer } from "./Footer";
 import { ErrorMessage } from "./ErrorMessage";
@@ -9,7 +11,7 @@ import { displayErrorToast } from "./ErrorToast";
 
 type WrapperProps = BoxProps & {
   variant?: "small" | "medium" | "large";
-  errorMessage?: { title?: string; message?: string };
+  errorMessage?: ErrorMessageType;
   errorIsToast?: boolean;
 };
 

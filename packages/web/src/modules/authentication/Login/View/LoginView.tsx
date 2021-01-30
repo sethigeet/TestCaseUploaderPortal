@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Form, Formik, FormikHelpers } from "formik";
+import { Form, Formik } from "formik";
 import { Box, Heading, List, ListIcon, ListItem, Text } from "@chakra-ui/react";
 
 import { loginSchema } from "@portal/common";
@@ -12,17 +12,15 @@ import {
   PencilIcon,
 } from "../../../assets/icons";
 
+import { ErrorMessageType } from "../../../types";
 import { Wrapper } from "../../../components";
 
-import { LoginFormValues } from "../LoginConnector";
+import { LoginFormOnSubmit } from "../LoginConnector";
 import { LoginForm } from "./LoginForm";
 
 interface LoginProps {
-  onSubmit: (
-    values: LoginFormValues,
-    formikHelpers: FormikHelpers<LoginFormValues>
-  ) => void;
-  errorMessage?: { title?: string; message?: string };
+  onSubmit: LoginFormOnSubmit;
+  errorMessage?: ErrorMessageType;
 }
 
 export const LoginView: FC<LoginProps> = ({ onSubmit, errorMessage }) => {

@@ -7,7 +7,7 @@ import {
   LoginMutationVariables,
   MeDocument,
   MeQuery,
-} from "../api-hooks";
+} from "../../../api-hooks";
 
 export const getLoginMutationOptions = (
   credentials: LoginMutationVariables["credentials"]

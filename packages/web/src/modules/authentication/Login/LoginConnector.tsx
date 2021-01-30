@@ -1,6 +1,5 @@
 import { FC, useState } from "react";
 
-import { FormikHelpers } from "formik";
 import { Redirect, useHistory, useLocation } from "react-router-dom";
 
 import {
@@ -12,11 +11,14 @@ import {
 import { toFormikError } from "../../utils";
 
 import { LoginView } from "./View";
+import { FormOnSubmit } from "../../types";
 
-export interface LoginFormValues {
+export type LoginFormValues = {
   username: string;
   password: string;
-}
+};
+
+export type LoginFormOnSubmit = FormOnSubmit<LoginFormValues>;
 
 export const LoginConnector: FC = () => {
   const history = useHistory();
@@ -26,10 +28,10 @@ export const LoginConnector: FC = () => {
   const [login, { error: loginError }] = useLoginMutation();
   const { data } = useMeQuery();
 
-  const onSubmit: (
-    values: LoginFormValues,
-    formikHelpers: FormikHelpers<LoginFormValues>
-  ) => void = async (values, { setErrors, setSubmitting }) => {
+  const onSubmit: LoginFormOnSubmit = async (
+    values,
+    { setErrors, setSubmitting }
+  ) => {
     const res = await login(getLoginMutationOptions(values));
 
     if (res.errors) {
@@ -45,8 +47,8 @@ export const LoginConnector: FC = () => {
       return;
     }
 
-    if (location.state.next) {
-      history.push(location.state.next);
+    if (location.state?.next) {
+      history.push(location.state?.next);
     } else {
       history.push("/");
     }
@@ -59,8 +61,8 @@ export const LoginConnector: FC = () => {
   }
 
   if (data?.me) {
-    if (location.state.next) {
-      return <Redirect to={location.state.next} />;
+    if (location.state?.next) {
+      return <Redirect to={location.state?.next} />;
     } else {
       return <Redirect to="/" />;
     }
