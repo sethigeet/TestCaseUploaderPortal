@@ -2,13 +2,13 @@ import { FC } from "react";
 
 import { Box, Button } from "@chakra-ui/react";
 
-import { BooleanSwitch, InputField } from "../../../../components";
+import { BooleanSwitch, InputField } from "../../components";
 
-interface CreateProductFormProps {
+interface CreateMasterFormProps {
   isSubmitting: boolean;
 }
 
-export const CreateProductForm: FC<CreateProductFormProps> = ({
+export const CreateMasterForm: FC<CreateMasterFormProps> = ({
   isSubmitting,
 }) => {
   return (

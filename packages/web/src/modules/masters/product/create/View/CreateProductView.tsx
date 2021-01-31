@@ -11,7 +11,7 @@ import { Wrapper } from "../../../../components";
 
 import { CreateProductFormOnSubmit } from "../CreateProductConnector";
 
-import { CreateProductForm } from "./CreateProductForm";
+import { CreateMasterForm } from "../../../base";
 
 interface CreateProductViewProps {
   onSubmit: CreateProductFormOnSubmit;
@@ -42,7 +42,7 @@ export const CreateProductView: FC<CreateProductViewProps> = ({
       >
         {({ isSubmitting }) => (
           <Form>
-            <CreateProductForm isSubmitting={isSubmitting} />
+            <CreateMasterForm isSubmitting={isSubmitting} />
           </Form>
         )}
       </Formik>
