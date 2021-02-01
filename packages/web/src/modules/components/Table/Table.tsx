@@ -44,7 +44,7 @@ export const Table: FC<TableProps> = ({
 
   return (
     <ChakraTable {...getTableProps()} fontSize={20}>
-      <Thead bg="blue.400">
+      <Thead bg="blue.700">
         {headerGroups.map((headerGroup, hi) => (
           <Tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column, hgi, arr) => {
