@@ -1,6 +1,9 @@
 import { FC } from "react";
 
-import { Box, Heading } from "@chakra-ui/react";
+import { Link } from "react-router-dom";
+
+import { Box, Button, Heading } from "@chakra-ui/react";
+import { AddIcon } from "@chakra-ui/icons";
 
 import { GetProductsQueryHookResult } from "@portal/controller";
 
@@ -22,7 +25,7 @@ export const ViewAllProductsView: FC<AllProductsViewProps> = ({
   return (
     <Wrapper loading={loading} errorMessage={errorMessage}>
       {data && (
-        <>
+        <Box display="flex" flexDirection="column">
           <Box
             textAlign="center"
             mb={10}
@@ -45,7 +48,18 @@ export const ViewAllProductsView: FC<AllProductsViewProps> = ({
             showLink
             initialRoute="/masters/products"
           />
-        </>
+          <Button
+            as={Link}
+            to="/masters/products/create"
+            bg="blue.700"
+            color="white"
+            mx="auto"
+            mt={10}
+          >
+            Create New
+            <AddIcon ml={2} />
+          </Button>
+        </Box>
       )}
     </Wrapper>
   );
