@@ -5,13 +5,14 @@ import { Form, Formik } from "formik";
 import { Box, Heading } from "@chakra-ui/react";
 
 import { createProductSchema } from "@portal/common";
+import { CreateProductInput } from "@portal/controller";
 
 import { ErrorMessageType } from "../../../../types";
 import { Wrapper } from "../../../../components";
 
-import { CreateProductFormOnSubmit } from "../CreateProductConnector";
-
 import { CreateMasterForm } from "../../../base";
+
+import { CreateProductFormOnSubmit } from "../CreateProductConnector";
 
 interface CreateProductViewProps {
   onSubmit: CreateProductFormOnSubmit;
@@ -36,7 +37,9 @@ export const CreateProductView: FC<CreateProductViewProps> = ({
         </Heading>
       </Box>
       <Formik
-        initialValues={{ code: "", name: "", deprecated: false }}
+        initialValues={
+          { code: "", name: "", deprecated: false } as CreateProductInput
+        }
         onSubmit={onSubmit}
         validationSchema={createProductSchema}
       >

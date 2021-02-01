@@ -3,6 +3,7 @@ import { FC, useState } from "react";
 import { useHistory } from "react-router-dom";
 
 import {
+  CreateProductInput,
   getCreateProductMutationOptions,
   useCreateProductMutation,
 } from "@portal/controller";
@@ -12,13 +13,7 @@ import { toFormikError } from "../../../utils";
 
 import { CreateProductView } from "./View";
 
-export type CreateProductFormValues = {
-  code: string;
-  name: string;
-  deprecated: boolean;
-};
-
-export type CreateProductFormOnSubmit = FormOnSubmit<CreateProductFormValues>;
+export type CreateProductFormOnSubmit = FormOnSubmit<CreateProductInput>;
 
 export const CreateProductConnector: FC = () => {
   const [error, setError] = useState(false);
