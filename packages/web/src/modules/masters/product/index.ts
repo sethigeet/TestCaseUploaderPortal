@@ -4,6 +4,6 @@ import { CreateProductRoute } from "./create";
 import { ViewProductRoutes } from "./view";
 
 export const ProductRoutes: RouteType[] = [
-  ...ViewProductRoutes,
   CreateProductRoute,
+  ...ViewProductRoutes,
 ];
