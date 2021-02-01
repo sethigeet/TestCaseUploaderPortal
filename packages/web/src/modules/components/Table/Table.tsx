@@ -56,6 +56,7 @@ export const Table: FC<TableProps> = ({
                   {...column.getHeaderProps()}
                   textAlign="center"
                   color="white"
+                  fontSize={13}
                   borderTopLeftRadius={borderTopLeftRadius}
                   borderTopRightRadius={borderTopRightRadius}
                 >
@@ -79,8 +80,11 @@ export const Table: FC<TableProps> = ({
           return (
             <Tr
               {...row.getRowProps()}
-              transition="all 0.2s ease"
-              _hover={{ bg: "blue.50" }}
+              transition="all 0.3s ease"
+              _hover={{
+                bg: "blue.50",
+                boxShadow: "xl",
+              }}
             >
               {row.cells.map((cell) => {
                 if (showLink && initialRoute) {
@@ -94,10 +98,19 @@ export const Table: FC<TableProps> = ({
                     );
                   }
                 }
+
                 if (cell.column.Header === "Deprecated") {
                   return (
                     <Td {...cell.getCellProps()} textAlign="center">
                       {cell.value ? <CheckIcon /> : <CloseIcon />}
+                    </Td>
+                  );
+                }
+
+                if (!cell.value) {
+                  return (
+                    <Td {...cell.getCellProps()} textAlign="center">
+                      {cell.render("Cell")}
                     </Td>
                   );
                 }
