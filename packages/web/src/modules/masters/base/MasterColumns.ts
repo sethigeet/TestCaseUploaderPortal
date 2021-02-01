@@ -2,6 +2,16 @@ import { Column } from "react-table";
 
 import * as timeago from "timeago.js";
 
+const formatTime = (val: string): string => {
+  if (!val) {
+    return "-";
+  }
+
+  const newVal = parseInt(val) - new Date().getTimezoneOffset() * 60 * 1000;
+
+  return timeago.format(newVal);
+};
+
 export const MASTER_COLUMNS: Column[] = [
   {
     Header: "Code",
@@ -26,7 +36,7 @@ export const MASTER_COLUMNS: Column[] = [
       {
         Header: "Created At",
         accessor: "createdAt",
-        Cell: ({ value }) => (value ? timeago.format(parseInt(value)) : "-"),
+        Cell: ({ value }) => formatTime(value),
       },
     ],
   },
@@ -41,7 +51,7 @@ export const MASTER_COLUMNS: Column[] = [
       {
         Header: "Updated At",
         accessor: "updatedAt",
-        Cell: ({ value }) => (value ? timeago.format(parseInt(value)) : "-"),
+        Cell: ({ value }) => formatTime(value),
       },
     ],
   },
