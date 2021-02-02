@@ -24,6 +24,7 @@ export const MASTER_COLUMNS: Column[] = [
   {
     Header: "Deprecated",
     accessor: "deprecated",
+    sortType: "boolean",
   },
   {
     Header: "Creation",

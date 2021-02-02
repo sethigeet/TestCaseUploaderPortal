@@ -54,7 +54,7 @@ export const ViewAllProductsView: FC<AllProductsViewProps> = ({
             bg="blue.700"
             color="white"
             mx="auto"
-            mt={10}
+            my={10}
           >
             Create New
             <AddIcon ml={2} />

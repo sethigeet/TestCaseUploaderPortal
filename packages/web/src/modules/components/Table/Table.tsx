@@ -3,7 +3,7 @@ import { FC, useMemo } from "react";
 
 import { Link } from "react-router-dom";
 
-import { Column, useTable } from "react-table";
+import { Column, useTable, useSortBy } from "react-table";
 
 import {
   Table as ChakraTable,
@@ -14,6 +14,9 @@ import {
   Td,
 } from "@chakra-ui/react";
 import { ArrowForwardIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+
+import { SortIcon } from "./SortIcon";
+import { getSortTypes } from "./getSortTypes";
 
 interface TableProps {
   columnProperties: Column[];
@@ -30,6 +33,7 @@ export const Table: FC<TableProps> = ({
 }) => {
   const columns = useMemo(() => columnProperties, []);
   const data = useMemo(() => dataToBeMemoised, []);
+  const sortTypes = useMemo(getSortTypes, []);
 
   const {
     getTableProps,
@@ -37,32 +41,41 @@ export const Table: FC<TableProps> = ({
     headerGroups,
     rows,
     prepareRow,
-  } = useTable({
-    columns: columns,
-    data: data,
-  });
+  } = useTable(
+    {
+      columns: columns,
+      data: data,
+      sortTypes,
+    },
+    useSortBy
+  );
 
   return (
     <ChakraTable {...getTableProps()} fontSize={20}>
       <Thead bg="blue.700">
         {headerGroups.map((headerGroup, hi) => (
           <Tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column, hgi, arr) => {
+            {headerGroup.headers.map((header, hgi, arr) => {
               const borderTopLeftRadius = hi === 0 ? (hgi === 0 ? 15 : 0) : 0;
               const borderTopRightRadius =
                 hi === 0 ? (hgi === arr.length - 1 ? 15 : 0) : 0;
               return (
                 <Th
-                  {...column.getHeaderProps()}
+                  {...header.getHeaderProps(header.getSortByToggleProps())}
                   textAlign="center"
                   color="white"
                   fontSize={13}
                   borderTopLeftRadius={borderTopLeftRadius}
                   borderTopRightRadius={borderTopRightRadius}
                 >
-                  {showLink && initialRoute && column.Header === "ID"
-                    ? ""
-                    : column.render("Header")}
+                  {showLink && initialRoute && header.Header === "ID" ? null : (
+                    <>
+                      {header.render("Header")}
+                      <span>
+                        <SortIcon header={header} />
+                      </span>
+                    </>
+                  )}
                 </Th>
               );
             })}
