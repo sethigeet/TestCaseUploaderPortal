@@ -17,6 +17,6 @@ export const getCreateProductMutationOptions = (
 > => ({
   variables: { input },
   update: (cache) => {
-    cache.evict({ fieldName: "getProducts:{}" });
+    cache.evict({ fieldName: "getProducts" });
   },
 });
