@@ -3,7 +3,7 @@ import { FC, useMemo } from "react";
 
 import { Link } from "react-router-dom";
 
-import { Column, useTable, useSortBy } from "react-table";
+import { Column, useTable, useSortBy, usePagination } from "react-table";
 
 import {
   Table as ChakraTable,
@@ -12,8 +12,20 @@ import {
   Th,
   Tbody,
   Td,
+  TableCaption,
+  Box,
+  Text,
+  Button,
 } from "@chakra-ui/react";
-import { ArrowForwardIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+import {
+  ArrowForwardIcon,
+  ArrowLeftIcon,
+  ArrowRightIcon,
+  CheckIcon,
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  CloseIcon,
+} from "@chakra-ui/icons";
 
 import { SortIcon } from "./SortIcon";
 import { getSortTypes } from "./getSortTypes";
@@ -39,15 +51,25 @@ export const Table: FC<TableProps> = ({
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
     prepareRow,
+    nextPage,
+    canNextPage,
+    previousPage,
+    canPreviousPage,
+    gotoPage,
+    pageCount,
+    pageOptions,
+    state: { pageIndex },
   } = useTable(
     {
       columns: columns,
       data: data,
       sortTypes,
+      initialState: { pageSize: 5 },
     },
-    useSortBy
+    useSortBy,
+    usePagination
   );
 
   return (
@@ -88,7 +110,7 @@ export const Table: FC<TableProps> = ({
         borderColor="gray.50"
         boxShadow="elevated"
       >
-        {rows.map((row) => {
+        {page.map((row) => {
           prepareRow(row);
           return (
             <Tr
@@ -133,6 +155,42 @@ export const Table: FC<TableProps> = ({
           );
         })}
       </Tbody>
+      <TableCaption>
+        <Box display="flex" alignItems="center" justifyContent="flex-end">
+          <Box mr={5}>
+            <Text>
+              Page
+              <strong style={{ marginLeft: 5 }}>
+                {pageIndex + 1} of {pageOptions.length}
+              </strong>
+            </Text>
+          </Box>
+          <Button
+            variant="ghost"
+            onClick={() => gotoPage(0)}
+            disabled={!canPreviousPage}
+          >
+            <ArrowLeftIcon />
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={previousPage}
+            disabled={!canPreviousPage}
+          >
+            <ChevronLeftIcon w={25} h={25} />
+          </Button>
+          <Button variant="ghost" onClick={nextPage} disabled={!canNextPage}>
+            <ChevronRightIcon w={25} h={25} />
+          </Button>
+          <Button
+            variant="ghost"
+            onClick={() => gotoPage(pageCount - 1)}
+            disabled={!canNextPage}
+          >
+            <ArrowRightIcon />
+          </Button>
+        </Box>
+      </TableCaption>
     </ChakraTable>
   );
 };
