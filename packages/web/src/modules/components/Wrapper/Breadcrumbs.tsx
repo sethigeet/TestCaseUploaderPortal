@@ -1,6 +1,6 @@
 import { FC } from "react";
 
-import { Link, useLocation } from "react-router-dom";
+import { Link, useRouteMatch } from "react-router-dom";
 
 import {
   Box,
@@ -11,11 +11,25 @@ import {
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
 export const Breadcrumbs: FC = () => {
-  const location = useLocation();
-  const crumbs = location.pathname
+  const route = useRouteMatch();
+  const crumbs = route.path
     .split("/")
-    .slice(1)
+    .filter((c) => c !== "")
+    .map((c) => {
+      if (c.charAt(0) === ":") {
+        const newC = c.slice(1);
+        if (newC.includes("Id")) {
+          return newC.split("Id")[0];
+        }
+        return newC;
+      }
+      return c;
+    })
     .map((c) => c.charAt(0).toUpperCase() + c.slice(1));
+
+  if (crumbs.length === 0) {
+    return null;
+  }
 
   return (
     <Box
