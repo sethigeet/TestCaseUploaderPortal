@@ -23,7 +23,7 @@ export const BooleanSwitch: FC<Props> = ({ label, name, ...props }) => {
   return (
     <FormControl isInvalid={isInvalid} display="flex">
       <FormLabel htmlFor={field.name}>{label}</FormLabel>
-      <Switch {...field} {...props} id={field.name} />
+      <Switch {...field} {...props} id={field.name} isChecked={field.value} />
       {isInvalid ? (
         <FormErrorMessage>{meta.error}</FormErrorMessage>
       ) : (
