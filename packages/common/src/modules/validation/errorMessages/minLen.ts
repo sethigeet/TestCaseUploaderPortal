@@ -1,3 +1,5 @@
+import { capitalise } from "../../utils";
+
 export const MIN_LEN = 3;
 
 export const getMinLenMessage = (
@@ -6,7 +8,7 @@ export const getMinLenMessage = (
 ): string => {
   const realMinLen = minLen || MIN_LEN;
 
-  return `${
-    fieldName.charAt(0).toUpperCase() + fieldName.slice(1)
-  } must be at least ${realMinLen} characters long!`;
+  return `${capitalise(
+    fieldName
+  )} must be at least ${realMinLen} characters long!`;
 };

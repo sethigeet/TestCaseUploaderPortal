@@ -1,0 +1,1 @@
+export { capitalise } from "./capitalise";

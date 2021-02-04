@@ -10,6 +10,8 @@ import {
 } from "@chakra-ui/react";
 import { ChevronRightIcon } from "@chakra-ui/icons";
 
+import { capitalise } from "@portal/common";
+
 export const Breadcrumbs: FC = () => {
   const route = useRouteMatch();
   const crumbs = route.path
@@ -25,7 +27,7 @@ export const Breadcrumbs: FC = () => {
       }
       return c;
     })
-    .map((c) => c.charAt(0).toUpperCase() + c.slice(1));
+    .map((c) => capitalise(c));
 
   const crumbLinks = route.url.split("/").filter((c) => c !== "");
 

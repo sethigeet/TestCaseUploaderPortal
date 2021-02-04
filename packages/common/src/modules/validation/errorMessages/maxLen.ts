@@ -1,3 +1,5 @@
+import { capitalise } from "../../utils";
+
 export const MAX_LEN = 20;
 
 export const getMaxLenMessage = (
@@ -6,7 +8,7 @@ export const getMaxLenMessage = (
 ): string => {
   const realMaxLen = maxLen || MAX_LEN;
 
-  return `${
-    fieldName.charAt(0).toUpperCase() + fieldName.slice(1)
-  } cannot be longer than ${realMaxLen} characters!`;
+  return `${capitalise(
+    fieldName
+  )} cannot be longer than ${realMaxLen} characters!`;
 };

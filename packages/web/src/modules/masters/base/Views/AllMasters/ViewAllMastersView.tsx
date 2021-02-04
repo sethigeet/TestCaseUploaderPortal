@@ -6,6 +6,7 @@ import { Box, Button, Heading } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
 import { GetProductsQuery } from "@portal/controller";
+import { capitalise } from "@portal/common";
 
 import { ErrorMessageType } from "../../../../types";
 import { Table, Wrapper } from "../../../../components";
@@ -41,7 +42,7 @@ export const ViewAllMastersView: FC<ViewAllMastersProps> = ({
               pb={1}
               borderColor="#ddd"
             >
-              {masterName.charAt(0).toUpperCase() + masterName.slice(1)}s
+              {capitalise(masterName)}s
             </Heading>
           </Box>
           <Table
