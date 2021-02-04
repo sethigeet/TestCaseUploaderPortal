@@ -91,7 +91,7 @@ export class CreateProductResolver {
 
     product.code = code;
     product.name = name;
-    if (deprecated) {
+    if (deprecated !== undefined) {
       product.deprecated = deprecated;
     }
     product.updatedBy = user;
