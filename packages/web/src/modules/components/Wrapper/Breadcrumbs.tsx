@@ -27,6 +27,8 @@ export const Breadcrumbs: FC = () => {
     })
     .map((c) => c.charAt(0).toUpperCase() + c.slice(1));
 
+  const crumbLinks = route.url.split("/").filter((c) => c !== "");
+
   if (crumbs.length === 0) {
     return null;
   }
@@ -47,12 +49,7 @@ export const Breadcrumbs: FC = () => {
         {crumbs.map((crumb, i, arr) => {
           const isCurrentPage = i === arr.length - 1;
 
-          const toLink =
-            "/" +
-            arr
-              .slice(0, i + 1)
-              .map((c) => c.charAt(0).toLowerCase() + c.slice(1))
-              .join("/");
+          const toLink = "/" + crumbLinks.slice(0, i + 1).join("/");
 
           return (
             <BreadcrumbItem key={i}>
