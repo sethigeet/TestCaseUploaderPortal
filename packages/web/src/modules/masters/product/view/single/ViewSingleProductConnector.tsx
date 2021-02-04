@@ -1,9 +1,10 @@
 import { FC, useState } from "react";
+
 import { useParams } from "react-router-dom";
 
 import { useGetProductQuery } from "@portal/controller";
 
-import { ViewSingleProductView } from "./View";
+import { ViewSingleMasterView } from "../../../base";
 
 export const ViewSingleProductConnector: FC = () => {
   const [error, setError] = useState(false);
@@ -19,8 +20,10 @@ export const ViewSingleProductConnector: FC = () => {
 
   return (
     <div>
-      <ViewSingleProductView
-        data={data}
+      <ViewSingleMasterView
+        masterName="product"
+        childName="module"
+        data={data?.getProduct}
         loading={loading}
         errorMessage={
           error

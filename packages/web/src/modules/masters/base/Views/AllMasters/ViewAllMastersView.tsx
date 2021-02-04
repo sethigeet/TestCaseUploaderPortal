@@ -5,22 +5,24 @@ import { Link } from "react-router-dom";
 import { Box, Button, Heading } from "@chakra-ui/react";
 import { AddIcon } from "@chakra-ui/icons";
 
-import { GetProductsQueryHookResult } from "@portal/controller";
+import { GetProductsQuery } from "@portal/controller";
 
-import { ErrorMessageType } from "../../../../../types";
-import { Table, Wrapper } from "../../../../../components";
-import { MASTER_COLUMNS } from "../../../../base";
+import { ErrorMessageType } from "../../../../types";
+import { Table, Wrapper } from "../../../../components";
+import { MASTER_COLUMNS } from "../..";
 
-interface AllProductsViewProps {
-  data?: GetProductsQueryHookResult["data"];
+interface ViewAllMastersProps {
+  data?: GetProductsQuery["getProducts"];
   loading?: boolean;
   errorMessage?: ErrorMessageType;
+  masterName: string;
 }
 
-export const ViewAllProductsView: FC<AllProductsViewProps> = ({
+export const ViewAllMastersView: FC<ViewAllMastersProps> = ({
   data,
   loading,
   errorMessage,
+  masterName,
 }) => {
   return (
     <Wrapper loading={loading} errorMessage={errorMessage}>
@@ -39,12 +41,12 @@ export const ViewAllProductsView: FC<AllProductsViewProps> = ({
               pb={1}
               borderColor="#ddd"
             >
-              Products
+              {masterName.charAt(0).toUpperCase() + masterName.slice(1)}s
             </Heading>
           </Box>
           <Table
             columnProperties={MASTER_COLUMNS}
-            data={data.getProducts}
+            data={data}
             showLink
             initialRoute="/masters/products"
           />

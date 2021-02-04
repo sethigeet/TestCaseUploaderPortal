@@ -1,2 +1,2 @@
-export { CreateMasterForm } from "./CreateMasterForm";
+export * from "./Views";
 export { MASTER_COLUMNS } from "./MasterColumns";

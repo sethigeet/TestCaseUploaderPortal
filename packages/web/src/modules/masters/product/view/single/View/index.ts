@@ -1,1 +1,0 @@
-export { ViewSingleProductView } from "./ViewSingleProductView";

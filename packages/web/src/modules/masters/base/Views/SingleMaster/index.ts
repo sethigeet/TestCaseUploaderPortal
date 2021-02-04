@@ -1,0 +1,1 @@
+export { ViewSingleMasterView } from "./ViewSingleMasterView";

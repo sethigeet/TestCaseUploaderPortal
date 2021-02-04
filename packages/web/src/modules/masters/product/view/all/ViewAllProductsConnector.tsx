@@ -2,7 +2,7 @@ import { FC, useState } from "react";
 
 import { useGetProductsQuery } from "@portal/controller";
 
-import { ViewAllProductsView } from "./View";
+import { ViewAllMastersView } from "../../../base";
 
 export const ViewAllProductsConnector: FC = () => {
   const [error, setError] = useState(false);
@@ -15,8 +15,9 @@ export const ViewAllProductsConnector: FC = () => {
 
   return (
     <div>
-      <ViewAllProductsView
-        data={data}
+      <ViewAllMastersView
+        masterName="product"
+        data={data?.getProducts}
         loading={loading}
         errorMessage={
           error
