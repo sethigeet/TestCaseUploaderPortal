@@ -23,9 +23,9 @@ import {
 } from "@portal/controller";
 import { UserRoles } from "@portal/common";
 
-import Logo from "../assets/icon.svg";
+import Logo from "../../assets/icon.svg";
 
-import { Link } from "./Link";
+import { Link } from "../Link";
 import { displayErrorToast } from "./ErrorToast";
 import { LoadingIndicator } from "./LoadingIndicator";
 
