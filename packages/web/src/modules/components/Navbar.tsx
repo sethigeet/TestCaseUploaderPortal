@@ -72,7 +72,7 @@ export const Navbar: FC = () => {
       </Box>
 
       <Box display="flex" alignItems="center">
-        <Link to="/" fontWeight={activeRoute === "" ? "bold" : ""}>
+        <Link to="/" fontWeight={activeRoute === "" ? "bold" : ""} showBorder>
           Home
         </Link>
 
@@ -80,6 +80,7 @@ export const Navbar: FC = () => {
           <Link
             to="/masters"
             fontWeight={activeRoute === "masters" ? "bold" : ""}
+            showBorder
           >
             Masters
           </Link>
@@ -88,12 +89,14 @@ export const Navbar: FC = () => {
         <Link
           to="/testCase"
           fontWeight={activeRoute === "testCase" ? "bold" : ""}
+          showBorder
         >
           Test Cases
         </Link>
         <Link
           to="/dashboard"
           fontWeight={activeRoute === "dashboard" ? "bold" : ""}
+          showBorder
         >
           Dashboard
         </Link>

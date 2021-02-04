@@ -1,5 +1,6 @@
-import { useGetProductsQuery } from "@portal/controller";
 import { FC, useState } from "react";
+
+import { useGetProductsQuery } from "@portal/controller";
 
 import { ViewAllProductsView } from "./View";
 

@@ -9,9 +9,15 @@ import {
 
 type LinkProps = ChakraLinkProps & {
   to: string;
+  showBorder?: boolean;
 };
 
-export const Link: FC<LinkProps> = ({ to, children, ...props }) => {
+export const Link: FC<LinkProps> = ({
+  to,
+  showBorder = false,
+  children,
+  ...props
+}) => {
   return (
     <RouterLink to={to}>
       <ChakraLink
@@ -22,7 +28,7 @@ export const Link: FC<LinkProps> = ({ to, children, ...props }) => {
         fontWeight="bold"
         _hover={{
           outline: "none",
-          borderBottom: "1px solid",
+          borderBottom: showBorder ? "1px solid" : undefined,
           borderBottomColor: "blue.900",
           transform: "scale(1.1)",
         }}

@@ -3,8 +3,10 @@ import { FC } from "react";
 
 import { Row as TableRowType } from "react-table";
 
-import { Tr, Td, Link } from "@chakra-ui/react";
+import { Tr, Td } from "@chakra-ui/react";
 import { ArrowForwardIcon, CheckIcon, CloseIcon } from "@chakra-ui/icons";
+
+import { Link } from "../Link";
 
 interface BodyRowProps {
   row: TableRowType;

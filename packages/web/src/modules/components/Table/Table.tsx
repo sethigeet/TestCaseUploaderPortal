@@ -1,4 +1,3 @@
-/* eslint-disable react/jsx-key */
 import { FC, useMemo } from "react";
 
 import { Column, useTable, useSortBy, usePagination } from "react-table";
@@ -13,7 +12,7 @@ import {
 import { getSortTypes } from "./getSortTypes";
 import { Pagination } from "./Pagination";
 import { BodyRow } from "./BodyRow";
-import { Header } from "./HeaderRow";
+import { HeaderRow } from "./HeaderRow";
 
 interface TableProps {
   columnProperties: Column[];
@@ -60,7 +59,15 @@ export const Table: FC<TableProps> = ({
   return (
     <ChakraTable {...getTableProps()} fontSize={20}>
       <Thead bg="blue.700">
-        <Header headerGroups={headerGroups} />
+        {headerGroups.map((headerGroup, hgi) => (
+          <HeaderRow
+            key={headerGroup.getHeaderGroupProps().key}
+            headerGroup={headerGroup}
+            headerGroupIdx={hgi}
+            showLink={showLink}
+            initialRoute={initialRoute}
+          />
+        ))}
       </Thead>
       <Tbody
         {...getTableBodyProps()}
@@ -72,6 +79,7 @@ export const Table: FC<TableProps> = ({
           prepareRow(row);
           return (
             <BodyRow
+              key={row.getRowProps().key}
               row={row}
               showLink={showLink}
               initialRoute={initialRoute}
