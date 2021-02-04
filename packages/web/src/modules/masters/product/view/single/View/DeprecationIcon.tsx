@@ -15,7 +15,10 @@ export const DeprecationIcon: FC<DeprecationIconProps> = ({
     <Box {...rest}>
       <Badge
         colorScheme={deprecated ? "red" : "green"}
-        py={2}
+        h={10}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
         px={3}
         borderRadius={8}
       >
@@ -27,7 +30,7 @@ export const DeprecationIcon: FC<DeprecationIconProps> = ({
             </>
           ) : (
             <>
-              <CheckCircleIcon mr={2} />
+              <CheckCircleIcon mr={2} w={5} h={5} />
               Not Deprecated
             </>
           )}
