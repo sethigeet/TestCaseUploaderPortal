@@ -2,50 +2,55 @@ import { FC } from "react";
 
 import { Box, Button } from "@chakra-ui/react";
 
-import { BooleanSwitch, InputField } from "../../../components";
+import { FormContainer, BooleanSwitch, InputField } from "../../../components";
 
 interface CreateMasterFormProps {
   isSubmitting: boolean;
+  showPreviousButton?: boolean;
+  onClickPrevious?: () => void;
 }
 
 export const CreateMasterForm: FC<CreateMasterFormProps> = ({
   isSubmitting,
+  showPreviousButton = false,
+  onClickPrevious,
 }) => {
   return (
-    <Box p={25}>
-      <Box
-        bg="white"
-        borderRadius={25}
-        p={10}
-        boxShadow="elevated"
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-      >
-        <Box>
-          <InputField name="code" label="Code" placeholder="Code" w="400px" />
-        </Box>
-        <Box mt={4}>
-          <InputField name="name" label="Name" placeholder="Name" w="400px" />
-        </Box>
-        <Box mt={4} alignSelf="flex-start">
-          <BooleanSwitch name="deprecated" label="Deprecated?" size="lg" />
-        </Box>
-        <Box mt={4} textAlign="center">
+    <FormContainer>
+      <Box>
+        <InputField name="code" label="Code" placeholder="Code" w="400px" />
+      </Box>
+      <Box mt={4}>
+        <InputField name="name" label="Name" placeholder="Name" w="400px" />
+      </Box>
+      <Box mt={4} alignSelf="flex-start">
+        <BooleanSwitch name="deprecated" label="Deprecated?" size="lg" />
+      </Box>
+      <Box mt={4} w="100%" display="flex" justifyContent="space-between">
+        {showPreviousButton && (
           <Button
-            bg="blue.700"
-            color="white"
-            isLoading={isSubmitting}
-            type="submit"
+            bg="gray.300"
+            color="black"
             borderRadius={10}
             px={39}
             py={25}
+            onClick={onClickPrevious}
           >
-            Submit
+            Previous
           </Button>
-        </Box>
+        )}
+        <Button
+          bg="blue.700"
+          color="white"
+          isLoading={isSubmitting}
+          type="submit"
+          borderRadius={10}
+          px={39}
+          py={25}
+        >
+          Submit
+        </Button>
       </Box>
-    </Box>
+    </FormContainer>
   );
 };

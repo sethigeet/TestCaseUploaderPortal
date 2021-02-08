@@ -2,20 +2,19 @@ import { FC } from "react";
 
 import { Link } from "react-router-dom";
 
-import { GetProductQuery } from "@portal/controller";
-
 import { Box, Button, Heading } from "@chakra-ui/react";
 import { EditIcon } from "@chakra-ui/icons";
 
 import { ErrorMessageType } from "../../../../types";
-import { formatTime } from "../../../../utils";
+import { formatTime, Master } from "../../../../utils";
 import { Wrapper } from "../../../../components";
 
 import { DeprecationIcon } from "../DeprecationIcon";
+
 import { ChildMasterTable } from "./ChildMasterTable";
 
 interface ViewSingleMasterViewProps {
-  data?: GetProductQuery["getProduct"];
+  data?: Master;
   loading?: boolean;
   errorMessage?: ErrorMessageType;
   masterName: string;

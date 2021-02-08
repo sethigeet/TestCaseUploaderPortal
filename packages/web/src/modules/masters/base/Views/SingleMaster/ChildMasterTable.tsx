@@ -2,16 +2,17 @@ import { FC } from "react";
 
 import { Alert, AlertIcon, Box } from "@chakra-ui/react";
 
-import { GetProductQuery } from "@portal/controller";
-
+import { Master } from "../../../../utils";
 import { Table } from "../../../../components";
 
 import { CHILD_MASTER_COLUMNS } from "../../ChildMasterColumns";
 
+import { getChildMasterData } from "./getChildMasterData";
+
 interface ChildMasterTableProps {
   masterName: string;
   childName: string;
-  data?: GetProductQuery["getProduct"];
+  data?: Master;
 }
 
 export const ChildMasterTable: FC<ChildMasterTableProps> = ({
@@ -23,15 +24,17 @@ export const ChildMasterTable: FC<ChildMasterTableProps> = ({
     return null;
   }
 
+  const childMasterData = getChildMasterData(data);
+
   return (
     <Box my={15} py={15} borderTopWidth={1} borderTopColor="gray.300">
-      {data.modules ? (
-        data.modules.length > 0 ? (
+      {childMasterData ? (
+        childMasterData.length > 0 ? (
           <Table
             columnProperties={CHILD_MASTER_COLUMNS}
-            data={data.modules}
+            data={childMasterData}
             showLink
-            initialRoute="/masters/modules/"
+            initialRoute={`/masters/${childName}s`}
           />
         ) : (
           <Alert status="info" borderRadius={15}>
