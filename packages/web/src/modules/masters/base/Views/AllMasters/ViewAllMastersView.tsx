@@ -19,6 +19,8 @@ interface ViewAllMastersProps {
   errorMessage?: ErrorMessageType;
   masterName: string;
   withWrapper?: boolean;
+  showPreviousButton?: boolean;
+  onClickPrevious?: () => void;
 }
 
 export const ViewAllMastersView: FC<ViewAllMastersProps> = ({
@@ -27,6 +29,8 @@ export const ViewAllMastersView: FC<ViewAllMastersProps> = ({
   errorMessage,
   masterName,
   withWrapper = false,
+  showPreviousButton = false,
+  onClickPrevious,
 }) => {
   let Container: any;
   if (withWrapper) {
@@ -38,50 +42,58 @@ export const ViewAllMastersView: FC<ViewAllMastersProps> = ({
   return (
     <>
       <Container loading={loading} errorMessage={errorMessage}>
-        {data && (
-          <Box display="flex" flexDirection="column">
-            <Box
-              textAlign="center"
-              mb={10}
-              display="flex"
-              justifyContent="center"
+        <Box display="flex" flexDirection="column">
+          <Box
+            textAlign="center"
+            mb={10}
+            display="flex"
+            justifyContent="center"
+          >
+            <Heading
+              size="3xl"
+              fontWeight={400}
+              borderBottomWidth={2}
+              pb={1}
+              borderColor="#ddd"
             >
-              <Heading
-                size="3xl"
-                fontWeight={400}
-                borderBottomWidth={2}
-                pb={1}
-                borderColor="#ddd"
-              >
-                {capitalise(masterName)}s
-              </Heading>
-            </Box>
-            {data.length > 0 ? (
-              <Table
-                columnProperties={MASTER_COLUMNS}
-                data={data}
-                showLink
-                initialRoute={`/masters/${masterName}s`}
-              />
-            ) : (
-              <Alert status="info" borderRadius={15}>
-                <AlertIcon />
-                There are no {masterName}s!
-              </Alert>
+              {capitalise(masterName)}s
+            </Heading>
+          </Box>
+          {data && data.length > 0 ? (
+            <Table
+              columnProperties={MASTER_COLUMNS}
+              data={data}
+              showLink
+              initialRoute={`/masters/${masterName}s`}
+            />
+          ) : (
+            <Alert status="info" borderRadius={15}>
+              <AlertIcon />
+              There are no {masterName}s!
+            </Alert>
+          )}
+          <Box
+            my={10}
+            display="flex"
+            justifyContent={showPreviousButton ? "space-between" : "center"}
+            alignItems="center"
+          >
+            {showPreviousButton && (
+              <Button bg="gray.300" color="black" onClick={onClickPrevious}>
+                Previous
+              </Button>
             )}
             <Button
               as={Link}
               to={`/masters/${masterName}s/create`}
               bg="blue.700"
               color="white"
-              mx="auto"
-              my={10}
             >
               Create New
               <AddIcon ml={2} />
             </Button>
           </Box>
-        )}
+        </Box>
       </Container>
     </>
   );

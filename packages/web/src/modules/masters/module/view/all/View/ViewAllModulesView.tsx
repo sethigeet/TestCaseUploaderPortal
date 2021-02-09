@@ -58,6 +58,8 @@ export const ViewAllModulesView: FC<ViewAllModulesViewProps> = ({
           data={data}
           loading={loading}
           errorMessage={errorMessage}
+          showPreviousButton
+          onClickPrevious={() => setActiveStep(0)}
         />
       </Stepper>
     </Wrapper>

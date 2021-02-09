@@ -21,7 +21,14 @@ export const Stepper: FC<StepperProps> = ({ children, activeStep, labels }) => {
 
   return (
     <Box>
-      <Box display="flex" justifyContent="center" alignItems="center">
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        borderColor="gray.300"
+        borderBottomWidth={1}
+        pb={50}
+      >
         {steps.map((_, i, arr) => {
           const isLast = i === arr.length - 1;
           const isActive = activeStep === i;
@@ -40,7 +47,9 @@ export const Stepper: FC<StepperProps> = ({ children, activeStep, labels }) => {
           );
         })}
       </Box>
-      <Box>{steps[activeStep]}</Box>
+      <Box mt={25} minW={600}>
+        {steps[activeStep]}
+      </Box>
     </Box>
   );
 };

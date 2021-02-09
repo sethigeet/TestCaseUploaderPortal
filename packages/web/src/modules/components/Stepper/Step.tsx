@@ -22,17 +22,20 @@ export const Step: FC<StepProps> = ({
   ...props
 }) => {
   return (
-    <Box {...props}>
+    <Box {...props} pos="relative">
       <Box display="flex" justifyContent="center" alignItems="center">
         <StepBubble isActive={isActive} isDone={isDone} index={index} />
-        {!isLast ? (
-          <StepConnector isDone={isDone} />
-        ) : (
-          <Box bg="white" h={1} w={3} />
-        )}
+        {!isLast ? <StepConnector isDone={isDone} /> : <div></div>}
       </Box>
       <Box>
-        <Text>{label}</Text>
+        <Text
+          pos="absolute"
+          left="22.5px"
+          transform="translateX(-50%)"
+          textAlign="center"
+        >
+          {label}
+        </Text>
       </Box>
     </Box>
   );

@@ -8,7 +8,7 @@ interface StepConnectorProps {
 
 export const StepConnector: FC<StepConnectorProps> = ({ isDone }) => {
   return (
-    <Box height={1} width="100%" minW={50} pos="relative" bg="gray.300">
+    <Box height={1} width="100%" minW={100} pos="relative" bg="gray.300">
       <Box
         bg="blue.300"
         pos="absolute"
