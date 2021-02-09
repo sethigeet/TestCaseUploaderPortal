@@ -1,24 +1,39 @@
 import { FC, useState } from "react";
 
-import { useGetProductsQuery } from "@portal/controller";
+import { useGetModulesQuery, useGetProductsQuery } from "@portal/controller";
 
-import { ViewAllMastersView } from "../../../base";
+import { ViewAllModulesView } from "./View/ViewAllModulesView";
 
 export const ViewAllModulesConnector: FC = () => {
+  const [productId, setProductId] = useState("");
   const [error, setError] = useState(false);
 
-  const { data, loading, error: getProductsError } = useGetProductsQuery();
+  const {
+    data: productsData,
+    loading: getProductsLoading,
+    error: getProductsError,
+  } = useGetProductsQuery();
+  const {
+    data: getModulesData,
+    loading: getModulesLoading,
+    error: getModulesError,
+  } = useGetModulesQuery({
+    skip: productId === "",
+    variables: { productId },
+  });
 
-  if (!error && getProductsError) {
+  if (!error && (getProductsError || getModulesError)) {
     setError(true);
   }
 
   return (
     <div>
-      <ViewAllMastersView
-        masterName="module"
-        data={data?.getProducts}
-        loading={loading}
+      <ViewAllModulesView
+        products={productsData?.getProducts}
+        data={getModulesData?.getModules}
+        productId={productId}
+        setProductId={setProductId}
+        loading={getModulesLoading || getProductsLoading}
         errorMessage={
           error
             ? {

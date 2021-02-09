@@ -27,6 +27,7 @@ export const ViewAllProductsConnector: FC = () => {
               }
             : undefined
         }
+        withWrapper
       />
     </div>
   );
