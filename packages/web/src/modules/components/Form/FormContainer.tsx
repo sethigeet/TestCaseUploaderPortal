@@ -1,10 +1,10 @@
 import { FC } from "react";
 
-import { Box } from "@chakra-ui/react";
+import { Box, BoxProps } from "@chakra-ui/react";
 
-export const FormContainer: FC = ({ children }) => {
+export const FormContainer: FC<BoxProps> = ({ children, ...props }) => {
   return (
-    <Box p={25}>
+    <Box p={25} minW={600} {...props}>
       <Box
         bg="white"
         borderRadius={25}

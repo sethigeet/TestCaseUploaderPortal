@@ -1,8 +1,13 @@
-import { GetProductQuery, GetModuleQuery } from "@portal/controller";
+import {
+  GetProductQuery,
+  GetModuleQuery,
+  GetMenuQuery,
+} from "@portal/controller";
 
 export type Master =
   | GetProductQuery["getProduct"]
-  | GetModuleQuery["getModule"];
+  | GetModuleQuery["getModule"]
+  | GetMenuQuery["getMenu"];
 
 type MasterNames =
   | "product"

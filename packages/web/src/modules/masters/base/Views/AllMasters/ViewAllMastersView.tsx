@@ -33,15 +33,18 @@ export const ViewAllMastersView: FC<ViewAllMastersProps> = ({
   onClickPrevious,
 }) => {
   let Container: any;
+  const containerProps: Record<string, any> = {};
   if (withWrapper) {
     Container = Wrapper;
+    containerProps.loading = loading;
+    containerProps.errorMessage = errorMessage;
   } else {
     Container = Box;
   }
 
   return (
     <>
-      <Container loading={loading} errorMessage={errorMessage}>
+      <Container {...containerProps}>
         <Box display="flex" flexDirection="column">
           <Box
             textAlign="center"

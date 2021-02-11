@@ -1,4 +1,8 @@
-import { GetModuleQuery, GetProductQuery } from "@portal/controller";
+import {
+  GetMenuQuery,
+  GetModuleQuery,
+  GetProductQuery,
+} from "@portal/controller";
 
 import { Master, getMasterType } from "../../../../utils";
 
@@ -9,6 +13,9 @@ export const getChildMasterData = (data: Master): any | null | undefined => {
 
     case "module":
       return (data as GetModuleQuery["getModule"])?.menus;
+
+    case "menu":
+      return (data as GetMenuQuery["getMenu"])?.testingFors;
 
     case "none":
       return null;

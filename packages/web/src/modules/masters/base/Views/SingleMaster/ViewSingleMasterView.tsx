@@ -42,7 +42,7 @@ export const ViewSingleMasterView: FC<ViewSingleMasterViewProps> = ({
             <DeprecationIcon deprecated={data.deprecated} ml={100} />
             <Button
               as={Link}
-              to={`/masters/products/${data.id}/edit`}
+              to={`/masters/${masterName}s/${data.id}/edit`}
               ml={2}
               h={10}
               w={10}
